@@ -34,14 +34,16 @@ const NavBarComponent = () => {
   return (
     <div className="flex items-center w-full px-4 justify-around bg-slate-600 py-4">
       <Link to="/" className="text-sky-500 font-semibold text-x1 p-2">
-        Narupax Joyas
+        Chelitas Joyas
       </Link>
       <div className="relative">
         <div
-          className="flex items-center justify-between w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+          className="flex items-center justify-between w-full border border-sky-500 hover:text-white transition duration-0.5 hover:bg-slate-900  px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <span>Seleccionar categoria</span>
+          <span className="text-cyan-500 hover:text-white">
+            Seleccionar categoria
+          </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className={`h-5 w-5 ${isOpen ? "transform rotate-180" : ""}`}
@@ -56,11 +58,11 @@ const NavBarComponent = () => {
           </svg>
         </div>
         {isOpen && (
-          <ul className="absolute z-10 w-full mt-2 py-1 bg-white border border-gray-400 rounded shadow">
+          <ul className="absolute z-10 w-full mt-2 bg-slate-900 border border-gray-400  rounded-lg">
             {options.map((option) => (
               <Link key={option.id} to={`/category/${option.name}`}>
                 <li
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-2 text-cyan-500 hover:text-white transition duration-0.5 cursor-pointer hover:border-spacing-1 border-sky-500 rounded-lg "
                   onClick={() => handleOptionClick(option)}
                 >
                   {option.name}
@@ -70,15 +72,24 @@ const NavBarComponent = () => {
           </ul>
         )}
       </div>
-      <Link to="/productos/" className="text-white font-semibold text-x1 p-2">
+      <Link
+        to="/productos"
+        className="text-cyan-500 font-semibold text-x1 p-2 border border-sky-500 rounded-lg hover:text-white transition duration-0.5 hover:bg-slate-900"
+      >
         Productos
       </Link>
-      <a href="#About" className="text-white font-semibold text-x1 p-2">
+      <Link
+        to="/about"
+        className="text-cyan-500 font-semibold text-x1 p-2 border border-sky-500 rounded-lg hover:text-white transition duration-0.5 hover:bg-slate-900"
+      >
         About
-      </a>
-      <a href="#Contact" className="text-white font-semibold text-x1 p-2">
+      </Link>
+      <Link
+        to="/contact"
+        className="text-cyan-500   font-semibold text-x1 p-2 border border-sky-500 rounded-lg hover:text-white transition duration-0.5 hover:bg-slate-900 "
+      >
         Contact
-      </a>
+      </Link>
 
       <CartWidget />
     </div>

@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-import { getCategory } from "../services/categoriesService";
 import { useParams } from "react-router-dom";
 import ItemList from "../components/ItemList";
-
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  where,
+  query,
+} from "firebase/firestore";
 export const Category = () => {
   const [titulo, setTitulo] = useState();
   const params = useParams();
-  console.log(params);
   useEffect(() => {
-    const categoriaData = getCategory(params.id);
-    setTitulo(categoriaData);
+    document.title = "Categoria | Chelitas Joyas";
+    const db = getFirestore();
+    const productsCollection = collection(db, "products");
+    const q = query(productsCollection, where("category", "==", params.id));
+    getDocs(q).then((snapshot) => {
+      setTitulo(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    });
   }, [params.id]);
 
   return (
