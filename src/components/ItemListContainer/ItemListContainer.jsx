@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import ItemList from "../ItemList";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
+import LoadingComponent from "../LoadingComponent";
+
 const ItemListContainer = () => {
   const [productos, setProductos] = useState([]);
 
@@ -13,8 +15,12 @@ const ItemListContainer = () => {
   }, []);
 
   return (
+    productos.length<= 0 ? <LoadingComponent /> :
     <div className="grid grid-cols-5 gap-6 mt-6 dark:bg-gray-900  w-[100%] h-screen place-items-center">
-      {productos.map((producto) => (
+
+      {
+        productos.map((producto) => (
+        
         <ItemList key={producto.id} producto={producto} />
       ))}
     </div>
