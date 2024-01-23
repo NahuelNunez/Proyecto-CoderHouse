@@ -32,7 +32,7 @@ const NavBarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex items-center w-full px-4 justify-around bg-slate-600 py-4">
+    <div className="flex items-center w-full px-4 justify-around bg-slate-800 py-4">
       <Link to="/" className="text-sky-500 font-semibold text-x1 p-2">
         Chelitas Joyas
       </Link>

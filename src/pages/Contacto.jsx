@@ -7,7 +7,7 @@ const Contacto = () => {
   return (
     <div className="h-screen w-full gap-[150px]">
       <h1 className="font-semibold text-white text-[40px] text-center mt-16">
-        Contacto
+        Dejanos tu informacion para contactarte
       </h1>
       <form
         onSubmit={handleSubmit(enviar)}

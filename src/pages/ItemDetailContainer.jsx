@@ -14,7 +14,7 @@ export const ItemDetailContainer = () => {
   }, [id]);
 
   return (
-    <div className="flex items-center justify-center dark:bg-gray-900 w-screen h-screen">
+    <div className="flex items-center justify-center dark:bg-gray-900  h-screen">
       {item && <ItemDetail item={item} />}
     </div>
   );
