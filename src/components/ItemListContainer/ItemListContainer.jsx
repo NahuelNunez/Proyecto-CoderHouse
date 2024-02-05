@@ -16,7 +16,7 @@ const ItemListContainer = () => {
 
   return (
     productos.length<= 0 ? <LoadingComponent /> : // Agrego un loading component para la demora de carga del firebase 
-    <div className="grid grid-cols-5 gap-6 mt-6 dark:bg-gray-900  w-[100%] h-screen place-items-center">
+    <div className="grid grid-cols-5 gap-6 mt-6 dark:bg-gray-900  w-[100%]  place-items-center">
 
       {
         productos.map((producto) => (
