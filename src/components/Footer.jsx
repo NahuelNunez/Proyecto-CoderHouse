@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="w-[%100] bg-slate-950 flex justify-between items-center py-10 h-full">
+    <div className="w-[%100] bg-slate-950 flex justify-between items-center py-10 h-full mt-6">
       <div className="flex flex-row gap-3">
         <div className="flex gap-2">
           <img src="/src/assets/phone.svg" alt="Phone" />
