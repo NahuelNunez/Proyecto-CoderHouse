@@ -8,7 +8,7 @@ import { Productos } from "./pages/Productos";
 import About from "./pages/About";
 import Contacto from "./pages/Contacto";
 import Footer from "./components/Footer";
-
+import Detail from "./pages/Detail";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ function App() {
         <Route path="/Productos" element={<Productos />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contacto />} />
+        <Route path="/detail" element={<Detail/>} />
       </Routes>
       <Footer/>
     </BrowserRouter>

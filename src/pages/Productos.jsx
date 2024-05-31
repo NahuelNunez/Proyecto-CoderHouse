@@ -7,8 +7,8 @@ export const Productos = () => {
   }, []);
 
   return (
-    <div className="w-full h-full">
-      <h1 className="font-semibold text-white text-[30px] text-center m-4">
+    <div className="  bg-slate-900 ">
+      <h1 className="font-semibold text-white text-[30px] p-4 text-center sm:mt-[50px] ">
         Productos
       </h1>
       <ItemListContainer />

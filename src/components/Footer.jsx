@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <div className="w-[%100] bg-slate-950 flex justify-between items-center py-10 h-full mt-6">
-      <div className="flex flex-row gap-3">
-        <div className="flex gap-2">
+    <div className=" bg-slate-950 flex flex-col md:flex-row  justify-between items-center py-10 h-full gap-5 mt-6 ">
+      <div className="flex flex-col lg:flex-row gap-3">
+        <div className="flex  gap-2">
           <img src="/src/assets/phone.svg" alt="Phone" />
           <p className="text-cyan-500 font-semibold">+54 264-410-6566</p>
         </div>
@@ -23,7 +23,7 @@ const Footer = () => {
           <img src="/src/assets/copyright.svg"></img>2023 Chelitas Joyas
         </span>
       </div>
-      <div className="flex flex-row gap-6">
+      <div className="flex gap-6">
         <div className="flex flex-row gap-2">
           <a href="https://wa.me/+542644106566" target="_blank ">
             <img src="/src/assets/whatasapp.svg" />

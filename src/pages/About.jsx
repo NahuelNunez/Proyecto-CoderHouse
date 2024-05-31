@@ -6,15 +6,17 @@ const About = () => {
   }, []);
 
   return (
+    
     <div className="h-screen flex flex-col">
-      <div className=" text-center  m-9 flex flex-col gap-20">
-        <h2 className="text-white font-semibold text-[40px]">Sobre Nosotros</h2>
-        <div className="flex flex-row gap-8  items-center">
+      <div className=" text-center flex flex-col  gap-20">
+        <h2 className="text-white font-semibold text-[40px] mt-[60px]">Sobre Nosotros</h2>
+        <div className="flex flex-col gap-8 lg:flex-row  items-center">
           <img
             src="/src/images/about.jpeg"
             className="h-[400px] w-[450px]  hover:scale-[1.1] transition duration-300 ease-in-out"
           />
-          <p className="text-cyan-500 text-[30px] tracking-widest text-left font-sans ">
+          <div className="overflow-auto h-40 lg:overflow-hidden lg:h-full">
+          <p className="text-cyan-500  tracking-widest text-left font-sans ">
             Somos una boutique digital de joyas donde la elegancia se encuentra
             con la artesanía. Ofrecemos una colección cuidadosamente
             seleccionada de piezas únicas que combinan lo clásico y lo moderno,
@@ -27,9 +29,11 @@ const About = () => {
             de las joyas, donde celebramos la singularidad y la emoción de cada
             pieza.
           </p>
+          </div>
         </div>
       </div>
     </div>
+    
   );
 };
 

@@ -36,7 +36,14 @@ export const CartProvider = ({ children }) => {
   const quantityInWidget = () => {
     return carrito.reduce((acc, producto) => acc + producto.cantidad, 0);
   };
+  const totalWidget = () => {
+    return carrito.reduce((acc, producto) => acc + producto.cantidad * producto.precio, 0);
+  }
+const removeProduct= (productID) => { 
 
+  setCarrito(carrito.filter(producto => producto.id !==productID))
+  
+}
   // Proporcionar el estado del carrito y las funciones asociadas a través del contexto
   return (
     <CartContext.Provider
@@ -44,6 +51,8 @@ export const CartProvider = ({ children }) => {
         carrito,
         handleAddWidget,
         quantityInWidget,
+        totalWidget,
+        removeProduct
       }}
     >
       {children}

@@ -5,13 +5,13 @@ const Contacto = () => {
     console.log(data);
   };
   return (
-    <div className="h-screen w-full gap-[150px]">
-      <h1 className="font-semibold text-white text-[40px] text-center mt-16">
+    <div className="h-screen w-full gap-[150px] ">
+      <h1 className="font-semibold text-white text-[40px] text-center mt-[50px]  sm:mt-[50px]">
         Dejanos tu informacion para contactarte
       </h1>
       <form
         onSubmit={handleSubmit(enviar)}
-        className="flex flex-col items-center justify-center gap-11 mt-[50px] border border-sky-500 w-[25%] h-[50%] m-auto rounded-[25px]"
+        className="flex flex-col items-center justify-center gap-11 mt-[100px]  border border-sky-500 h-[45%] max-w-[350px] m-auto rounded-[25px]"
       >
         <input
           type="text"
@@ -33,7 +33,7 @@ const Contacto = () => {
         ></input>
         <button
           type="submit"
-          className=" py-2  border border-sky-500 bg-sky-400 w-[25%] text-center rounded-lg text-white font-semibold hover:cursor-pointer  hover:bg-gray-900 transition duration-0.5"
+          className=" py-2 border border-sky-500 bg-sky-400 w-[25%] text-center rounded-lg text-white font-semibold hover:cursor-pointer  hover:bg-gray-900 transition duration-0.5"
         >
           Enviar
         </button>
