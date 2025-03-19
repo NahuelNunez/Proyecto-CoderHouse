@@ -5,13 +5,13 @@ const Contacto = () => {
     console.log(data);
   };
   return (
-    <div className="h-screen w-full gap-[150px] ">
+    <div className="h-screen flex flex-col w-full gap-[150px] ">
       <h1 className="font-semibold text-white text-[40px] text-center mt-[50px]  sm:mt-[50px]">
         Dejanos tu informacion para contactarte
       </h1>
       <form
         onSubmit={handleSubmit(enviar)}
-        className="flex flex-col items-center justify-center gap-11 mt-[100px]  border border-sky-500 h-[45%] max-w-[350px] m-auto rounded-[25px]"
+        className="flex flex-col bg-[#000] items-center justify-center gap-11 mt-[100px]  border border-sky-500 h-[45%] max-w-[350px] m-auto rounded-[25px]"
       >
         <input
           type="text"

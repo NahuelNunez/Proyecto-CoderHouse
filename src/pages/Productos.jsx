@@ -7,9 +7,9 @@ export const Productos = () => {
   }, []);
 
   return (
-    <div className="  bg-slate-900 ">
-      <h1 className="font-semibold text-white text-[30px] p-4 text-center sm:mt-[50px] ">
-        Productos
+    <div className="flex flex-col">
+      <h1 className="font-semibold font-playfair text-white text-[30px] p-4 text-center sm:mt-[50px] ">
+        Explora nuestras últimas joyas.
       </h1>
       <ItemListContainer />
     </div>

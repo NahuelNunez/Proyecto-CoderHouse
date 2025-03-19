@@ -1,25 +1,27 @@
+import { Card, CardBody, CardFooter, Image } from "@heroui/react";
 import { Link } from "react-router-dom";
+
 const ItemList = ({ producto }) => {
   return (
     <Link to={`/item/${producto.id}`}>
-      <div className="w-64 border-2 border-sky-600 flex items-center flex-col justify-center bg-slate-950 rounded-[6px] gap-5 hover:scale-[1.1] transition duration-[0.5s]  ease-in-out">
-      <div className="mt-2">
-      <img  className="rounded-full"
-          src={producto.imagen}
-          style={{ width: "175px", height: "200px" }}
-        />
-      </div>
-        
-        <div className="flex flex-col items-center bg-slate-950 w-full rounded-b-[6px] gap-3">
-          <h3 className="font-semibold text-white border-b-2 border-sky-600">{producto.titulo}</h3>
-          <h3 className="font-semibold text-white">
-          💲{producto.precio} ARS
-          </h3>
-          <h3 className="font-semibold text-white">
-            Stock: {producto.stock}
-          </h3>
-        </div>
-      </div>
+      <Card
+        key={producto.id}
+        isPressable
+        shadow="sm"
+        onPress={() => console.log("item pressed")}
+        className="w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 transition duration-500 ease-in-out"
+      >
+        <CardBody className="flex justify-center overflow-visible p-0 ">
+          <img
+            className=" object-cover object-center h-40 w-full rounded-t-lg rounded-b-lg "
+            src={producto.imagen}
+          />
+        </CardBody>
+        <CardFooter className="text-center justify-between px-4">
+          <h3 className="font-semibold text-white ">{producto.titulo}</h3>
+          <h3 className="font-semibold text-gray-500">{producto.precio} ARS</h3>
+        </CardFooter>
+      </Card>
     </Link>
   );
 };

@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className=" bg-slate-950 flex flex-col md:flex-row  justify-between items-center py-10 h-full gap-5 mt-6 ">
+    <div className=" bg-[#000] flex flex-col md:flex-row  justify-between items-center py-10  gap-5 mt-6 ">
       <div className="flex flex-col lg:flex-row gap-3">
         <div className="flex  gap-2">
           <img src="/src/assets/phone.svg" alt="Phone" />
@@ -10,17 +10,11 @@ const Footer = () => {
           <img src="/src/assets/location.svg" alt="Location" />
           <p className="text-cyan-500 font-semibold"> Av.España 4654 Sur</p>
         </div>
-        <div className="flex gap-2">
-          <img src="/src/assets/gmail.svg" alt="" />
-          <p className="text-cyan-500 font-semibold">
-            chelitasJoyas03@gmail.com
-          </p>
-        </div>
       </div>
       <div>
         <span className="text-white font-semibold flex gap-2">
           Copyright
-          <img src="/src/assets/copyright.svg"></img>2023 Chelitas Joyas
+          <img src="/src/assets/copyright.svg"></img>2025 Chelitas Joyas
         </span>
       </div>
       <div className="flex gap-6">
