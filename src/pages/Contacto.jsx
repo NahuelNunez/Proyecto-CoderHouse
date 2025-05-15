@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 const Contacto = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const enviar = (data) => {
     console.log(data);
   };
   return (
     <div className="h-screen flex flex-col w-full gap-[150px] ">
-      <h1 className="font-semibold text-white text-[40px] text-center mt-[50px]  sm:mt-[50px]">
+      {/* <h1 className="font-semibold text-white text-[40px] text-center mt-[50px]  sm:mt-[50px]">
         Dejanos tu informacion para contactarte
       </h1>
       <form
@@ -37,7 +37,8 @@ const Contacto = () => {
         >
           Enviar
         </button>
-      </form>
+        <button onClick={reset}>Reset</button>
+      </form> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 const ItemCount = ({ handleAdd, handleAddProduct, handleRemove, cantidad }) => {
   return (
-    <div className="flex flex-row justify-around items-center p-2 bg-slate-950 w-full rounded-[2px] rounded-b-[6px]">
+    <div className="relative flex flex-row justify-between w-full items-center  gap-2   ">
       <button
         onClick={handleAddProduct}
         className="text-cyan-500 font-semibold border border-sky-500 p-1 text-sm hover:text-white transition duration-0.5 hover:bg-slate-900  rounded-lg"
@@ -9,14 +9,16 @@ const ItemCount = ({ handleAdd, handleAddProduct, handleRemove, cantidad }) => {
       </button>
       <button
         onClick={handleAdd}
-        className="text-cyan-500 font-semibold border border-sky-500 rounded-lg px-1 hover:text-white transition duration-0.5 hover:bg-slate-900"
+        className="text-cyan-500 font-semibold border  border-sky-500 rounded-full p-0 px-[6px]  hover:text-white transition duration-0.5 hover:bg-slate-900"
       >
         +
       </button>
-      <span className="text-white font-semibold">{cantidad}</span>
+      <span className="text-white font-semibold absolute right-9">
+        {cantidad}
+      </span>
       <button
         onClick={handleRemove}
-        className="text-cyan-500 font-semibold border border-sky-500 rounded-lg px-1 hover:text-white transition duration-0.5 hover:bg-slate-900"
+        className="text-cyan-500 font-semibold border border-sky-500 rounded-full px-2 hover:text-white transition duration-0.5 hover:bg-slate-900"
       >
         -
       </button>

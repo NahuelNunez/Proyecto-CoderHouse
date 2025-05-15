@@ -8,8 +8,11 @@ import {
   DropdownItem,
   Button,
 } from "@heroui/react";
+import { useAuth } from "../Admin/Store/useAuth";
+import { Logout } from "../Admin/Logout";
 
 const NavBarComponent = () => {
+  const { user } = useAuth();
   const options = [
     {
       id: 1,
@@ -40,7 +43,7 @@ const NavBarComponent = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex  items-center w-full px-4 fixed top-0 justify-around  py-2  z-[9999]">
+    <div className="flex  items-center w-full px-4 fixed top-0 justify-around  py-2 bg-black/90  z-[9999]">
       <Link
         to="/"
         className="text-sky-500 font-semibold font-playfair  text-lg  sm:text-[17pxs] md:text-[19px]"
@@ -69,7 +72,7 @@ const NavBarComponent = () => {
         <div
           className={`${
             open ? "w-[160px]" : "w-0"
-          } bg-slate-900 min-h-screen  fixed top-0 left-0 right-0 flex`}
+          } bg-slate-900 min-h-screesn  fixed top-0 left-0 right-0 flex`}
         >
           <div
             className={`${
@@ -161,26 +164,23 @@ const NavBarComponent = () => {
         {/* LARGE RESPONSIVE */}
       </div>
 
-      <div className="hidden lg:flex lg:gap-10">
+      <div className="hidden lg:flex lg:relative lg:gap-10 lg:items-center">
         <div className="relative">
-          <div className="hover:border-b hover:border-b-white p-4">
-            <Dropdown>
+          <div className="">
+            <Dropdown className="bg-black">
               <DropdownTrigger>
                 <Button
                   variant="bordered"
-                  className="text-white font-semibold text-center"
+                  className=" text-white text-center p-2 "
                 >
                   Categorias
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu
-                className="bg-[#000000]"
-                aria-label="Static Actions"
-              >
+              <DropdownMenu className="" variant="bordered">
                 {options.map((option) => (
-                  <DropdownItem key={option.id}>
+                  <DropdownItem key={option.id} className="">
                     <Link
-                      className="text-white text-semibold"
+                      className="text-white font-bold"
                       key={option.id}
                       to={`/category/${option.name}`}
                     >
@@ -192,26 +192,39 @@ const NavBarComponent = () => {
             </Dropdown>
           </div>
         </div>
-        <Button className="hover:border-b hover:border-b-white p-2">
+        <Button variant="bordered" className=" p-2">
           <Link to="/Productos" className="text-white">
             Productos
           </Link>
         </Button>
-        <Button className="hover:border-b hover:border-b-white p-2 ">
+        <Button variant="bordered" className=" p-2 ">
           <Link to="/about" className="text-white font-semibold">
             Nosotros
           </Link>
         </Button>
-        <Button
-          to="/contact"
-          className="hover:border-b hover:border-b-white p-2"
-        >
+        <Button variant="bordered" to="/contact" className=" p-2">
           <Link to="/contact" className="text-white font-semibold">
             Contacto
           </Link>
         </Button>
-
         <CartWidget />
+        {user ? (
+          <Logout user={user} />
+        ) : (
+          <Link to="/login">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="2em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="white"
+                d="M17 18h4v-2h-4v-2l-3 3l3 3zM11 4C8.8 4 7 5.8 7 8s1.8 4 4 4s4-1.8 4-4s-1.8-4-4-4m0 10c-4.4 0-8 1.8-8 4v2h9.5c-.3-.8-.5-1.6-.5-2.5c0-1.2.3-2.3.9-3.4c-.6 0-1.2-.1-1.9-.1"
+              />
+            </svg>
+          </Link>
+        )}
       </div>
     </div>
   );

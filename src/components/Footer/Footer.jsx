@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className=" bg-[#000] flex flex-col md:flex-row  justify-between items-center py-10  gap-5 mt-6 ">
-      <div className="flex flex-col lg:flex-row gap-3">
+      {/* <div className="flex flex-col lg:flex-row gap-3">
         <div className="flex  gap-2">
           <img src="/src/assets/phone.svg" alt="Phone" />
           <p className="text-cyan-500 font-semibold">+54 264-410-6566</p>
@@ -36,7 +36,7 @@ const Footer = () => {
             <img src="/src/assets/facebook.svg" alt="Facebook" />
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

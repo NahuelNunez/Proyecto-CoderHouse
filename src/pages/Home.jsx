@@ -1,4 +1,3 @@
-import ItemListContainer from "../components/ItemListContainer/ItemListContainer";
 import Welcome from "../components/Welcome";
 import { useEffect } from "react";
 
