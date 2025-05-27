@@ -39,7 +39,7 @@ export const ItemList = ({ producto }) => {
         >
           <CardBody className="flex justify-center overflow-visible p-0 ">
             <img
-              className=" object-cover object-center h-40 w-full rounded-t-lg rounded-b-lg "
+              className=" object-cover h-[200px] rounded-t-lg rounded-b-lg "
               src={`${baseURL}/uploads/${producto.image}`}
             />
           </CardBody>
@@ -83,7 +83,7 @@ export const ItemList = ({ producto }) => {
           >
             <CardBody className="flex justify-center overflow-visible p-0 ">
               <img
-                className=" object-cover object-center h-40 w-full rounded-t-lg rounded-b-lg "
+                className=" object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg "
                 src={`${baseURL}/uploads/${producto.image}`}
               />
             </CardBody>

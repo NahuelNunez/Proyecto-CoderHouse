@@ -19,6 +19,18 @@ export const useProductos = create((set) => ({
         }
     },
 
+    getById: async (id) => {
+        try {
+            const response = await axios.get(`${baseURL}/products/getAll/${id}`, {
+                withCredentials: true,
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.error('Error al obtener el producto', error)
+            return { error: error, data: null }
+        }
+    },
+
     postProductos: async (data, token) => {
         try {
             const response = await axios.post(`${baseURL}/products/create`, data, {

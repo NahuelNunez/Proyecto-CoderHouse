@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useDisclosure } from "@heroui/react";
-import { useProductos } from "../Form as Admin/Store/useProductos";
+
 // Crear el contexto para el carrito
 export const CartContext = createContext();
 
@@ -8,27 +7,10 @@ const initialValue = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // Proveedor de contexto para gestionar el estado del carrito
 export const CartProvider = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const { setEditingProduct, clearEditingProduct, editProductos } =
-    useProductos();
-
-  const handleOpenModal = (producto = null) => {
-    if (producto) {
-      setEditingProduct(producto);
-    } else {
-      clearEditingProduct();
-    }
-    onOpen();
-  };
-  const handleCloseModal = () => {
-    clearEditingProduct();
-
-    onClose();
-  };
   // Estado que almacena los productos en el carrito
   const [carrito, setCarrito] = useState(initialValue);
-
+  console.log("Carrito data:", carrito);
+  const [cantidad, setCantidad] = useState(1);
   // Función para agregar un producto al carrito o actualizar su cantidad
   const handleAddWidget = (item, cantidad) => {
     // Crear una copia del producto con la cantidad proporcionada
@@ -52,6 +34,17 @@ export const CartProvider = ({ children }) => {
       setCarrito(nuevoCarrito);
     }
   };
+  // Función para incrementar la cantidad
+  const handleAdd = (cantidad) => {
+    // Verificar que la cantidad no supere el stock disponible
+    if (cantidad < 10) setCantidad(cantidad + 1);
+  };
+
+  // Función para decrementar la cantidad
+  const handleRemove = (cantidad) => {
+    // Verificar que la cantidad sea mayor que 1 antes de decrementar
+    if (cantidad > 1) setCantidad(cantidad - 1);
+  };
 
   // Función para calcular la cantidad total de productos en el carrito
   const quantityInWidget = () => {
@@ -59,7 +52,7 @@ export const CartProvider = ({ children }) => {
   };
   const totalWidget = () => {
     return carrito.reduce(
-      (acc, producto) => acc + producto.cantidad * producto.precio,
+      (acc, producto) => acc + producto.cantidad * producto.price,
       0
     );
   };
@@ -79,10 +72,10 @@ export const CartProvider = ({ children }) => {
         quantityInWidget,
         totalWidget,
         removeProduct,
-        isOpen,
-        onOpen: handleOpenModal,
-        onClose: handleCloseModal,
-        editProductos,
+        handleAdd,
+        handleRemove,
+        cantidad,
+        setCarrito,
       }}
     >
       {children}

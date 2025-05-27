@@ -10,6 +10,7 @@ import {
 } from "@heroui/react";
 import { useAuth } from "../Admin/Store/useAuth";
 import { Logout } from "../Admin/Logout";
+import { Carrito } from "../Carrito/Carrito";
 
 const NavBarComponent = () => {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ const NavBarComponent = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex  items-center w-full px-4 fixed top-0 justify-around  py-2 bg-black/90  z-[9999]">
+    <div className="flex  items-center w-full px-4 fixed top-0 justify-around  py-2 bg-black/90  z-[10]">
       <Link
         to="/"
         className="text-sky-500 font-semibold font-playfair  text-lg  sm:text-[17pxs] md:text-[19px]"
@@ -207,7 +208,8 @@ const NavBarComponent = () => {
             Contacto
           </Link>
         </Button>
-        <CartWidget />
+        {/* <CartWidget /> */}
+        <Carrito />
         {user ? (
           <Logout user={user} />
         ) : (

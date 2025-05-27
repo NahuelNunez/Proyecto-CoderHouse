@@ -5,44 +5,41 @@ import { CartContext } from "../context/CartContext";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/react";
 import LoadingComponent from "../LoadingComponent";
 
-export const ItemDetail = ({ item }) => {
+const baseURL = import.meta.env.VITE_API_URL;
+
+export const ItemDetail = ({ producto }) => {
   // Obtener el estado del carrito y la función para agregar productos del contexto
-  const { carrito, handleAddWidget } = useContext(CartContext);
-  console.log(carrito);
+  const { handleAddWidget, handleAdd, handleRemove, cantidad } =
+    useContext(CartContext);
+
   // Estado local para la cantidad de productos a agregar al carrito
-  const [cantidad, setCantidad] = useState(1);
 
-  // Función para incrementar la cantidad
-  const handleAdd = () => {
-    // Verificar que la cantidad no supere el stock disponible
-    if (cantidad < 10) setCantidad(cantidad + 1);
-  };
-
-  // Función para decrementar la cantidad
-  const handleRemove = () => {
-    // Verificar que la cantidad sea mayor que 1 antes de decrementar
-    if (cantidad > 1) setCantidad(cantidad - 1);
-  };
-
-  return !item || Object.keys(item).length === 0 ? (
+  return !producto || Object.keys(producto).length === 0 ? (
     <LoadingComponent />
   ) : (
-    <Card className="relative w-64 flex items-center flex-col justify-center bg-[#18181B] rounded-lg  gap-3">
+    <Card
+      key={producto.id}
+      className="relative w-64 flex items-center flex-col justify-center bg-[#18181B] rounded-lg  gap-3"
+    >
       <img
-        className=" h-40 w-full object-cover object-center rounded-t-lg rounded-b-lg"
-        src={item.imagen}
+        className=" h-[200px] w-full object-cover object-center rounded-t-lg rounded-b-lg"
+        src={`${baseURL}/uploads/${producto.image}`}
       />
 
       <CardBody className="flex flex-row justify-around overflow-visible  items-center  w-full gap-3 ">
-        <h3 className="font-semibold text-white  ">{item.titulo}</h3>
-        <h3 className="font-semibold text-gray-500"> {item.precio} ARS</h3>
+        <h3 className="font-semibold text-white  ">{producto.title}</h3>
+        <h3 className="font-semibold text-gray-500"> {producto.price} ARS</h3>
       </CardBody>
       <CardFooter>
         <ItemCount
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
+          handleAdd={() => {
+            handleAdd(cantidad);
+          }}
+          handleRemove={() => {
+            handleRemove(cantidad);
+          }}
           handleAddProduct={() => {
-            handleAddWidget(item, cantidad);
+            handleAddWidget(producto, cantidad);
           }}
           cantidad={cantidad}
         />

@@ -1,15 +1,28 @@
+import { ItemDetail } from "../components/ItemDetail/ItemDetail";
+import { useProductos } from "../components/Form as Admin/Store/useProductos";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ItemDetail } from "../components/ItemDetail/ItemDetail";
 
 export const ItemDetailContainer = () => {
   const [item, setItem] = useState({});
+  const { getById } = useProductos();
   const { id } = useParams();
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const getId = async () => {
+      try {
+        const response = await getById(id);
+        setItem(response.data);
+      } catch (error) {
+        console.error("Error al obtener los productos", error);
+      }
+    };
+
+    getId();
+  }, []);
 
   return (
     <div className="flex items-center justify-center   h-screen">
-      {item && <ItemDetail item={item} />}
+      {item && <ItemDetail producto={item} />}
     </div>
   );
 };
