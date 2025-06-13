@@ -1,6 +1,6 @@
 const Welcome = () => {
   return (
-    <div className="relative w-full flex flex-col items-center gap-40">
+    <div className="w-full flex flex-col items-center gap-40">
       <h1 className="font-semibold font-playfair  text-[40px] text-center py-4 text-white  sm:mt-[50px]">
         Cuidado de joya
       </h1>

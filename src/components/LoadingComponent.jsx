@@ -1,20 +1,20 @@
+import { ring } from "ldrs";
 
-import { ring } from 'ldrs'
-
-ring.register()
+ring.register();
 const LoadingComponent = () => {
   return (
     <div className="w-full h-[100vh] flex items-center justify-center">
-    <div className="flex justify-center items-center "><l-ring
-    size="50"
-    stroke="5"
-    bg-opacity="0"
-    speed="1.5" 
-    color="cyan" 
-    
-  ></l-ring></div>
-  </div>
-  )
-}
+      <div className="flex justify-center items-center ">
+        <l-ring
+          size="50"
+          stroke="5"
+          bg-opacity="0"
+          speed="1.5"
+          color="#0ea5e9"
+        ></l-ring>
+      </div>
+    </div>
+  );
+};
 
-export default LoadingComponent
+export default LoadingComponent;

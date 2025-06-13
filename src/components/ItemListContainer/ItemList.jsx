@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../Admin/Store/useAuth";
 import { useProductos } from "../Form as Admin/Store/useProductos";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Editlist } from "./Editlist";
+import { CartContext } from "../context/CartContext";
 
 export const ItemList = ({ producto }) => {
   const { deleteProductos, getProductos } = useProductos();
   const baseURL = import.meta.env.VITE_API_URL;
   const { user } = useAuth();
+
+  const { convertArs } = useContext(CartContext);
 
   const deletebyId = async (id) => {
     try {
@@ -46,7 +49,7 @@ export const ItemList = ({ producto }) => {
           <CardFooter className="text-center justify-between px-4">
             <h3 className="font-semibold text-white ">{producto.title}</h3>
             <h3 className="font-semibold text-gray-500">
-              {producto.price} ARS
+              {convertArs(producto.price)}
             </h3>
 
             <div className="flex flex-col items-center">
@@ -90,7 +93,7 @@ export const ItemList = ({ producto }) => {
             <CardFooter className="text-center justify-between px-4">
               <h3 className="font-semibold text-white ">{producto.title}</h3>
               <h3 className="font-semibold text-gray-500">
-                {producto.price} ARS
+                {convertArs(producto.price)}
               </h3>
             </CardFooter>
           </Card>

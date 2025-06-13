@@ -6,7 +6,8 @@ import {
   ModalFooter,
   useDisclosure,
   Button,
-  Input,
+  RadioGroup,
+  Radio,
 } from "@heroui/react";
 
 import { useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ export const AddProduct = ({ user }) => {
 
   const handleOnSubmit = async (data) => {
     try {
+      console.log("Data form", data);
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("category", data.category);
@@ -86,11 +88,38 @@ export const AddProduct = ({ user }) => {
                   {errors.title && (
                     <p className="text-red-500">El titulo es requerido</p>
                   )}
-                  <input
-                    className="outline-none w-full border-b-2 p-1 bg-transparent placeholder:text-sm  text-sky-500 focus:border-b-gray-600 focus:transition-all focus:duration-300 "
-                    {...register("category", { required: true })}
-                    placeholder="Ingresar categoria"
-                  />
+                  <RadioGroup label="Selecciona la categoria">
+                    <Radio
+                      {...register("category", { required: true })}
+                      value="tobilleras"
+                    >
+                      <h5 className="text-white">Tobilleras</h5>
+                    </Radio>
+                    <Radio
+                      {...register("category", { required: true })}
+                      value="collares"
+                    >
+                      <h5 className="text-white">Collares</h5>
+                    </Radio>
+                    <Radio
+                      {...register("category", { required: true })}
+                      value="aros"
+                    >
+                      <h5 className="text-white">Aros</h5>
+                    </Radio>
+                    <Radio
+                      {...register("category", { required: true })}
+                      value="abridores"
+                    >
+                      <h5 className="text-white">Abridores</h5>
+                    </Radio>
+                    <Radio
+                      {...register("category", { required: true })}
+                      value="brazalete"
+                    >
+                      <h5 className="text-white">Brazalete</h5>
+                    </Radio>
+                  </RadioGroup>
                   {errors.category && (
                     <p className="text-red-500">La categoria es requerida</p>
                   )}

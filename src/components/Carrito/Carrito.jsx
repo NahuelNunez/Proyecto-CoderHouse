@@ -9,13 +9,20 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-
+import { useNavigate } from "react-router-dom";
 export const Carrito = () => {
+  const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_API_URL;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = useState("md");
-  const { carrito, setCarrito, totalWidget, removeProduct, quantityInWidget } =
-    useContext(CartContext);
+  const {
+    carrito,
+    setCarrito,
+    totalWidget,
+    removeProduct,
+    quantityInWidget,
+    convertArs,
+  } = useContext(CartContext);
   const handleOpen = (size) => {
     setSize(size);
     onOpen();
@@ -38,6 +45,10 @@ export const Carrito = () => {
       Sum.cantidad = Sum.cantidad + 1;
       setCarrito(newCarrito);
     }
+  };
+  const navigateanotherwebsite = () => {
+    navigate("/CHECKOUT/metodo-pago");
+    onClose();
   };
 
   return (
@@ -89,7 +100,7 @@ export const Carrito = () => {
                         <div className="flex flex-col gap-3">
                           <h2 className="font-playfair">{prod.title}</h2>
                           <h2 className="font-poppins  text-sky-500">
-                            ${prod.price}
+                            {convertArs(prod.price)}
                           </h2>
                         </div>
                         <div className="w-full flex items-centers justify-between p-4 ">
@@ -141,9 +152,12 @@ export const Carrito = () => {
                       Total:
                     </h2>
 
-                    <h2 className="font-poppins">${totalWidget()}</h2>
+                    <h2 className="font-poppins">{totalWidget()} ARS</h2>
                   </div>
-                  <button className="  w-full bg-black  text-sky-500 hover:scale-105 hover:bg-sky-500 hover:text-black scale-90 transition-all duration-[0.5s] ease-in-out   font-bold p-3 text-md">
+                  <button
+                    onClick={navigateanotherwebsite}
+                    className="  w-full bg-black  text-sky-500 hover:scale-105 hover:bg-sky-500 hover:text-black scale-90 transition-all duration-[0.5s] ease-in-out   font-bold p-3 text-md"
+                  >
                     <h2 className="">FINALIZAR COMPRA</h2>
                   </button>
                 </div>

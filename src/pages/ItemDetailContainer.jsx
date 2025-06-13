@@ -1,12 +1,14 @@
 import { ItemDetail } from "../components/ItemDetail/ItemDetail";
 import { useProductos } from "../components/Form as Admin/Store/useProductos";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../components/context/CartContext";
 
 export const ItemDetailContainer = () => {
   const [item, setItem] = useState({});
   const { getById } = useProductos();
   const { id } = useParams();
+
   useEffect(() => {
     const getId = async () => {
       try {
