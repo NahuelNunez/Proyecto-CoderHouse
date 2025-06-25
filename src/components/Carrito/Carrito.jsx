@@ -10,7 +10,10 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Admin/Store/useAuth";
 export const Carrito = () => {
+  const { user } = useAuth();
+  console.log("Usuario", user);
   const navigate = useNavigate();
   const baseURL = import.meta.env.VITE_API_URL;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -22,6 +25,7 @@ export const Carrito = () => {
     removeProduct,
     quantityInWidget,
     convertArs,
+    totalWidget2,
   } = useContext(CartContext);
   const handleOpen = (size) => {
     setSize(size);
@@ -147,19 +151,48 @@ export const Carrito = () => {
               </DrawerBody>
               <DrawerFooter className="w-full justify-center mb-20">
                 <div className="flex flex-col gap-5 w-full">
-                  <div className="flex w-full justify-between">
-                    <h2 className="font-playfair font-semibold text-gray-900 text-lg">
-                      Total:
-                    </h2>
+                  <div className="flex flex-col w-full justify-between">
+                    {user?.rol === "usuario" ? (
+                      <div className="flex w-full justify-between">
+                        <h2 className="font-playfair font-semibold text-gray-900 text-lg">
+                          Descuento:
+                        </h2>
+                        <h2 className="font-poppins">10%</h2>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    <div className="flex w-full justify-between">
+                      <h2 className="font-playfair font-semibold text-gray-900 text-lg">
+                        Total:
+                      </h2>
+                      {user?.rol === "usuario" ? (
+                        <div className="flex flex-col">
+                          {carrito.length >= 1 ? (
+                            <h2 className="font-poppins line-through text-gray-500">
+                              {totalWidget()}
+                            </h2>
+                          ) : (
+                            ""
+                          )}
 
-                    <h2 className="font-poppins">{totalWidget()} ARS</h2>
+                          <h2 className="font-poppins">{totalWidget2()}</h2>
+                        </div>
+                      ) : (
+                        <h2 className="font-poppins">{totalWidget()}</h2>
+                      )}
+                    </div>
                   </div>
-                  <button
-                    onClick={navigateanotherwebsite}
-                    className="  w-full bg-black  text-sky-500 hover:scale-105 hover:bg-sky-500 hover:text-black scale-90 transition-all duration-[0.5s] ease-in-out   font-bold p-3 text-md"
-                  >
-                    <h2 className="">FINALIZAR COMPRA</h2>
-                  </button>
+                  {carrito.length === 0 ? (
+                    ""
+                  ) : (
+                    <button
+                      onClick={navigateanotherwebsite}
+                      className="  w-full bg-black  text-sky-500 hover:scale-105 hover:bg-sky-500 hover:text-black scale-90 transition-all duration-[0.5s] ease-in-out   font-bold p-3 text-md"
+                    >
+                      <h2 className="font-poppins">FINALIZAR COMPRA</h2>
+                    </button>
+                  )}
                 </div>
               </DrawerFooter>
             </>

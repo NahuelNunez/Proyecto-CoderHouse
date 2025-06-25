@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useAuth } from "./Store/useAuth";
 import { Dropdown, DropdownMenu, DropdownItem } from "@heroui/react";
 import { AddProduct } from "../Form as Admin/AddProduct";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { TableOrder } from "./Table Order/TableOrder";
 
-export const Logout = ({ user }) => {
+export const Logout = ({ user, toggleMenu }) => {
   const Navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { name, rol } = user;
@@ -22,7 +23,7 @@ export const Logout = ({ user }) => {
     <div className="relative flex flex-col   items-center">
       <button
         onClick={openToggle}
-        className="text-white flex items-center gap-2 font-semibold absolute -right-40  cursor-pointer"
+        className="text-white flex items-center gap-2 font-semibold absolute lg:-right-40  cursor-pointer"
       >
         {name}{" "}
         <svg
@@ -38,23 +39,73 @@ export const Logout = ({ user }) => {
           />
         </svg>
       </button>
-      {open && (
-        <Dropdown className="absolute -right-60 -bottom-40  text-center  bg-black">
+
+      {open && rol === "usuario" && (
+        <Dropdown className="-bottom-[120px] z-[9999] absolute -right-28 lg:-right-60 lg:-bottom-[119px]  lg:text-center bg-black">
           <DropdownMenu className="">
-            <DropdownItem className="text-white">
-              Cambiar contraseña
+            <DropdownItem
+              variant="bordered"
+              className="text-white"
+              onPress={() => {
+                Navigate(`/changepassword`), toggleMenu();
+              }}
+            >
+              <span>Cambiar contraseña</span>
             </DropdownItem>
             <DropdownItem
-              onClick={() => {
+              variant="bordered"
+              onPress={() => {
                 LogOut();
+                toggleMenu();
+              }}
+              className="text-danger"
+            >
+              Cerrar Sesion
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      )}
+      {open && rol === "admin" && (
+        <Dropdown className="absolute lg:-right-60  -right-[100px] -bottom-[210px] text-center  bg-black">
+          <DropdownMenu className="">
+            <DropdownItem
+              variant="bordered"
+              className="text-white"
+              onPress={() => {
+                Navigate(`/changepassword`), toggleMenu();
+              }}
+            >
+              <span>Cambiar contraseña</span>
+            </DropdownItem>
+            <DropdownItem
+              variant="bordered"
+              onPress={() => {
+                LogOut();
+                toggleMenu();
               }}
               className="text-danger"
             >
               Cerrar Sesion
             </DropdownItem>
             {rol === "admin" && (
-              <DropdownItem className="text-amber-400">
+              <DropdownItem
+                variant="bordered"
+                onPress={() => {
+                  toggleMenu();
+                }}
+                className="text-amber-400"
+              >
                 <AddProduct user={user} />
+              </DropdownItem>
+            )}
+            {rol === "admin" && (
+              <DropdownItem
+                variant="bordered"
+                onPress={() => {
+                  Navigate(`/admin/TableOrders`), toggleMenu();
+                }}
+              >
+                <span className="text-green-500">Table Orders</span>
               </DropdownItem>
             )}
           </DropdownMenu>

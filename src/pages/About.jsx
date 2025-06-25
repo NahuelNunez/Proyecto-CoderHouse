@@ -58,9 +58,9 @@ const About = () => {
 
   return (
     <div className="min-h-screen flex flex-col gap-20 items-center justify-center">
-      <div className="flex gap-20 about justify-center w-full mt-20">
-        <div className="w-[450px] flex flex-col gap-8">
-          <h2 className="text-white text-[40px] font-playfair">
+      <div className="flex flex-col md:flex-row gap-20 about items-center justify-center w-full mt-20">
+        <div className="w-[340px] flex flex-col gap-8">
+          <h2 className="text-white text-center text-[40px] font-playfair">
             Elegancia que Perdura
           </h2>
           <p className="text-gray-300  text-sm/7 font-poppins">
@@ -79,15 +79,15 @@ const About = () => {
             hecho con el corazón.
           </p>
         </div>
-        <div className="about-line overflow-hidden transition-all duration-300 ease-in-out ">
+        <div className="about-line flex w-[250px] md:w-[400px] overflow-hidden transition-all duration-300 ease-in-out ">
           <img
-            src="/src/images/about2.jpg"
-            className="w-[400px]  h-[550px]  object-fill scale-100 hover:scale-110 transition-all ease-in-out duration-300 "
+            src="/src/images/abuot3.jpg"
+            className="md:w-[550px]  md:h-[550px] w-[250px] h-[400px] grow  object-cover scale-100 hover:scale-110 transition-all ease-in-out duration-300 "
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,_1fr))]  gap-32 max-w-[1200px] text-white">
+      <div className="grid xl:grid-cols-[repeat(auto-fit,minmax(300px,_1fr))] sm:grid-cols-1 lg:grid-cols-1  gap-20 max-w-[1200px] text-white">
         <div className="mx-auto max-w-[300px] w-full group text-center hover:bg-black/90 p-4 hover:translate-y-[-20px] ease-in-out transition-all duration-500 flex flex-col gap-2 border-t-3 border-sky-500  ">
           <div className="flex justify-center items-center gap-2 mt-5">
             {circleCheck}
@@ -113,7 +113,7 @@ const About = () => {
             {diamond}
             <h2 className="font-playfair text-[19px]">Detalles Exclusivos</h2>
           </div>
-          <hr className="mx-auto w-[25px] group-hover:w-[45px] group-hover:border-sky-500  group-hover:scale-110 ease-in-out transition-all duration-300"></hr>
+          <hr className="mx-auto  w-[25px] group-hover:w-[45px] group-hover:border-sky-500  group-hover:scale-110 ease-in-out transition-all duration-300"></hr>
           <p className="font-poppins text-sm">
             Diseños únicos que realzan tu estilo y personalidad.
           </p>

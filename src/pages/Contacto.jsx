@@ -16,7 +16,7 @@ const Contacto = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center gap-5 w-full max-w-md p-[20px] rounded-2xl bg-black/90"
+        className="flex flex-col items-center justify-center gap-5 w-full  max-w-md p-[20px] rounded-2xl bg-black/90"
       >
         <div className="flex flex-col md:flex-row gap-4 w-full">
           <input
@@ -57,17 +57,19 @@ const Contacto = () => {
           Enviar
         </button>
       </form>
-      <div className=" flex  gap-5">
-        <div className="text-white font-poppins flex flex-col gap-10 w-[500px]  ">
-          <h2 className="text-[30px] text-[#D4AF37]">
+      <div className=" flex flex-col lg:flex-row  gap-5">
+        <div className="text-white font-poppins flex flex-col gap-10 max-w-[500px]  ">
+          <h2 className="text-[30px] text-white uppercase text-center font-playfair">
             ¡Descubrí el brillo de la elegancia con{" "}
             <span className="text-[30px] text-sky-500">Chelitas Joyas</span>!
           </h2>
-          <p>
+          <p className="mx-1">
             Encontrá la joya ideal con{" "}
-            <span className="text-sky-500">calidad</span>,{" "}
-            <span className="text-sky-500">exclusividad</span> y el mejor
-            servicio personalizado.
+            <span className="text-amber-400">calidad</span>,{" "}
+            <span className="text-amber-400">exclusividad</span>{" "}
+            <span className="text-amber-400">
+              y el mejor servicio personalizado.
+            </span>
           </p>
         </div>
         <div className="flex flex-col gap-3">
@@ -140,7 +142,7 @@ const Contacto = () => {
           </div>
 
           {/* Social Media - Enhanced */}
-          <div className="flex gap-6 mt-8 justify-center md:justify-start">
+          <div className="flex gap-6 mt-8 mb-2 justify-center md:justify-start">
             <a
               href="https://google.com"
               className="group h-12 w-12 bg-sky-500 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-amber-500 hover:scale-110 hover:shadow-md"

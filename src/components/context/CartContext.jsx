@@ -2,8 +2,9 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useOrder } from "../../pages/Checkout/Store/useOrder";
 
-import { UserLocalStorage } from "../Admin/UserLocalStorage";
+import { UserLocalStorage } from "../../hooks/UserLocalStorage";
 import axios from "axios";
+import { useAuth } from "../Admin/Store/useAuth";
 
 const baseURL = import.meta.env.VITE_API_URL;
 // Crear el contexto para el carrito
@@ -13,6 +14,8 @@ const initialValue = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // Proveedor de contexto para gestionar el estado del carrito
 export const CartProvider = ({ children }) => {
+  const { user } = useAuth();
+  console.log(user);
   const [sessionId, setSessionId] = useState("");
   const [postData, setPostData] = useState(null);
 
@@ -61,6 +64,8 @@ export const CartProvider = ({ children }) => {
     montoTotal: 0,
     productos: productosParaEnviar,
     sessionId: sessionId,
+
+    userToken: user?.token,
   });
 
   const [error, setError] = useState({});
@@ -105,14 +110,24 @@ export const CartProvider = ({ children }) => {
       0
     );
 
+    const montoCalculado2 = montoCalculado * (10 / 100);
+
+    const ResTotal = montoCalculado - montoCalculado2;
     const montoIngresado = Number(formdata.montoTotal);
 
-    if (montoIngresado !== montoCalculado) {
-      newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
-        montoCalculado
-      )})`;
+    if (user?.rol === "usuario") {
+      if (montoIngresado !== ResTotal) {
+        newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
+          ResTotal
+        )})`;
+      }
+    } else {
+      if (montoIngresado !== montoCalculado) {
+        newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
+          montoCalculado
+        )})`;
+      }
     }
-
     setError(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -134,6 +149,9 @@ export const CartProvider = ({ children }) => {
         formData.append("numeroTransferencia", formdata.numeroTransferencia);
       formData.append("montoTotal", formdata.montoTotal);
       formData.append("sessionId", sessionId);
+      if (user?.token) {
+        formData.append("userToken", user?.token);
+      }
 
       if (formdata.comprobanteURL) {
         formData.append("comprobanteURL", formdata.comprobanteURL);
@@ -150,6 +168,7 @@ export const CartProvider = ({ children }) => {
         setCarrito([]);
       }
     } catch (error) {
+      toast.error("Error al generar el pedido😣");
       console.log("Error al generar la orden", error);
     }
     handleOpen();
@@ -213,6 +232,22 @@ export const CartProvider = ({ children }) => {
     return total;
   };
 
+  const totalWidget2 = () => {
+    const totalCarrito = carrito.reduce(
+      (acc, producto) => acc + producto.cantidad * producto.price,
+      0
+    );
+    const totalCarrito2 = totalCarrito * (10 / 100);
+
+    const Total2 = totalCarrito - totalCarrito2;
+    const total = Total2.toLocaleString("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 0,
+    });
+    return total;
+  };
+
   const convertArs = (rawPrice) => {
     const formattedPrice = Math.floor(rawPrice);
     return formattedPrice.toLocaleString("es-AR", {
@@ -253,6 +288,7 @@ export const CartProvider = ({ children }) => {
         sessionId,
         postData,
         error,
+        totalWidget2,
       }}
     >
       {children}

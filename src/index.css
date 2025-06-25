@@ -27,7 +27,45 @@
     
 }
 
+@media only screen and (max-width:600px) {
+    .about:hover .about-line{
+        transform: translateY(-10px);
+        box-shadow: 20px 20px 00 #0ea5e9;
+    }
+    .about-line{ box-shadow: 10px 10px 00 #0ea5e9;
+        transform: translateY(0);
+    }
+}
 
+@keyframes mobileNavbar {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+    
+    
+}
+
+@keyframes mobileNavbarExit {
+    from {
+        transform: translateY(0%);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+.mobileNavbarExit{
+    
+    transform: translateY(100%);
+    transition-duration: 1.5s;
+}
+
+.mobileNavbar {
+   animation: mobileNavbar 1.5s  ;
+}
 
 
 input[type=number]::-webkit-outer-spin-button,

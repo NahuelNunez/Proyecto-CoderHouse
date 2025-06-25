@@ -1,7 +1,7 @@
 const Welcome = () => {
   return (
-    <div className="w-full flex flex-col items-center gap-40">
-      <h1 className="font-semibold font-playfair  text-[40px] text-center py-4 text-white  sm:mt-[50px]">
+    <div className="w-full flex flex-col items-center gap-10">
+      <h1 className="uppercase font-playfair  text-[40px] text-center py-4 text-white  sm:mt-[50px]">
         Cuidado de joya
       </h1>
 

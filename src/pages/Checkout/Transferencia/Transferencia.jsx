@@ -1,11 +1,20 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { CartContext } from "../../../components/context/CartContext";
+import { useAuth } from "../../../components/Admin/Store/useAuth";
 
 export const Transferencia = () => {
-  const { handleContinuar } = useOutletContext();
-
   const navigate = useNavigate();
+  const { handleContinuar, pasoActual, setPasoActual } = useOutletContext();
+  const { user } = useAuth();
+  setPasoActual("paso3");
+  useEffect(() => {
+    if (pasoActual === "transferencia") {
+      setPasoActual("metodoPago");
+    } else {
+      navigate(`/Productos`);
+    }
+  }, []);
 
   const {
     formdata,
@@ -17,15 +26,13 @@ export const Transferencia = () => {
     handleOpen,
     menuForm,
     error,
+    totalWidget2,
   } = useContext(CartContext);
-
-  console.log("Estamos en trasfer:", formdata);
-  console.log("Confirmar:", confirmar);
 
   return (
     <div className="min-h-screen   flex flex-col  font-poppins  justify-center items-center ">
       {!menuForm ? (
-        <div className="flex w-full justify-between items-center bg-black/90 p-8">
+        <div className="flex w-full flex-col gap-8 lg:flex-row justify-between items-center bg-black/90 p-8">
           {confirmar ? (
             <button
               onClick={handleContinuar}
@@ -51,7 +58,11 @@ export const Transferencia = () => {
             <div className="flex flex-col justify-center items-centers gap-10 ">
               <h2 className="text-gray-400">
                 VALOR A ABONAR:
-                <span className="text-white"> {totalWidget()} ARS </span>
+                {user?.rol === "usuario" ? (
+                  <span className="text-white"> {totalWidget2()} ARS</span>
+                ) : (
+                  <span className="text-white"> {totalWidget()} ARS </span>
+                )}
               </h2>
               <h2 className="text-gray-400">
                 DEPOSITO: <span className="text-white">BANCO SANTANDER</span>
@@ -182,7 +193,7 @@ export const Transferencia = () => {
                 name="comprobanteURL"
                 type="file"
                 id="file"
-                accept="image/*"
+                accept="image/*,application/pdf"
                 onChange={handleOnChange}
                 className="bg-transparent border-b-1 hidden  border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
               />

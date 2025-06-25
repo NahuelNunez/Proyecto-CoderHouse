@@ -67,7 +67,9 @@ export const Checkout = () => {
       ),
     },
     {
-      path: `resumen/${postData?.OrderId}/${postData?.SessionId}`,
+      path: `resumen/${postData?.OrderId}/${
+        postData?.userToken ? postData?.userToken : postData?.SessionId
+      }`,
       label: "Resumen",
       icon: (
         <svg
@@ -112,9 +114,11 @@ export const Checkout = () => {
     }
   };
 
+  const [pasoActual, setPasoActual] = useState("metodoPago");
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-start gap-8 p-4  text-white">
-      <div className="flex gap-3 flex-wrap justify-center absolute top-[100px] bg-black/90 rounded-lg p-6">
+      <div className="flex gap-3 flex-wrap justify-center relative lg:absolute top-[100px] bg-black/90 rounded-lg p-6">
         {pasos.map((paso, index) => {
           const isActive = location.pathname.includes(paso.path);
           const isEnabled = index <= continuar;
@@ -134,14 +138,14 @@ export const Checkout = () => {
                   <span className="text-sm">{paso.label}</span>
                 </NavLink>
               ) : (
-                <div className="flex items-center gap-1 px-3 py-1 text-gray-600 cursor-not-allowed opacity-50">
+                <div className="flex  items-center gap-1 px-3 py-1 text-gray-600 cursor-not-allowed opacity-50">
                   <span className="text-lg">{paso.icon}</span>
                   <span className="text-lg">{paso.label}</span>
                 </div>
               )}
 
               {index < pasos.length - 1 && (
-                <span className="text-gray-500">──</span>
+                <span className="text-gray-500 ">──</span>
               )}
             </div>
           );
@@ -150,7 +154,7 @@ export const Checkout = () => {
 
       {/* Outlet para los pasos */}
       <div className="w-full max-w-4xl">
-        <Outlet context={{ handleContinuar }} />
+        <Outlet context={{ handleContinuar, setPasoActual, pasoActual }} />
       </div>
     </div>
   );

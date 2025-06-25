@@ -22,8 +22,13 @@ import { Resumen } from "./pages/Checkout/Resumen/Resumen";
 import { Checkout } from "./pages/Checkout/Checkout";
 import { Transferencia } from "./pages/Checkout/Transferencia/Transferencia";
 import { WhatsApp } from "./WhatsApp";
+import { TableOrder } from "./components/Admin/Table Order/TableOrder";
+import { ChangePassword } from "./pages/ChangePassword";
+import { RutaProtegida } from "./components/RutaProtegida.jsx/RutaProtegida";
+import { useAuth } from "./components/Admin/Store/useAuth";
 
 function App() {
+  const { user } = useAuth();
   return (
     <BrowserRouter>
       <CartProvider>
@@ -40,6 +45,23 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contacto />} />
 
+            <Route
+              path="/admin/TableOrders"
+              element={
+                <RutaProtegida roleRequired="admin">
+                  <TableOrder />
+                </RutaProtegida>
+              }
+            />
+
+            <Route
+              path="/changepassword"
+              element={
+                <RutaProtegida roleRequired={user?.rol}>
+                  <ChangePassword />
+                </RutaProtegida>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/CHECKOUT" element={<Checkout />}>

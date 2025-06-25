@@ -54,7 +54,7 @@ export const AddProduct = ({ user }) => {
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">
+      <Button onPress={onOpen} className="bg-transparent text-blue-600">
         Add products as Admin
       </Button>
       <Modal className="bg-black" isOpen={isOpen} onOpenChange={onOpenChange}>

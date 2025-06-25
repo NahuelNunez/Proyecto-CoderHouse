@@ -22,13 +22,9 @@ export const Resumen = () => {
     viewOrder();
   }, []);
 
-  {
-    console.log("Data de ordenes:", ordenes);
-  }
-
   return (
     <div className="min-h-screen flex flex-col font-poppins justify-center items-center ">
-      <div className="bg-black/95 flex flex-col p-4 gap-4 ">
+      <div className="bg-black/95 flex flex-col p-4 gap-4 rounded-xl ">
         <h1 className="text-center">RESUMEN</h1>
         <div className="text-center">
           <h2>Gracias Por tu compra!</h2>

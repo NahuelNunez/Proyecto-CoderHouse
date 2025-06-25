@@ -1,13 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { CartContext } from "../../../components/context/CartContext";
-import { form } from "@heroui/react";
+
 import { RadioGroup, Radio } from "@heroui/react";
 export const Entrega = () => {
-  const { handleContinuar } = useOutletContext();
+  const navigate = useNavigate();
+  const { handleContinuar, pasoActual, setPasoActual } = useOutletContext();
   const { setFormdata, formdata, handleOnChange } = useContext(CartContext);
 
-  console.log("Data:", formdata);
+  useEffect(() => {
+    if (pasoActual === "entrega") {
+      setPasoActual("transferencia");
+    } else {
+      navigate(`/Productos`);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col gap-5 justify-center items-center">
       <div className="flex relative items-center gap-2">
@@ -30,7 +38,7 @@ export const Entrega = () => {
           onChange={handleOnChange}
         />
         {formdata.tipoEntrega === "Envio" && (
-          <div className="flex absolute top-0 left-[250px] flex-col items-center gap-4 bg-black/90 p-4">
+          <div className="flex absolute top-0 lg:left-[250px] mt-8  flex-col items-center gap-2 bg-black/90 p-4">
             <h2>Tu direccion</h2>
             <input
               name="domicilio"

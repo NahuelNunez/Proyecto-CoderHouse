@@ -41,6 +41,21 @@ export const useAuth = create((set) => ({
         if (storedUser) {
             set({ user: JSON.parse(storedUser) })
         }
+    },
+    changePassword: async (token, data) => {
+        try {
+            const response = await axios.patch(`${baseURL}/auth/changePassword`, data, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+            );
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.log("Error de aunteticacion:", error)
+            return { data: null, error: "Error de aunteticacion" }
+        }
     }
 })
 
