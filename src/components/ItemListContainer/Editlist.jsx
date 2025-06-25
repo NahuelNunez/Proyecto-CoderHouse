@@ -51,7 +51,6 @@ export const Editlist = ({ producto, user }) => {
         error: "Error al editar el producto😯",
       });
       getProductos();
-      console.log("Data:", data.image[0]);
     } catch (error) {
       console.log("Error al editar el producto", error);
     }
@@ -117,35 +116,23 @@ export const Editlist = ({ producto, user }) => {
                   {errors.title && (
                     <p className="text-red-500">El titulo es requerido</p>
                   )}
-                  <RadioGroup label="Selecciona la categoria">
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="tobilleras"
-                    >
+                  <RadioGroup
+                    {...register("category")}
+                    label="Selecciona la categoria"
+                  >
+                    <Radio {...register("category")} value="tobilleras">
                       <h5 className="text-white">Tobilleras</h5>
                     </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="collares"
-                    >
+                    <Radio {...register("category")} value="collares">
                       <h5 className="text-white">Collares</h5>
                     </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="aros"
-                    >
+                    <Radio {...register("category")} value="aros">
                       <h5 className="text-white">Aros</h5>
                     </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="abridores"
-                    >
+                    <Radio {...register("category")} value="abridores">
                       <h5 className="text-white">Abridores</h5>
                     </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="brazalete"
-                    >
+                    <Radio {...register("category")} value="brazalete">
                       <h5 className="text-white">Brazalete</h5>
                     </Radio>
                   </RadioGroup>

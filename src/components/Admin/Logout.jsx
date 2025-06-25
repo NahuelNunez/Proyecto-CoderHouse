@@ -40,7 +40,7 @@ export const Logout = ({ user, toggleMenu }) => {
         </svg>
       </button>
 
-      {open && rol === "usuario" && (
+      {!open && rol === "usuario" && (
         <Dropdown className="-bottom-[120px] z-[9999] absolute -right-28 lg:-right-60 lg:-bottom-[119px]  lg:text-center bg-black">
           <DropdownMenu className="">
             <DropdownItem
@@ -65,14 +65,14 @@ export const Logout = ({ user, toggleMenu }) => {
           </DropdownMenu>
         </Dropdown>
       )}
-      {open && rol === "admin" && (
+      {open === true && rol === "admin" && (
         <Dropdown className="absolute lg:-right-60  -right-[100px] -bottom-[210px] text-center  bg-black">
           <DropdownMenu className="">
             <DropdownItem
               variant="bordered"
               className="text-white"
               onPress={() => {
-                Navigate(`/changepassword`), toggleMenu();
+                Navigate(`/changepassword`), openToggle(), toggleMenu();
               }}
             >
               <span>Cambiar contraseña</span>
@@ -91,7 +91,7 @@ export const Logout = ({ user, toggleMenu }) => {
               <DropdownItem
                 variant="bordered"
                 onPress={() => {
-                  toggleMenu();
+                  openToggle(), toggleMenu();
                 }}
                 className="text-amber-400"
               >
@@ -102,7 +102,7 @@ export const Logout = ({ user, toggleMenu }) => {
               <DropdownItem
                 variant="bordered"
                 onPress={() => {
-                  Navigate(`/admin/TableOrders`), toggleMenu();
+                  Navigate(`/admin/TableOrders`), openToggle(), toggleMenu();
                 }}
               >
                 <span className="text-green-500">Table Orders</span>

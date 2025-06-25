@@ -23,6 +23,7 @@ export const Category = () => {
     document.title = "Categoria | Chelitas Joyas";
   }, []);
 
+  console.log("DATA NO FILTRADA", titulo);
   const filterTitle = titulo.filter(
     (producto) => producto.category === category
   );
