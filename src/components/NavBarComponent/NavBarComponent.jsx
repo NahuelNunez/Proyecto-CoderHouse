@@ -1,5 +1,5 @@
-import { useState } from "react";
-import CartWidget from "../CartWidget/CartWidget";
+import { useEffect, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import {
   Dropdown,
@@ -11,38 +11,21 @@ import {
 import { useAuth } from "../Admin/Store/useAuth";
 import { Logout } from "../Admin/Logout";
 import { Carrito } from "../Carrito/Carrito";
+import { useCategory } from "../Admin/Category/Store/useCategory";
 
 const NavBarComponent = () => {
+  const { categories, getCategory } = useCategory();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const options = [
-    {
-      id: 1,
-      name: "tobilleras",
-    },
-    {
-      id: 2,
-      name: "collares",
-    },
-    {
-      id: 3,
-      name: "aros",
-    },
-    {
-      id: 4,
-      name: "abridores",
-    },
-    {
-      id: 5,
-      name: "brazalete",
-    },
-  ];
 
   const [open, setOpen] = useState(false);
 
   const toggleMenu = () => {
     setOpen(!open);
   };
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   return (
     <div className="flex  items-center w-full px-4 fixed top-0 justify-between lg:justify-around  py-2 bg-black/90  z-[10]">
@@ -95,10 +78,10 @@ const NavBarComponent = () => {
                   Categorias
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu variant="bordered" options={options}>
-                {options.map((option) => (
+              <DropdownMenu variant="bordered" categories={categories}>
+                {categories.map((option) => (
                   <DropdownItem
-                    key={option.name}
+                    key={option.id}
                     textValue={option.name}
                     onPress={() => {
                       navigate(`/category/${option.name}`), toggleMenu();
@@ -163,15 +146,18 @@ const NavBarComponent = () => {
                   Categorias
                 </Button>
               </DropdownTrigger>
-              <DropdownMenu variant="bordered" options={options}>
-                {options.map((option) => (
+              <DropdownMenu variant="bordered" categories={categories}>
+                {categories.map((option) => (
                   <DropdownItem
-                    key={option.name}
-                    textValue={option.name}
-                    onPress={() => navigate(`/category/${option.name}`)}
+                    className={`${
+                      option.estado === "Inactivo" ? "hidden" : ""
+                    }`}
+                    key={option.id}
+                    textValue={option.category}
+                    onPress={() => navigate(`/category/${option.category}`)}
                   >
                     <span className="text-white font-semibold">
-                      {option.name}
+                      {option.category}
                     </span>
                   </DropdownItem>
                 ))}

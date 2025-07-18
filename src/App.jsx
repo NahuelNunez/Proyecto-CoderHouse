@@ -16,16 +16,15 @@ import { ToastContainer } from "react-toastify";
 import { CartProvider } from "./components/context/CartContext";
 import { SignUp } from "./components/User/SignUp";
 
-import { MetodoPago } from "./pages/Checkout/MetodoPago/MetodoPago";
-import { Entrega } from "./pages/Checkout/Entrega/Entrega";
-import { Resumen } from "./pages/Checkout/Resumen/Resumen";
-import { Checkout } from "./pages/Checkout/Checkout";
-import { Transferencia } from "./pages/Checkout/Transferencia/Transferencia";
 import { WhatsApp } from "./WhatsApp";
 import { TableOrder } from "./components/Admin/Table Order/TableOrder";
 import { ChangePassword } from "./pages/ChangePassword";
 import { RutaProtegida } from "./components/RutaProtegida.jsx/RutaProtegida";
 import { useAuth } from "./components/Admin/Store/useAuth";
+import { TableCategory } from "./components/Admin/Category/Table Category/tableCategory";
+import { TableAdmins } from "./components/Admin/SuperAdmin/Table Admin/TableAdmins";
+import { FinalizarCompra } from "./pages/finalizarCompra/finalizarCompra";
+import SucessPayment from "./pages/SucessPayment";
 
 function App() {
   const { user } = useAuth();
@@ -53,6 +52,22 @@ function App() {
                 </RutaProtegida>
               }
             />
+            <Route
+              path="/superadmin/TableAdmins"
+              element={
+                <RutaProtegida roleRequired="superadmin">
+                  <TableAdmins />
+                </RutaProtegida>
+              }
+            />
+            <Route
+              path="/admin/categories"
+              element={
+                <RutaProtegida roleRequired="admin">
+                  <TableCategory user={user} />
+                </RutaProtegida>
+              }
+            />
 
             <Route
               path="/changepassword"
@@ -64,13 +79,8 @@ function App() {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<SignUp />} />
-            <Route path="/CHECKOUT" element={<Checkout />}>
-              <Route index element={<MetodoPago />} />
-              <Route path="metodo-pago" element={<MetodoPago />} />
-              <Route path="entrega" element={<Entrega />} />
-              <Route path="transferencia" element={<Transferencia />} />
-              <Route path="resumen/:id/:sessionId" element={<Resumen />} />
-            </Route>
+            <Route path="/checkout" element={<FinalizarCompra />} />
+            <Route path="/payment/success" element={<SucessPayment />} />
           </Routes>
           <Footer />
         </Layout>

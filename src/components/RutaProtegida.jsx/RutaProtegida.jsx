@@ -15,7 +15,11 @@ export const RutaProtegida = ({ children, roleRequired }) => {
     return navigate(`/Productos`);
   }
 
-  if ((roleRequired && user.rol === "admin") || user.rol === "user") {
+  if (
+    (roleRequired && user.rol === "admin") ||
+    user.rol === "superadmin" ||
+    user.rol === "user"
+  ) {
     return children;
   }
 

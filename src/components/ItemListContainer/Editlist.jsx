@@ -12,10 +12,12 @@ import {
 
 import { toast } from "react-toastify";
 import { useProductos } from "../Form as Admin/Store/useProductos";
-
+import { useCategory } from "../Admin/Category/Store/useCategory.js";
+import { useEffect } from "react";
 export const Editlist = ({ producto, user }) => {
   const { editProductos, getProductos } = useProductos();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { categories, getCategory } = useCategory();
   const {
     register,
     handleSubmit,
@@ -23,8 +25,13 @@ export const Editlist = ({ producto, user }) => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    getCategory();
+  }, []);
+
   const Onediting = (producto) => {
     if (producto) {
+      console.log("setValue", producto);
       setValue("image", producto.image);
       setValue("title", producto.title);
       setValue("category", producto.category);
@@ -51,6 +58,7 @@ export const Editlist = ({ producto, user }) => {
         error: "Error al editar el producto😯",
       });
       getProductos();
+      console.log("After setvalie", formData);
     } catch (error) {
       console.log("Error al editar el producto", error);
     }
@@ -59,8 +67,7 @@ export const Editlist = ({ producto, user }) => {
     <>
       <Button
         className="bg-transparent hover:text-blue-500 text-white p-0 w-1 m-0"
-        onClick={() => Onediting(producto)}
-        onPress={onOpen}
+        onPress={() => Onediting(producto)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +104,7 @@ export const Editlist = ({ producto, user }) => {
               <ModalBody>
                 <form
                   onSubmit={handleSubmit(OnSubmit)}
-                  className="flex flex-col items-center gap-5"
+                  className="flex flex-col items-start gap-5"
                 >
                   <input
                     type="file"
@@ -120,21 +127,15 @@ export const Editlist = ({ producto, user }) => {
                     {...register("category")}
                     label="Selecciona la categoria"
                   >
-                    <Radio {...register("category")} value="tobilleras">
-                      <h5 className="text-white">Tobilleras</h5>
-                    </Radio>
-                    <Radio {...register("category")} value="collares">
-                      <h5 className="text-white">Collares</h5>
-                    </Radio>
-                    <Radio {...register("category")} value="aros">
-                      <h5 className="text-white">Aros</h5>
-                    </Radio>
-                    <Radio {...register("category")} value="abridores">
-                      <h5 className="text-white">Abridores</h5>
-                    </Radio>
-                    <Radio {...register("category")} value="brazalete">
-                      <h5 className="text-white">Brazalete</h5>
-                    </Radio>
+                    {categories.map((category) => (
+                      <Radio
+                        key={category.id}
+                        {...register("category")}
+                        value={category.category}
+                      >
+                        <h5 className="text-white">{category.category}</h5>
+                      </Radio>
+                    ))}
                   </RadioGroup>
                   {errors.category && (
                     <p className="text-red-500">La categoria es requerida</p>

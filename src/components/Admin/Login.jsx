@@ -19,13 +19,18 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: userData } = await login(formData);
+      const { data: userData, error: loginError } = await login(formData);
+      if (loginError) {
+        toast.error(loginError);
+        console.error("Error al iniciar sesión:", loginError);
+        return;
+      }
       if (userData) {
         toast.success("Login exitoso");
         reset();
         navigate("/");
       } else {
-        toast.error("Error al ingresar");
+        toast.error("Error al iniciar sesion");
       }
     } catch (error) {
       console.error("Error al iniciar sesion", error);

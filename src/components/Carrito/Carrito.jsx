@@ -51,7 +51,7 @@ export const Carrito = () => {
     }
   };
   const navigateanotherwebsite = () => {
-    navigate("/CHECKOUT/metodo-pago");
+    navigate("/checkout");
     onClose();
   };
 

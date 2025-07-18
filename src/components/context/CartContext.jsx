@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useOrder } from "../../pages/Checkout/Store/useOrder";
 
 import { UserLocalStorage } from "../../hooks/UserLocalStorage";
 import axios from "axios";
 import { useAuth } from "../Admin/Store/useAuth";
+import { useOrder } from "../../hooks/useOrder";
 
 const baseURL = import.meta.env.VITE_API_URL;
 // Crear el contexto para el carrito
@@ -52,7 +52,8 @@ export const CartProvider = ({ children }) => {
   const [formdata, setFormdata] = useState({
     metodoPago: "",
     tipoEntrega: "",
-    nombreCompleto: "",
+    nombre: "",
+    apellido: "",
     domicilio: "",
     localidad: "",
     codigoPostal: "",
@@ -67,6 +68,8 @@ export const CartProvider = ({ children }) => {
 
     userToken: user?.token,
   });
+
+  console.log("Datos a enviar:", formdata);
 
   const [error, setError] = useState({});
 
@@ -93,8 +96,9 @@ export const CartProvider = ({ children }) => {
   const validate = () => {
     const newErrors = {};
 
-    if (!formdata.nombreCompleto)
-      newErrors.nombreCompleto = "El nombre y apellido es obligatorio";
+    if (!formdata.nombre) newErrors.nombre = "El nombre es obligatorio";
+
+    if (!formdata.apellido) newErrors.apellido = "El apellido es obligatorio";
     if (!formdata.email) newErrors.email = "El email es obligatorio";
 
     if (!formdata.telefono)
@@ -140,7 +144,8 @@ export const CartProvider = ({ children }) => {
       const formData = new FormData();
       formData.append("metodoPago", formdata.metodoPago),
         formData.append("tipoEntrega", formdata.tipoEntrega),
-        formData.append("nombreCompleto", formdata.nombreCompleto),
+        formData.append("nombre", formdata.nombre),
+        formData.append("apellido", formdata.apellido),
         formData.append("domicilio", formdata.domicilio),
         formData.append("localidad", formdata.localidad),
         formData.append("codigoPostal", formdata.codigoPostal),

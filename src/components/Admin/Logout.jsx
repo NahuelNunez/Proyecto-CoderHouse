@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useAuth } from "./Store/useAuth";
 import { Dropdown, DropdownMenu, DropdownItem } from "@heroui/react";
 import { AddProduct } from "../Form as Admin/AddProduct";
-import { Link, useNavigate } from "react-router-dom";
-import { TableOrder } from "./Table Order/TableOrder";
+import { useNavigate } from "react-router-dom";
+
+import { AddCategories } from "./Category/AddCategories";
 
 export const Logout = ({ user, toggleMenu }) => {
   const Navigate = useNavigate();
@@ -47,7 +48,7 @@ export const Logout = ({ user, toggleMenu }) => {
               variant="bordered"
               className="text-white"
               onPress={() => {
-                Navigate(`/changepassword`), toggleMenu();
+                Navigate(`/changepassword`), openToggle(), toggleMenu();
               }}
             >
               <span>Cambiar contraseña</span>
@@ -66,7 +67,7 @@ export const Logout = ({ user, toggleMenu }) => {
         </Dropdown>
       )}
       {open === true && rol === "admin" && (
-        <Dropdown className="absolute lg:-right-60  -right-[100px] -bottom-[210px] text-center  bg-black">
+        <Dropdown className="absolute lg:-right-60  -right-[100px] -bottom-[300px] text-center  bg-black">
           <DropdownMenu className="">
             <DropdownItem
               variant="bordered"
@@ -77,17 +78,8 @@ export const Logout = ({ user, toggleMenu }) => {
             >
               <span>Cambiar contraseña</span>
             </DropdownItem>
-            <DropdownItem
-              variant="bordered"
-              onPress={() => {
-                LogOut();
-                toggleMenu();
-              }}
-              className="text-danger"
-            >
-              Cerrar Sesion
-            </DropdownItem>
-            {rol === "admin" && (
+
+            {open === true && rol === "admin" && (
               <DropdownItem
                 variant="bordered"
                 onPress={() => {
@@ -108,6 +100,70 @@ export const Logout = ({ user, toggleMenu }) => {
                 <span className="text-green-500">Table Orders</span>
               </DropdownItem>
             )}
+            {rol === "admin" && (
+              <DropdownItem
+                variant="bordered"
+                onPress={() => {
+                  openToggle(), toggleMenu();
+                }}
+              >
+                <AddCategories user={user} />
+              </DropdownItem>
+            )}
+            {rol === "admin" && (
+              <DropdownItem
+                variant="bordered"
+                onPress={() => {
+                  Navigate(`/admin/categories`);
+                  openToggle(), toggleMenu();
+                }}
+              >
+                <span className="text-amber-300">Table Categories</span>
+              </DropdownItem>
+            )}
+            <DropdownItem
+              variant="bordered"
+              onPress={() => {
+                LogOut();
+                toggleMenu();
+              }}
+              className="text-danger"
+            >
+              Cerrar Sesion
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      )}
+      {open === true && rol === "superadmin" && (
+        <Dropdown className="absolute lg:-right-60  -right-[100px] -bottom-[155px] text-center  bg-black">
+          <DropdownMenu>
+            <DropdownItem
+              variant="bordered"
+              className="text-white"
+              onPress={() => {
+                Navigate(`/changepassword`), openToggle(), toggleMenu();
+              }}
+            >
+              <span>Cambiar contraseña</span>
+            </DropdownItem>
+            <DropdownItem
+              variant="bordered"
+              onPress={() => {
+                Navigate(`/superadmin/TableAdmins`), openToggle(), toggleMenu();
+              }}
+            >
+              <span className="text-red-600">Table Admins</span>
+            </DropdownItem>
+            <DropdownItem
+              variant="bordered"
+              onPress={() => {
+                LogOut();
+                toggleMenu();
+              }}
+              className="text-danger"
+            >
+              Cerrar Sesion
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       )}

@@ -3,7 +3,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   useDisclosure,
   Button,
   RadioGroup,
@@ -14,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { useProductos } from "./Store/useProductos";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { useCategory } from "../Admin/Category/Store/useCategory";
 
 export const AddProduct = ({ user }) => {
   const {
@@ -26,6 +26,7 @@ export const AddProduct = ({ user }) => {
   const { onOpen, onOpenChange, isOpen, onClose } = useDisclosure();
 
   const { postProductos, getProductos } = useProductos();
+  const { getCategory, categories } = useCategory();
 
   const handleOnSubmit = async (data) => {
     try {
@@ -50,8 +51,10 @@ export const AddProduct = ({ user }) => {
 
   useEffect(() => {
     getProductos();
+    getCategory();
   }, [user]);
 
+  console.log("Categorias", categories);
   return (
     <>
       <Button onPress={onOpen} className="bg-transparent text-blue-600">
@@ -88,38 +91,24 @@ export const AddProduct = ({ user }) => {
                   {errors.title && (
                     <p className="text-red-500">El titulo es requerido</p>
                   )}
-                  <RadioGroup label="Selecciona la categoria">
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="tobilleras"
-                    >
-                      <h5 className="text-white">Tobilleras</h5>
-                    </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="collares"
-                    >
-                      <h5 className="text-white">Collares</h5>
-                    </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="aros"
-                    >
-                      <h5 className="text-white">Aros</h5>
-                    </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="abridores"
-                    >
-                      <h5 className="text-white">Abridores</h5>
-                    </Radio>
-                    <Radio
-                      {...register("category", { required: true })}
-                      value="brazalete"
-                    >
-                      <h5 className="text-white">Brazalete</h5>
-                    </Radio>
+                  <RadioGroup
+                    {...register("category")}
+                    label="Selecciona la categoria"
+                  >
+                    {categories.map((categories) => (
+                      <Radio
+                        className={`${
+                          categories.estado === "Inactivo" ? "hidden" : ""
+                        }`}
+                        key={categories.id}
+                        {...register("category", { required: true })}
+                        value={categories.category}
+                      >
+                        <h5 className="text-white">{categories.category}</h5>
+                      </Radio>
+                    ))}
                   </RadioGroup>
+
                   {errors.category && (
                     <p className="text-red-500">La categoria es requerida</p>
                   )}

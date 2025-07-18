@@ -6,9 +6,10 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/react";
-import { useOrder } from "../../../pages/Checkout/Store/useOrder";
+
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useOrder } from "../../../hooks/useOrder";
 const closeButton = (
   <svg
     className="hover:text-red-500 ease-in-out transition-all duration-300"

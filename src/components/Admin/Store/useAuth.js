@@ -28,8 +28,14 @@ export const useAuth = create((set) => ({
             }
 
         } catch (error) {
-            console.error('Error de aunteticacion:', error)
-            return { data: null, error: 'Error de autenticacion' };
+            const msg =
+                error.response?.data?.message ||
+                error.response?.data?.error ||
+                'Error desconocido al iniciar sesión';
+            console.error('Error al iniciar sesión', error);
+            return { data: null, error: msg };
+
+
         }
     },
     logout: () => {

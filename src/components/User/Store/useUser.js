@@ -15,6 +15,85 @@ export const useUser = create((set) => ({
             return { error: error, data: null }
 
         }
+    },
+    getUser: async () => {
+        try {
+            const response = await axios.get(`${baseURL}/user/getall`, {
+                withCredentials: true
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.log("Error al mostrar usuarios", error)
+            return { error: error, data: null }
+        }
+    },
+    editUser: async (id, token, data) => {
+        try {
+            const response = await axios.put(`${baseURL}/user/edit/${id}`, data, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.log("Error al editar el usuario", error)
+            return { error: error, data: null }
+        }
+
+
+
+    },
+
+    inhabilitarAdmin: async (id, token) => {
+
+        try {
+            const response = await axios.patch(`${baseURL}/user/inhabilitarAdmin/${id}`, {}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return { data: response.data, error: null }
+
+        } catch (error) {
+            console.log("Error al inhabilitar el administador", error)
+            return { error: error, data: null }
+
+        }
+
+    },
+    habilitarAdmin: async (id, token) => {
+        try {
+            const response = await axios.patch(`${baseURL}/user/habilitarAdmin/${id}`, {}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.log("Error al habilitar el administrador", error)
+            return { error: error, data: null }
+
+        }
+    },
+
+
+    deleteUser: async (id, token) => {
+        try {
+            const response = await axios.delete(`${baseURL}/user/delete/${id}`, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.log("Error al eliminar el usuario", error)
+            return { error: error, data: null }
+        }
     }
 
 
