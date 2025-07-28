@@ -8,7 +8,7 @@ const Welcome = () => {
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))]  lg:grid-cols-[repeat(3,_minmax(200px,_1fr))] place-items-center place-content-center  gap-5">
         <div className=" flex flex-col  max-w-md    bg-black/90 rounded-xl scale-90 transition-all hover:scale-100 duration-300 ">
           <img
-            src="/src/images/primer paso.jpg"
+            src="images/primer paso.jpg"
             className="w-[450px] h-[250px] object-cover object-center rounded-xl"
           />
           <div className="flex items-center gap-2 px-2 text-white mt-1">
@@ -22,7 +22,7 @@ const Welcome = () => {
         </div>
         <div className=" flex flex-col  max-w-md   bg-black/90 rounded-xl scale-90 transition-all hover:scale-100 duration-300  ">
           <img
-            src="/src/images/segundo paso.jpg"
+            src="images/segundo paso.jpg"
             className="w-[450px] h-[250px] object-cover object-center rounded-xl"
           />
           <div className="text-white flex items-center gap-2 px-2 mt-1 ">
@@ -36,7 +36,7 @@ const Welcome = () => {
         </div>
         <div className="text-white flex flex-col  max-w-md    bg-black/90  rounded-xl scale-90 transition-all hover:scale-100 duration-300 ">
           <img
-            src="/src/images/tercer paso.jpg"
+            src="images/tercer paso.jpg"
             className="w-[450px] h-[250px] object-cover object-center rounded-xl"
           />
           <div className="flex items-center gap-2 mt-1 px-2">
@@ -52,7 +52,7 @@ const Welcome = () => {
         {/* Parte 4 - 5  */}
         <div className="text-white flex flex-col  max-w-md     bg-black/90 rounded-xl scale-90 transition-all hover:scale-100 duration-300 ">
           <img
-            src="/src/images/cuarto paso.jpg"
+            src="images/cuarto paso.jpg"
             className="w-[450px] h-[250px] object-cover object-center rounded-xl"
           />
           <div className="flex items-center gap-2 mt-1 px-2">
@@ -67,7 +67,7 @@ const Welcome = () => {
         <div className="text-white flex flex-col  max-w-md        bg-black/90 rounded-xl scale-90 transition-all hover:scale-100 duration-300 ">
           <img
             className="w-[450px] h-[250px] object-cover object-center rounded-xl"
-            src="/src/images/quinto paso.jpg"
+            src="images/quinto paso.jpg"
           />
           <div className="flex  items-center gap-2 mt-1 px-2 ">
             <span className="px-2   rounded-full border border-white">5</span>
