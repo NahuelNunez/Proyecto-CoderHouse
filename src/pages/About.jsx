@@ -81,7 +81,7 @@ const About = () => {
         </div>
         <div className="about-line flex w-[250px] md:w-[400px] overflow-hidden transition-all duration-300 ease-in-out ">
           <img
-            src="/src/images/abuot3.jpg"
+            src="/images/abuot3.jpg"
             className="md:w-[550px]  md:h-[550px] w-[250px] h-[400px] grow  object-cover scale-100 hover:scale-110 transition-all ease-in-out duration-300 "
           />
         </div>
