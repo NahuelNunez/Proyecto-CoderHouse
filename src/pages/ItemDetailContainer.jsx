@@ -22,6 +22,8 @@ export const ItemDetailContainer = () => {
     getId();
   }, []);
 
+  console.log("PAGINA VERCEL ID ITEM", id);
+
   return (
     <div className="flex items-center justify-center   h-screen">
       {item && <ItemDetail producto={item} />}
