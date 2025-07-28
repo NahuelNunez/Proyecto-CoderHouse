@@ -354,7 +354,7 @@ export const FinalizarCompra = () => {
           >
             <label className="text-white flex items-center gap-2 text-[14px]">
               Pagos sin Tarjeta de Mercado Pago{" "}
-              <img src="/src/images/icon-mp.png" className="w-5 h-5" />
+              <img src="/images/icon-mp.png" className="w-5 h-5" />
             </label>
           </Radio>
 
@@ -399,10 +399,7 @@ export const FinalizarCompra = () => {
 
               <div className="p-4 text-[12px]">
                 <p className="flex items-center gap-2 text-[#0000008C] font-semibold">
-                  <img
-                    src="/src/assets/redirect-logo.svg"
-                    className="w-5 h-5"
-                  />
+                  <img src="/assets/redirect-logo.svg" className="w-5 h-5" />
                   Te llevaremos a Mercado Pago.
                 </p>
                 <p className="text-gray-500">
@@ -422,7 +419,7 @@ export const FinalizarCompra = () => {
             <label className="text-white flex items-center gap-2 text-[14px]">
               Pagos con Tarjeta de Mercado Pago en hasta 3 y 6 cuotas sin
               interes
-              <img src="/src/images/icon-mp.png" className="w-5 h-5" />
+              <img src="/images/icon-mp.png" className="w-5 h-5" />
             </label>
           </Radio>
           <div
@@ -438,7 +435,7 @@ export const FinalizarCompra = () => {
               </h2>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <img src="/src/assets/wallet.svg" className="w-5 h-5" />
+                  <img src="/assets/wallet.svg" className="w-5 h-5" />
                   <p className="text-gray-500 ">
                     <span className="text-[#0000008C] font-semibold">
                       Paga con tus tarjetas guardadas
@@ -448,7 +445,7 @@ export const FinalizarCompra = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <img src="/src/assets/shield.svg" className="w-5 h-5" />
+                  <img src="/assets/shield.svg" className="w-5 h-5" />
                   <p className="text-gray-500 ">
                     <span className="text-[#0000008C] font-semibold">
                       Paga con tus tarjetas guardadas
@@ -459,37 +456,37 @@ export const FinalizarCompra = () => {
               </div>
               <div className="flex justify-center items-center gap-2">
                 <img
-                  src="/src/assets/visa.svg"
+                  src="/assets/visa.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Visa"
                 />
                 <img
-                  src="/src/assets/master.svg"
+                  src="/assets/master.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Master"
                 />
                 <img
-                  src="/src/assets/amex.svg"
+                  src="/assets/amex.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Amex"
                 />
                 <img
-                  src="/src/assets/naranja.svg"
+                  src="/assets/naranja.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Naranja"
                 />
                 <img
-                  src="/src/assets/maestro.svg"
+                  src="/assets/maestro.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Maestro"
                 />
                 <img
-                  src="/src/assets/cabal.svg"
+                  src="/assets/cabal.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Cabal"
                 />
                 <img
-                  src="/src/assets/account-money.svg"
+                  src="/assets/account-money.svg"
                   className="w-5 h-5 border-1 border-gray-300 shadow-lg"
                   alt="Account Money"
                 />
@@ -497,10 +494,7 @@ export const FinalizarCompra = () => {
 
               <div className="p-4 text-[12px] flex flex-col items-center">
                 <p className="flex items-center gap-2 text-[#0000008C] font-semibold">
-                  <img
-                    src="/src/assets/redirect-logo.svg"
-                    className="w-5 h-5"
-                  />
+                  <img src="/assets/redirect-logo.svg" className="w-5 h-5" />
                   Te llevaremos a Mercado Pago.
                 </p>
                 <p className="text-gray-500">
