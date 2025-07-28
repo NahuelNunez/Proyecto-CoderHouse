@@ -62,9 +62,6 @@ export const FinalizarCompra = () => {
       return;
     }
 
-    localStorage.setItem("clientData", JSON.stringify(formdata));
-    localStorage.setItem("cartItems", JSON.stringify(carrito));
-
     try {
       if (user?.rol === "usuario") {
         const userEmail = user?.email;

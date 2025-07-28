@@ -15,109 +15,33 @@ const SucessPayment = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { orderPost } = useOrder();
+  const { getOrderByExternalReference } = useOrder();
   const { setCarrito } = useContext(CartContext);
   const location = useLocation();
 
   useEffect(() => {
-    const createOrderOnBackend = async () => {
+    const getOrderByReference = async () => {
+      const urlParams = new URLSearchParams(location.search);
+      const externalReference = urlParams.get("ref");
       try {
-        const clientData = JSON.parse(
-          localStorage.getItem("clientData") || "{}"
-        );
-        const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
-        const urlParams = new URLSearchParams(location.search);
-        const externalReference = urlParams.get("ref");
-
-        if (!externalReference) {
-          setError("No se encontro la referencia de pago externa.");
+        const { data: response, error: orderError } =
+          await getOrderByExternalReference(externalReference);
+        if (orderError) {
+          setError("Error al obtener la orden , porfavor contacta a soporte.");
           setLoading(false);
           return;
         }
 
-        if (
-          !clientData ||
-          Object.keys(clientData).length === 0 ||
-          !cartItems ||
-          cartItems.length === 0
-        ) {
-          setError(
-            "No se encontraron datos del cliente o del carrito en el almacenamiento local."
-          );
-          setLoading(false);
-          return;
+        if (response) {
+          setDataOrder(response);
         }
-
-        const ItemsMap = cartItems.map((item) => ({
-          idProducto: item.id,
-          titulo: item.title,
-          cantidad: item.cantidad,
-          precio: item.price,
-          imagen: item.image || "",
-        }));
-
-        const totalCarrito = cartItems.reduce(
-          (acc, producto) => acc + producto.cantidad * producto.price,
-          0
-        );
-
-        const totalCarritoUser = totalCarrito * (10 / 100);
-
-        const totalCarritoUserOff = totalCarrito - totalCarritoUser;
-
-        const orderPayload = {
-          metodoPago: clientData.metodoPago,
-          userToken: clientData.userToken || null,
-          sessionId: clientData.sessionId || null,
-          tipoEntrega: clientData.tipoEntrega,
-          nombre: clientData.nombre,
-          apellido: clientData.apellido,
-          domicilio: clientData.domicilio || null,
-          localidad: clientData.localidad || null,
-          codigoPostal: clientData.codigoPostal || null,
-          email: clientData.email,
-          telefono: clientData.telefono,
-          montoTotal: clientData.userToken ? totalCarritoUserOff : totalCarrito,
-          productos: JSON.stringify(ItemsMap),
-          paymentExternalReference: externalReference,
-        };
-
-        const result = await orderPost(orderPayload);
-
-        if (result.error) {
-          console.error("Error from useOrder hook:", result.error);
-          setError(
-            "Error al procesar tu orden. Por favor, contacta a soporte."
-          );
-          setLoading(false);
-          return;
-        }
-
-        const data = result.data;
-        if (data.orderData) {
-          setDataOrder(data.orderData);
-        }
-
-        if (data && data.orderData) {
-          localStorage.removeItem("clientData");
-          localStorage.removeItem("cartItems");
-          localStorage.removeItem("carrito");
-          setCarrito([]);
-        } else {
-          setError(
-            data
-              ? data.error || "Error desconocido al crear la orden."
-              : "Respuesta inesperada del servidor"
-          );
-        }
-      } catch (err) {
-        console.error("Error al crear la orden en el backend:", err);
-        setError("Error al procesar tu orden. Contacta a soporte.");
+      } catch (error) {
+        console.log("Error al obtener la orden", error);
       } finally {
         setLoading(false);
       }
     };
-    createOrderOnBackend();
+    getOrderByReference();
   }, []);
 
   if (loading) {

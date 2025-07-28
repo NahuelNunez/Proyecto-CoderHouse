@@ -50,6 +50,20 @@ export const useOrder = create(() => ({
             return { error: error, data: null }
 
         }
+    },
+    getOrderByExternalReference: async (externalReference) => {
+        try {
+            const response = await axios.get(`${baseURL}/order/byRef/${externalReference}`, {
+
+            })
+            return { data: response.data, error: null }
+
+        } catch (err) {
+            console.log("Error al obtener la referencia", err)
+            const msg = err.response?.data?.message || err.response?.data?.error || "Error desconocido al obtener el reference"
+            return { data: null, error: msg }
+
+        }
     }
 
 
