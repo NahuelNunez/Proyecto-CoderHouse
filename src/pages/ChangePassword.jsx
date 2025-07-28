@@ -67,12 +67,12 @@ export const ChangePassword = () => {
     <div className="min-h-screen flex justify-center items-center flex-col">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-xl m-4 p-6 rounded-lg flex flex-col justify-center items-center gap-10 bg-black/90 "
+        className="lg:w-[1000px] min-w-[320px] md:w-auto m-4 p-6 rounded-lg flex flex-col justify-center items-center lg:gap-10 gap-16 bg-black/90 "
       >
         <h2 className="text-white text-center  font-playfair text-[40px] mb-10">
           Cambiar Contraseña
         </h2>
-        <div className="relative w-[50%] ">
+        <div className="relative w-[70%] ">
           <Input
             autoFocus
             type="password"
@@ -86,12 +86,12 @@ export const ChangePassword = () => {
             </p>
           )}
           {actual && (
-            <p className="text-red-500 absolute">
+            <p className="text-red-500 absolute ">
               La contraseña actual es incorrecta
             </p>
           )}
         </div>
-        <div className="relative w-[50%] ">
+        <div className="relative w-[70%] ">
           <Input
             type="password"
             {...register("passwordNew", { required: true })}
@@ -105,7 +105,7 @@ export const ChangePassword = () => {
             </p>
           )}
         </div>
-        <div className="relative w-[50%] ">
+        <div className="relative w-[70%] ">
           <Input
             type="password"
             {...register("confirmPassword", { required: true })}

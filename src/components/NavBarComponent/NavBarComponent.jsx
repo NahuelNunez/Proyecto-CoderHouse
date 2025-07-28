@@ -81,14 +81,17 @@ const NavBarComponent = () => {
               <DropdownMenu variant="bordered" categories={categories}>
                 {categories.map((option) => (
                   <DropdownItem
+                    className={`${
+                      option.estado === "Inactivo" ? "hidden" : ""
+                    }`}
                     key={option.id}
-                    textValue={option.name}
+                    textValue={option.category}
                     onPress={() => {
-                      navigate(`/category/${option.name}`), toggleMenu();
+                      navigate(`/category/${option.category}`), toggleMenu();
                     }}
                   >
                     <span className="text-white font-semibold">
-                      {option.name}
+                      {option.category}
                     </span>
                   </DropdownItem>
                 ))}

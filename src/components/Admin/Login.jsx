@@ -6,9 +6,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "./Store/useAuth";
 import { Link, useNavigate } from "react-router-dom";
+import { UserLocalStorage } from "../../hooks/UserLocalStorage";
 
 export const Login = () => {
   const navigate = useNavigate();
+  UserLocalStorage();
   const { login, user } = useAuth();
 
   const { handleChange, reset, formData, validate, error } = UseForm({

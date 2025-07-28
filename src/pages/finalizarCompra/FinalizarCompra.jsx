@@ -2,8 +2,8 @@ import { useContext, useEffect } from "react";
 import { CartContext } from "../../components/context/CartContext";
 import { Radio, RadioGroup } from "@heroui/react";
 
-import { initMercadoPago } from "@mercadopago/sdk-react";
 import { usePayment } from "../../hooks/usePayment";
+import { useAuth } from "../../components/Admin/Store/useAuth";
 
 const arrowRight = (
   <svg
@@ -21,7 +21,6 @@ const arrowRight = (
 );
 
 export const FinalizarCompra = () => {
-  const publicKey = "";
   const {
     formdata,
     totalWidget,
@@ -36,15 +35,11 @@ export const FinalizarCompra = () => {
     convertArs,
   } = useContext(CartContext);
 
-  useEffect(() => {
-    if (!window.MercadoPago) {
-      initMercadoPago(publicKey, { locale: "es-AR" });
-    } else {
-      console.log("Ya se inicializo");
-    }
-  }, []);
+  useEffect(() => {}, []);
   const { createPayments } = usePayment();
+  const { user } = useAuth();
 
+  console.log("user", user);
   console.log("carrito:", carrito);
   const selectDepartamentos = [
     { key: 0, label: "" },
@@ -70,37 +65,78 @@ export const FinalizarCompra = () => {
     localStorage.setItem("clientData", JSON.stringify(formdata));
     localStorage.setItem("cartItems", JSON.stringify(carrito));
 
-    const items = carrito.map((item) => ({
-      productId: item.id,
-      title: item.title,
-      quantity: item.cantidad,
-      unit_price: item.price,
-      current_id: "ARS",
-    }));
     try {
-      const response = await createPayments({ items });
+      if (user?.rol === "usuario") {
+        const userEmail = user?.email;
+        const userId = user?.token;
+        const items = carrito.map((item) => ({
+          productId: item.id,
+          title: item.title,
+          quantity: item.cantidad,
+          unit_price: item.price * 0.9,
+          current_id: "ARS",
+        }));
+        const response = await createPayments({
+          items,
+          formdata,
+          userEmail,
+          userId,
+        });
 
-      if (response.error) {
-        console.error(
-          "Error al procesar el pago con MercadoPago (desde hook):",
-          response.error
-        );
-        alert(
-          "Hubo un error al intentar conectar con MercadoPago. Intenta de nuevo."
-        );
-        return;
-      }
+        if (response.error) {
+          console.error(
+            "Error al procesar el pago con MercadoPago (desde hook):",
+            response.error
+          );
+          alert(
+            "Hubo un error al intentar conectar con MercadoPago. Intenta de nuevo. 444"
+          );
+          return;
+        }
 
-      const backendResponse = response.data;
+        const backendResponse = response.data;
 
-      if (
-        backendResponse &&
-        backendResponse.success &&
-        backendResponse.data &&
-        backendResponse.data.sandboxInitPoint
-      ) {
-        // Redirigir a MercadoPago
-        window.location.href = backendResponse.data.sandboxInitPoint;
+        if (
+          backendResponse &&
+          backendResponse.success &&
+          backendResponse.data &&
+          backendResponse.data.sandboxInitPoint
+        ) {
+          // Redirigir a MercadoPago
+          window.location.href = backendResponse.data.sandboxInitPoint;
+        }
+      } else {
+        const items = carrito.map((item) => ({
+          productId: item.id,
+          title: item.title,
+          quantity: item.cantidad,
+          unit_price: item.price,
+          current_id: "ARS",
+        }));
+        const response = await createPayments({ items, formdata });
+
+        if (response.error) {
+          console.error(
+            "Error al procesar el pago con MercadoPago (desde hook):",
+            response.error
+          );
+          alert(
+            "Hubo un error al intentar conectar con MercadoPago. Intenta de nuevo."
+          );
+          return;
+        }
+
+        const backendResponse = response.data;
+
+        if (
+          backendResponse &&
+          backendResponse.success &&
+          backendResponse.data &&
+          backendResponse.data.sandboxInitPoint
+        ) {
+          // Redirigir a MercadoPago
+          window.location.href = backendResponse.data.sandboxInitPoint;
+        }
       }
     } catch (error) {
       console.error("Error al procesar el pago con MercadoPago:", error);
@@ -289,7 +325,11 @@ export const FinalizarCompra = () => {
               <td className=" font-oswald text-white font-semibold text-[14px] px-2">
                 Subtotal
               </td>
-              <td className="font-oswald font-semibold text-start text-[14px] text-white">
+              <td
+                className={`font-oswald font-semibold text-start text-[14px] text-white ${
+                  user?.rol === "usuario" ? "line-through" : ""
+                }`}
+              >
                 {totalWidget()}
               </td>
             </tr>
@@ -298,7 +338,7 @@ export const FinalizarCompra = () => {
                 Total
               </td>
               <td className="text-start text-white font-oswald text-[14px] font-semibold">
-                {totalWidget()}
+                {user?.rol === "usuario" ? totalWidget2() : totalWidget()}
               </td>
             </tr>
           </tbody>

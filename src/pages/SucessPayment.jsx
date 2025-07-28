@@ -1,9 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { useOrder } from "../hooks/useOrder";
 import { CartContext } from "../components/context/CartContext";
+
+import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+
+import { Card, CardHeader, CardBody } from "@heroui/card";
+import { Button } from "@heroui/react";
 
 const SucessPayment = () => {
   const [dataOrder, setDataOrder] = useState({});
@@ -22,11 +27,7 @@ const SucessPayment = () => {
         );
         const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
         const urlParams = new URLSearchParams(location.search);
-        const externalReference = urlParams.get("external_reference");
-        const paymentId = urlParams.get("payment_id");
-        const status = urlParams.get("status");
-        const paymentType = urlParams.get("payment_type");
-        const collectionId = urlParams.get("collection_id");
+        const externalReference = urlParams.get("ref");
 
         if (!externalReference) {
           setError("No se encontro la referencia de pago externa.");
@@ -60,6 +61,10 @@ const SucessPayment = () => {
           0
         );
 
+        const totalCarritoUser = totalCarrito * (10 / 100);
+
+        const totalCarritoUserOff = totalCarrito - totalCarritoUser;
+
         const orderPayload = {
           metodoPago: clientData.metodoPago,
           userToken: clientData.userToken || null,
@@ -72,7 +77,7 @@ const SucessPayment = () => {
           codigoPostal: clientData.codigoPostal || null,
           email: clientData.email,
           telefono: clientData.telefono,
-          montoTotal: totalCarrito,
+          montoTotal: clientData.userToken ? totalCarritoUserOff : totalCarrito,
           productos: JSON.stringify(ItemsMap),
           paymentExternalReference: externalReference,
         };
@@ -115,72 +120,135 @@ const SucessPayment = () => {
     createOrderOnBackend();
   }, []);
 
-  console.log("DATA", dataOrder);
   if (loading) {
-    return <div className="text-center">Cargando...</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <Card className="w-full max-w-md text-center p-8 shadow-lg rounded-xl">
+          <CardHeader className="space-y-4">
+            <div className="flex flex-col gap-2">
+              <Loader2 className="mx-auto h-20 w-20 animate-spin text-primary" />
+              <h1 className="text-4xl font-extrabold text-center text-primary">
+                Procesando tu pago...
+              </h1>
+              <h2 className="text-lg text-center  text-muted-foreground">
+                Estamos confirmando tu orden. Por favor, espera.
+              </h2>
+            </div>
+          </CardHeader>
+
+          <CardBody>
+            <p className="text-base text-center text-muted-foreground">
+              Esto puede tardar unos segundos.
+            </p>
+          </CardBody>
+        </Card>
+      </div>
+    );
   }
 
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-[22px] ">
-        <div className="bg-black/90 text-red-500 text-center p-4 animate-pulse ">
-          {error}
-        </div>
+        <Card className="w-full max-w-md text-center p-8 shadow-lg rounded-xl border-4 border-destructive">
+          <CardHeader className="space-y-4 flex">
+            <div className="flex flex-col gap-2 ">
+              <XCircle className="mx-auto h-20 w-20 text-destructive" />
+              <h1 className="text-4xl font-extrabold text-destructive">
+                Error en el Pago
+              </h1>
+              <h2 className="text-lg text-muted-foreground">
+                Ha ocurrido un error al procesar tu orden.
+              </h2>
+            </div>
+          </CardHeader>
+          <CardBody className="space-y-6">
+            <Button>
+              <Link href="/">Volver al Inicio</Link>
+            </Button>
+          </CardBody>
+        </Card>
       </div>
     );
   }
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center mt-8">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h2 className="font-oswald text-3xl font-semibold mb-6">
-          ¡Pago Exitoso!
-        </h2>
-        <p className="mb-4">
-          Gracias por tu compra. Tu pago ha sido procesado con éxito.
-        </p>
-        {dataOrder && (
-          <>
-            <div className="mb-6">
-              <h4 className="font-oswald text-[18px] font-semibold mb-2">
-                Datos del Cliente
-              </h4>
-              <p>
-                **Nombre Completo:**{" "}
-                {`${dataOrder.nombre} ${dataOrder.apellido}`}
-              </p>{" "}
-              {/* Corregido */}
-              <p>**Email:** {dataOrder.email}</p> {/* Corregido */}
-              <p>**Teléfono:** {dataOrder.telefono}</p>
-              <p>**Tipo de Entrega:** {dataOrder.tipoEntrega}</p>
-              {dataOrder.tipoEntrega === "Envio" && (
-                <>
+    <div className="min-h-screen flex flex-col items-center justify-center ">
+      <Card className="w-full max-w-3xl p-10 shadow-2xl rounded-xl border-4 flex flex-col   border-green-500">
+        <CardHeader className="text-center space-y-6">
+          <div className="flex flex-col gap-2">
+            <CheckCircle2 className="mx-auto h-24 w-24 text-green-600" />
+            <h1 className="text-5xl font-extrabold text-green-700 leading-tight">
+              ¡Pago Exitoso!
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Gracias por tu compra. Tu pago ha sido procesado con éxito y tu
+              orden está en camino.
+            </p>
+          </div>
+        </CardHeader>
+        <CardBody className="space-y-8 mt-8">
+          {dataOrder && (
+            <>
+              <div className="flex flex-col gap-3 ">
+                <div className="text-center">
+                  <h4 className="text-2xl font-bold mb-3 text-gray-800">
+                    Datos del Cliente
+                  </h4>
                   <p>
-                    **Domicilio:** {dataOrder.domicilio}, {dataOrder.localidad}{" "}
-                    (CP: {dataOrder.codigoPostal})
+                    <span className="font-semibold">Nombre Completo:</span>{" "}
+                    {`${dataOrder.nombre} ${dataOrder.apellido}`}
                   </p>
-                </>
-              )}
-            </div>
-
-            <div className="mb-6">
-              <h4 className="font-oswald text-[18px] font-semibold mb-2">
-                Detalle de la Orden
-              </h4>
-              <p>**ID de la Orden:** {dataOrder.id}</p>
-              <p>**Monto Total:** ${dataOrder.montoTotal}</p>
-              {/* Aquí podrías iterar sobre los productos si 'dataOrder' los incluye */}
-            </div>
-          </>
-        )}
-        <div className="flex items-center justify-between">
-          <Link
-            to="/"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Volver al Inicio
-          </Link>
-        </div>
-      </div>
+                  <p>
+                    <span className="font-semibold">Email:</span>{" "}
+                    {dataOrder.email}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Teléfono:</span>{" "}
+                    {dataOrder.telefono}
+                  </p>
+                </div>
+                <div className="text-center">
+                  <h4 className="text-2xl font-bold mb-3 text-gray-800">
+                    Detalles de Entrega
+                  </h4>
+                  <p>
+                    <span className="font-semibold">Tipo de Entrega:</span>{" "}
+                    {dataOrder.tipoEntrega}
+                  </p>
+                  {dataOrder.tipoEntrega === "Envio" && (
+                    <p>
+                      <span className="font-semibold">Domicilio:</span>{" "}
+                      {`${dataOrder.domicilio}, ${dataOrder.localidad} (CP: ${dataOrder.codigoPostal})`}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="my-8" />
+              <div className="text-center space-y-4">
+                <h4 className="text-2xl font-bold text-gray-800">
+                  Resumen de la Orden
+                </h4>
+                <p className="text-xl">
+                  <span className="font-semibold">ID de la Orden:</span>{" "}
+                  <span className="font-bold text-primary">{dataOrder.id}</span>
+                </p>
+                <p className="text-4xl font-extrabold text-green-700">
+                  <span className="font-semibold">Monto Total:</span> $
+                  {dataOrder.montoTotal}
+                </p>
+                {/* Aquí podrías iterar sobre los productos si 'dataOrder' los incluye */}
+              </div>
+            </>
+          )}
+          <div className="flex justify-center mt-10">
+            <Button
+              size="lg"
+              className="px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white shadow-lg"
+            >
+              <Link to="/">Volver al Inicio</Link>
+            </Button>
+          </div>
+        </CardBody>
+      </Card>
     </div>
   );
 };

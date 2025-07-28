@@ -9,17 +9,17 @@ import { useOrder } from "../../hooks/useOrder";
 const baseURL = import.meta.env.VITE_API_URL;
 // Crear el contexto para el carrito
 export const CartContext = createContext();
-
 const initialValue = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // Proveedor de contexto para gestionar el estado del carrito
 export const CartProvider = ({ children }) => {
+  UserLocalStorage();
   const { user } = useAuth();
-  console.log(user);
-  const [sessionId, setSessionId] = useState("");
+
+  const [sessionId, setSessionId] = useState(null);
   const [postData, setPostData] = useState(null);
 
-  UserLocalStorage();
+  console.log("user", user?.token);
 
   useEffect(() => {
     const getSession = async () => {
@@ -35,6 +35,22 @@ export const CartProvider = ({ children }) => {
     };
     getSession();
   }, []);
+
+  useEffect(() => {
+    setFormdata((prev) => ({
+      ...prev,
+      sessionId: sessionId,
+    }));
+  }, [sessionId]);
+
+  useEffect(() => {
+    setFormdata((prev) => ({
+      ...prev,
+      userToken: user?.email || "",
+    }));
+  }, [user?.email]);
+
+  console.log("session ID", sessionId);
   const [menuForm, setMenuForm] = useState(false);
   const handleOpen = () => {
     setMenuForm(!menuForm);
@@ -66,7 +82,7 @@ export const CartProvider = ({ children }) => {
     productos: productosParaEnviar,
     sessionId: sessionId,
 
-    userToken: user?.token,
+    userToken: user?.email || "",
   });
 
   console.log("Datos a enviar:", formdata);
@@ -154,8 +170,8 @@ export const CartProvider = ({ children }) => {
         formData.append("numeroTransferencia", formdata.numeroTransferencia);
       formData.append("montoTotal", formdata.montoTotal);
       formData.append("sessionId", sessionId);
-      if (user?.token) {
-        formData.append("userToken", user?.token);
+      if (user?.email) {
+        formData.append("userToken", user?.email);
       }
 
       if (formdata.comprobanteURL) {

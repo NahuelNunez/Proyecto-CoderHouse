@@ -25,6 +25,7 @@ import { TableCategory } from "./components/Admin/Category/Table Category/tableC
 import { TableAdmins } from "./components/Admin/SuperAdmin/Table Admin/TableAdmins";
 import { FinalizarCompra } from "./pages/finalizarCompra/finalizarCompra";
 import SucessPayment from "./pages/SucessPayment";
+import FailurePayment from "./pages/FailurePayment";
 
 function App() {
   const { user } = useAuth();
@@ -81,6 +82,8 @@ function App() {
             <Route path="/register" element={<SignUp />} />
             <Route path="/checkout" element={<FinalizarCompra />} />
             <Route path="/payment/success" element={<SucessPayment />} />
+            <Route path="/payment/failure" element={<FailurePayment />} />
+            <Route path="/payment/pending" element={<SucessPayment />} />
           </Routes>
           <Footer />
         </Layout>
