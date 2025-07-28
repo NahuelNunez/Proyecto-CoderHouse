@@ -23,7 +23,7 @@ import { RutaProtegida } from "./components/RutaProtegida.jsx/RutaProtegida";
 import { useAuth } from "./components/Admin/Store/useAuth";
 import { TableCategory } from "./components/Admin/Category/Table Category/TableCategory";
 import { TableAdmins } from "./components/Admin/SuperAdmin/Table Admin/TableAdmins";
-import { FinalizarCompra } from "./pages/finalizarCompra/finalizarCompra";
+import { FinalizarCompra } from "./pages/finalizarCompra/FinalizarCompra";
 import SucessPayment from "./pages/SucessPayment";
 import FailurePayment from "./pages/FailurePayment";
 
