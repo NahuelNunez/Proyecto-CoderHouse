@@ -25,7 +25,7 @@ export const CartProvider = ({ children }) => {
     const getSession = async () => {
       try {
         const response = await axios.get(`${baseURL}/api/session`, {
-          withCredentials: true,
+          withCredentials: "include",
         });
 
         setSessionId(response.data.sessionId);
