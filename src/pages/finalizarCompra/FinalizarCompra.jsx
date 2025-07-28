@@ -135,7 +135,7 @@ export const FinalizarCompra = () => {
           backendResponse.data.init
         ) {
           // Redirigir a MercadoPago
-          window.location.href = backendResponse.data.init;
+          window.location.href = backendResponse.data.initPoint;
         }
       }
     } catch (error) {
