@@ -132,10 +132,10 @@ export const FinalizarCompra = () => {
           backendResponse &&
           backendResponse.success &&
           backendResponse.data &&
-          backendResponse.data.sandboxInitPoint
+          backendResponse.data.init
         ) {
           // Redirigir a MercadoPago
-          window.location.href = backendResponse.data.sandboxInitPoint;
+          window.location.href = backendResponse.data.init;
         }
       }
     } catch (error) {
