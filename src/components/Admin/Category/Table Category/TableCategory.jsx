@@ -6,13 +6,27 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCategory } from "../Store/useCategory";
 import { toast } from "react-toastify";
 
 import { AddCategories } from "../AddCategories";
 
-const iconeyeSlashed = (
+const openEye = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1.4em"
+    height="1.4em"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"
+    />
+  </svg>
+);
+
+const closeEye = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1.4em"
@@ -51,14 +65,25 @@ export const TableCategory = ({ user }) => {
 
   const functionDisabled = async (category) => {
     try {
-      const data = {
-        estado: "Inactivo",
-      };
+      if (category.estado === "Activo") {
+        const data = {
+          estado: "Inactivo",
+        };
 
-      const response = await editCategory(user.token, category.id, data);
-      if (response) {
-        toast.success("Estado de categoria modificado");
-        getCategory();
+        const response = await editCategory(user.token, category.id, data);
+        if (response) {
+          toast.success("Estado de categoria Inactivo");
+          getCategory();
+        }
+      } else if (category.estado === "Inactivo") {
+        const data = {
+          estado: "Activo",
+        };
+        const response = await editCategory(user.token, category.id, data);
+        if (response) {
+          toast.success("Estado de categoria Activo");
+          getCategory();
+        }
       }
     } catch (error) {
       toast.error("Error al cambiar el estado de la categoria 🤔");
@@ -108,7 +133,7 @@ export const TableCategory = ({ user }) => {
               <TableCell>
                 <div className="flex items-center gap-1">
                   <button onClick={() => functionDisabled(category)}>
-                    {iconeyeSlashed}{" "}
+                    {category.estado === "Inactivo" ? closeEye : openEye}
                   </button>
 
                   <AddCategories

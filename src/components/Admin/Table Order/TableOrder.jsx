@@ -31,17 +31,18 @@ export const TableOrder = () => {
   const { convertArs } = useContext(CartContext);
   const { getOrder } = useOrder();
   const [allOrder, setAllOrder] = useState([]);
-  useEffect(() => {
-    const getAllOrders = async () => {
-      try {
-        const response = await getOrder();
-        if (response) {
-          setAllOrder(response.data);
-        }
-      } catch (error) {
-        console.log("Error al obtener las ordenes", error);
+
+  const getAllOrders = async () => {
+    try {
+      const response = await getOrder();
+      if (response) {
+        setAllOrder(response.data);
       }
-    };
+    } catch (error) {
+      console.log("Error al obtener las ordenes", error);
+    }
+  };
+  useEffect(() => {
     getAllOrders();
   }, []);
   const handleOpenImage = (orders) => {
@@ -58,6 +59,7 @@ export const TableOrder = () => {
             <TableColumn>FULL NAME</TableColumn>
             <TableColumn>METODO PAGO</TableColumn>
             <TableColumn>TIPO ENTREGA</TableColumn>
+            <TableColumn>PRODUCTOS</TableColumn>
             <TableColumn>ESTADO</TableColumn>
             <TableColumn>NUMERO TELEFONO</TableColumn>
             <TableColumn>EMAIL</TableColumn>
@@ -71,9 +73,20 @@ export const TableOrder = () => {
           <TableBody>
             {allOrder.map((orders) => (
               <TableRow key={orders.id}>
-                <TableCell>{orders.nombreCompleto}</TableCell>
+                <TableCell>
+                  {orders.nombre} {orders.apellido}
+                </TableCell>
                 <TableCell>{orders.metodoPago}</TableCell>
                 <TableCell>{orders.tipoEntrega}</TableCell>
+                <TableCell>
+                  <ul>
+                    {orders.productos.map((prod) => (
+                      <li key={prod.id} className="text-xs">
+                        {prod.titulo} x{prod.cantidad}
+                      </li>
+                    ))}
+                  </ul>
+                </TableCell>
                 <TableCell>{orders.estado}</TableCell>
                 <TableCell>{orders.telefono}</TableCell>
                 <TableCell>{orders.email}</TableCell>
