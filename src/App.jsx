@@ -21,7 +21,7 @@ import { TableOrder } from "./components/Admin/Table Order/TableOrder";
 import { ChangePassword } from "./pages/ChangePassword";
 import { RutaProtegida } from "./components/RutaProtegida.jsx/RutaProtegida";
 import { useAuth } from "./components/Admin/Store/useAuth";
-import { TableCategory } from "./components/Admin/Category/Table Category/tableCategory";
+import { TableCategory } from "./components/Admin/Category/Table Category/TableCategory";
 import { TableAdmins } from "./components/Admin/SuperAdmin/Table Admin/TableAdmins";
 import { FinalizarCompra } from "./pages/finalizarCompra/finalizarCompra";
 import SucessPayment from "./pages/SucessPayment";
