@@ -132,7 +132,7 @@ export const FinalizarCompra = () => {
           backendResponse &&
           backendResponse.success &&
           backendResponse.data &&
-          backendResponse.data.init
+          backendResponse.data.initPoint
         ) {
           // Redirigir a MercadoPago
           window.location.href = backendResponse.data.initPoint;
