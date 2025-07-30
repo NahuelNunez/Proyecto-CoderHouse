@@ -79,6 +79,7 @@ export const CartProvider = ({ children }) => {
     numeroTransferencia: "",
     estado: "",
     montoTotal: 0,
+    envio: 0,
     productos: productosParaEnviar,
     sessionId: sessionId,
 
@@ -91,6 +92,7 @@ export const CartProvider = ({ children }) => {
 
   const handleOnChange = ({ target }) => {
     const { name, value, files } = target;
+
     if (name === "comprobanteURL") {
       setFormdata((prev) => ({
         ...prev,
@@ -245,7 +247,13 @@ export const CartProvider = ({ children }) => {
       0
     );
 
-    const total = totalCarrito.toLocaleString("es-AR", {
+    const addEnvio =
+      formdata.tipoEntrega === "Retiro"
+        ? (formdata.envio = 0)
+        : Number(formdata.envio);
+    const totalito = totalCarrito + addEnvio;
+
+    const total = totalito.toLocaleString("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 0,

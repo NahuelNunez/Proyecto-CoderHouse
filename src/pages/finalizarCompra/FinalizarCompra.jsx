@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { CartContext } from "../../components/context/CartContext";
-import { Radio, RadioGroup } from "@heroui/react";
+import { form, Radio, RadioGroup } from "@heroui/react";
 
 import { usePayment } from "../../hooks/usePayment";
 import { useAuth } from "../../components/Admin/Store/useAuth";
@@ -32,6 +32,8 @@ export const FinalizarCompra = () => {
     error,
     totalWidget2,
     carrito,
+    setCarrito,
+
     convertArs,
   } = useContext(CartContext);
 
@@ -61,7 +63,7 @@ export const FinalizarCompra = () => {
       alert("El carrito esta vacio agregar productos para continuar.");
       return;
     }
-
+    const shippingCost = Number(formdata.envio);
     try {
       if (user?.rol === "usuario") {
         const userEmail = user?.email;
@@ -78,6 +80,7 @@ export const FinalizarCompra = () => {
           formdata,
           userEmail,
           userId,
+          shippingCost,
         });
 
         if (response.error) {
@@ -97,10 +100,10 @@ export const FinalizarCompra = () => {
           backendResponse &&
           backendResponse.success &&
           backendResponse.data &&
-          backendResponse.data.sandboxInitPoint
+          backendResponse.data.initPoint
         ) {
           // Redirigir a MercadoPago
-          window.location.href = backendResponse.data.sandboxInitPoint;
+          window.location.href = backendResponse.data.initPoint;
         }
       } else {
         const items = carrito.map((item) => ({
@@ -110,7 +113,10 @@ export const FinalizarCompra = () => {
           unit_price: item.price,
           current_id: "ARS",
         }));
-        const response = await createPayments({ items, formdata });
+        const response = await createPayments({
+          items,
+          formdata,
+        });
 
         if (response.error) {
           console.error(
@@ -155,14 +161,14 @@ export const FinalizarCompra = () => {
             ? handleMercadoPayment
             : handleSubmit
         }
-        className="bg-black/90 p-8 flex flex-col justify-between relative gap-10 mb-10  min-w-[350px] w-[80%]"
+        className="bg-black/90 p-8 flex flex-col justify-between relative gap-10 mb-10  min-w-[320px] w-[80%]"
       >
         <h4 className="text-white font-poppins text-[15px]">
           Detalles Facturacion
         </h4>
 
-        <div className="flex justify-around gap-24 w-full">
-          <div className="min-w-[350px] w-full flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row md:justify-around md:gap-24 w-full">
+          <div className=" w-full flex flex-col gap-2">
             <span className="text-white text-[14px] font-oswald">Nombre</span>
             <input
               name="nombre"
@@ -172,7 +178,7 @@ export const FinalizarCompra = () => {
             />
           </div>
 
-          <div className=" min-w-[350px] w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-2">
             <span className="text-white font-oswald text-[14px]">Apellido</span>
             <input
               name="apellido"
@@ -206,6 +212,51 @@ export const FinalizarCompra = () => {
           </RadioGroup>
         </div>
 
+        <div
+          className={`${
+            formdata.tipoEntrega === "Retiro"
+              ? "hidden"
+              : "flex flex-col w-full gap-2"
+          }`}
+        >
+          <RadioGroup name="envio">
+            <Radio
+              type="number"
+              checked={formdata.envio === 3500}
+              name="envio"
+              value={3500}
+              onChange={handleOnChange}
+            >
+              <span className="text-white font-oswald text-[12px]">
+                San Juan, Capital - <label className="font-bold">$3500</label>
+              </span>
+            </Radio>
+            <Radio
+              type="number"
+              checked={formdata.envio === 6000}
+              name="envio"
+              value={6000}
+              onChange={handleOnChange}
+            >
+              <span className="text-white font-oswald text-[12px]">
+                Rivadavia, Chimbas, Santa Lucia,Rawson -{" "}
+                <label className="font-bold">$6000</label>
+              </span>
+            </Radio>
+            <Radio
+              type="number"
+              checked={formdata.envio === 9900}
+              name="envio"
+              value={9900}
+              onChange={handleOnChange}
+            >
+              <span className="text-white font-oswald text-[12px]">
+                Departamentos alejados, San Juan -{" "}
+                <label className="font-bold">$9900</label>
+              </span>
+            </Radio>
+          </RadioGroup>
+        </div>
         <div
           className={`${
             formdata.tipoEntrega === "Retiro" ? "hidden" : "flex"
@@ -308,16 +359,6 @@ export const FinalizarCompra = () => {
                 </td>
               </tr>
             ))}
-            <tr
-              className={`${formdata.tipoEntrega === "Retiro" ? "hidden" : ""}`}
-            >
-              <td className="text-white font-oswald text-[14px] font-semibold px-2">
-                Envío
-              </td>
-              <td className="text-start text-white text-[14px] font-oswald">
-                A coordinar luego de la compra
-              </td>
-            </tr>
             <tr>
               <td className=" font-oswald text-white font-semibold text-[14px] px-2">
                 Subtotal
@@ -330,6 +371,17 @@ export const FinalizarCompra = () => {
                 {totalWidget()}
               </td>
             </tr>
+            <tr
+              className={`${formdata.tipoEntrega === "Retiro" ? "hidden" : ""}`}
+            >
+              <td className="text-white font-oswald text-[14px] font-semibold px-2">
+                Envío
+              </td>
+              <td className="text-start text-white text-[14px] font-oswald">
+                {convertArs(formdata.envio)}
+              </td>
+            </tr>
+
             <tr>
               <td className="text-white font-oswald text-[14px] font-semibold px-2">
                 Total
@@ -500,7 +552,7 @@ export const FinalizarCompra = () => {
               </div>
             </div>
           </div>
-          <Radio
+          {/* <Radio
             name="metodoPago"
             value="transferencia"
             onChange={handleOnChange}
@@ -509,7 +561,7 @@ export const FinalizarCompra = () => {
             <label className="text-white text-[14px]">
               Transferencia Bancaria
             </label>
-          </Radio>
+          </Radio> */}
 
           <div
             className={`${
@@ -533,11 +585,11 @@ export const FinalizarCompra = () => {
           </div>
         </RadioGroup>
 
-        <div className="w-full min-w-[350px] flex justify-between">
+        <div className="  flex flex-col gap-5 relative  md:flex-row justify-between">
           <p className="text-white text-[14px]">
             Tus datos personales se utilizarán para procesar tu pedido.
           </p>
-          <button className="bg-sky-500 flex items-center px-2 py-2 font-poppins hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 ">
+          <button className="bg-sky-500 flex items-center px-2 py-2 font-poppins   hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 ">
             Realizar pedido
             {arrowRight}
           </button>

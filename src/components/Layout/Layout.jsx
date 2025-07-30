@@ -1,4 +1,4 @@
-import fondoImage from "../../../public/images/fondo2.jpg";
+import fondoImage from "/images/fondo2.jpg";
 
 export const Layout = ({ children }) => {
   return (

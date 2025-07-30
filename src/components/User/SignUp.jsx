@@ -45,10 +45,10 @@ export const SignUp = () => {
   };
 
   return (
-    <div className=" w-full flex flex-col justify-center items-center min-h-screen">
+    <div className="  flex flex-col justify-center items-center min-h-screen">
       <form
         onSubmit={handleSubmit(OnSubmit)}
-        className="flex flex-col gap-12 items-center bg-black/90 w-[25%] rounded-xl  p-10"
+        className="flex flex-col gap-12 items-center bg-black/90 rounded-xl md:w-[50%]  p-10"
       >
         <h2 className="text-white font-playfair font-semibold text-[30px]">
           Registrate
