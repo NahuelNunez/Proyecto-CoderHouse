@@ -34,6 +34,8 @@ const SucessPayment = () => {
 
         if (response) {
           setDataOrder(response);
+          localStorage.removeItem("carrito");
+          setCarrito([]);
         }
       } catch (error) {
         console.log("Error al obtener la orden", error);
@@ -97,7 +99,7 @@ const SucessPayment = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center ">
       <Card className="w-full max-w-3xl p-10 shadow-2xl rounded-xl border-4 flex flex-col   border-green-500">
-        <CardHeader className="text-center space-y-6">
+        <div className="text-center space-y-6">
           <div className="flex flex-col gap-2">
             <CheckCircle2 className="mx-auto h-24 w-24 text-green-600" />
             <h1 className="text-5xl font-extrabold text-green-700 leading-tight">
@@ -108,7 +110,7 @@ const SucessPayment = () => {
               orden está en camino.
             </p>
           </div>
-        </CardHeader>
+        </div>
         <CardBody className="space-y-8 mt-8">
           {dataOrder && (
             <>

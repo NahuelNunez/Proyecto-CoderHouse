@@ -45,10 +45,10 @@ export const TableOrder = () => {
   useEffect(() => {
     getAllOrders();
   }, []);
-  const handleOpenImage = (orders) => {
-    setImagenOpen(!imagenOpen);
-    setImage(orders);
-  };
+  // const handleOpenImage = (orders) => {
+  //   setImagenOpen(!imagenOpen);
+  //   setImage(orders);
+  // };
 
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center">
@@ -68,7 +68,6 @@ export const TableOrder = () => {
             <TableColumn>CODIGO POSTAL</TableColumn>
             <TableColumn>N° Transferencia</TableColumn>
             <TableColumn>MONTO TOTAL</TableColumn>
-            <TableColumn>COMPROBANTE URL</TableColumn>
           </TableHeader>
           <TableBody>
             {allOrder.map((orders) => (
@@ -95,20 +94,12 @@ export const TableOrder = () => {
                 <TableCell>{orders.codigoPostal}</TableCell>
                 <TableCell>{orders.numeroTransferencia}</TableCell>
                 <TableCell>{convertArs(orders.montoTotal)}</TableCell>
-                <TableCell className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleOpenImage(orders.comprobanteURL)}
-                    className="text-blue-500 hover:text-blue-700 ease-in-out transition-all duration-300"
-                  >
-                    Abrir imagen
-                  </button>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
-      {imagenOpen && (
+      {/* {imagenOpen && (
         <div className="absolute flex  flex-col-reverse gap-5 justify-center items-center bg-black/90 w-[590px] h-[580px] ">
           <embed
             className="w-[500px] h-[500px]  object-cover"
@@ -121,7 +112,7 @@ export const TableOrder = () => {
             {closeButton}
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
