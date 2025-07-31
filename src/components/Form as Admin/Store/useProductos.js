@@ -49,7 +49,7 @@ export const useProductos = create((set) => ({
 
     editProductos: async (id, data, token) => {
         try {
-            const response = await axios.put(`${baseURL}/products/edite/${id}`, data, {
+            const response = await axios.patch(`${baseURL}/products/edite/${id}`, data, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`

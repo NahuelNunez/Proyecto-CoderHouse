@@ -5,8 +5,6 @@ import { CartContext } from "../context/CartContext";
 import { Card, CardBody, CardFooter } from "@heroui/react";
 import LoadingComponent from "../LoadingComponent";
 
-const baseURL = import.meta.env.VITE_API_URL;
-
 export const ItemDetail = ({ producto }) => {
   // Obtener el estado del carrito y la función para agregar productos del contexto
   const { handleAddWidget, handleAdd, handleRemove, cantidad, convertArs } =
@@ -23,7 +21,8 @@ export const ItemDetail = ({ producto }) => {
     >
       <img
         className=" h-[200px] w-full object-cover object-center rounded-t-lg rounded-b-lg"
-        src={`${baseURL}/uploads/${producto.image}`}
+        src={`${producto.image}`}
+        alt={`${producto.title}`}
       />
 
       <CardBody className="flex flex-row justify-around overflow-visible  items-center  w-full gap-3 ">

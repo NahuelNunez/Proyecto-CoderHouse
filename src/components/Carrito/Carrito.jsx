@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import {
   Drawer,
@@ -15,7 +15,7 @@ export const Carrito = () => {
   const { user } = useAuth();
   console.log("Usuario", user);
   const navigate = useNavigate();
-  const baseURL = import.meta.env.VITE_API_URL;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = useState("md");
   const {
@@ -96,8 +96,8 @@ export const Carrito = () => {
                   carrito.map((prod) => (
                     <div key={prod.id} className="flex gap-4">
                       <img
-                        src={`${baseURL}/uploads/${prod.image}`}
-                        alt=""
+                        src={`${prod.image}`}
+                        alt={`${prod.title}`}
                         className="h-[100px] w-[120px] object-cover"
                       />
                       <div className="flex flex-col justify-start   w-full">

@@ -32,7 +32,7 @@ export const Editlist = ({ producto, user }) => {
   const Onediting = (producto) => {
     if (producto) {
       console.log("setValue", producto);
-      setValue("image", producto.image);
+      setValue("image", producto.image[0]);
       setValue("title", producto.title);
       setValue("category", producto.category);
       setValue("price", producto.price);
@@ -50,7 +50,9 @@ export const Editlist = ({ producto, user }) => {
       formData.append("price", data.price);
       formData.append("stock", data.stock);
 
-      if (data.image[0]) formData.append("image", data.image[0]);
+      if (data.image && data.image[0]) {
+        formData.append("image", data.image[0]);
+      }
 
       await toast.promise(editProductos(producto.id, formData, user.token), {
         pending: "Editando...🙄",

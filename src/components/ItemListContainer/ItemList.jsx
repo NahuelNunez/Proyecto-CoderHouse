@@ -10,7 +10,7 @@ import { CartContext } from "../context/CartContext";
 
 export const ItemList = ({ producto }) => {
   const { deleteProductos, getProductos } = useProductos();
-  const baseURL = import.meta.env.VITE_API_URL;
+
   const { user } = useAuth();
 
   const { convertArs } = useContext(CartContext);
@@ -43,7 +43,7 @@ export const ItemList = ({ producto }) => {
           <CardBody className="flex justify-center overflow-visible p-0 ">
             <img
               className=" object-cover h-[200px] rounded-t-lg rounded-b-lg "
-              src={`${baseURL}/uploads/${producto.image}`}
+              src={`${producto.image}`}
             />
           </CardBody>
           <CardFooter className="text-center justify-between px-4">
@@ -87,7 +87,8 @@ export const ItemList = ({ producto }) => {
             <CardBody className="flex justify-center overflow-visible p-0 ">
               <img
                 className=" object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg "
-                src={`${baseURL}/uploads/${producto.image}`}
+                src={`${producto.image}`}
+                alt={`${producto.title}`}
               />
             </CardBody>
             <CardFooter className="text-center justify-between px-4">

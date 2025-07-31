@@ -29,6 +29,10 @@ export const AddProduct = ({ user }) => {
   const { getCategory, categories } = useCategory();
 
   const handleOnSubmit = async (data) => {
+    if (!data.image) {
+      alert("Selecciona una imagen🙃");
+      return;
+    }
     try {
       console.log("Data form", data);
       const formData = new FormData();
@@ -36,7 +40,7 @@ export const AddProduct = ({ user }) => {
       formData.append("category", data.category);
       formData.append("price", data.price);
       formData.append("stock", data.stock);
-      if (data.image[0]) formData.append("image", data.image[0]);
+      formData.append("image", data.image[0]);
       const response = await postProductos(formData, user.token);
       if (response) {
         toast.success("Producto creado exitosamente");
