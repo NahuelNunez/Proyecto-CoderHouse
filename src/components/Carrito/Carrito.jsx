@@ -96,8 +96,8 @@ export const Carrito = () => {
                   carrito.map((prod) => (
                     <div key={prod.id} className="flex gap-4">
                       <img
-                        src={`${prod.image}`}
-                        alt={`${prod.title}`}
+                        src={prod.image}
+                        alt={prod.title}
                         className="h-[100px] w-[120px] object-cover"
                       />
                       <div className="flex flex-col justify-start   w-full">
