@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { UserLocalStorage } from "../../hooks/UserLocalStorage";
 import axios from "axios";
 import { useAuth } from "../Admin/Store/useAuth";
-import { useOrder } from "../../hooks/useOrder";
+// import { useOrder } from "../../hooks/useOrder";
 
 const baseURL = import.meta.env.VITE_API_URL;
 // Crear el contexto para el carrito
@@ -17,9 +17,24 @@ export const CartProvider = ({ children }) => {
   const { user } = useAuth();
 
   const [sessionId, setSessionId] = useState(null);
-  const [postData, setPostData] = useState(null);
+  // const [postData, setPostData] = useState(null);
+  // const [confirmar, setConfirmar] = useState("");
+  const [carrito, setCarrito] = useState(initialValue);
+  const [menuForm, setMenuForm] = useState(false);
 
-  console.log("user", user?.token);
+  const [cantidad, setCantidad] = useState(1);
+  const handleOpen = () => {
+    setMenuForm(!menuForm);
+  };
+
+  const productosParaEnviar = carrito.map((product) => ({
+    idProducto: product.id,
+    titulo: product.title,
+    precio: product.price,
+    cantidad: product.cantidad,
+    imagen: product.image,
+  }));
+  console.log("carrito", carrito);
 
   useEffect(() => {
     const getSession = async () => {
@@ -50,21 +65,13 @@ export const CartProvider = ({ children }) => {
     }));
   }, [user?.email]);
 
-  console.log("session ID", sessionId);
-  const [menuForm, setMenuForm] = useState(false);
-  const handleOpen = () => {
-    setMenuForm(!menuForm);
-  };
-  const [confirmar, setConfirmar] = useState("");
-  const [carrito, setCarrito] = useState(initialValue);
-  const productosParaEnviar = carrito.map((product) => ({
-    idProducto: product.id,
-    titulo: product.title,
-    precio: product.price,
-    cantidad: product.cantidad,
-    imagen: product.image,
-  }));
-  const { orderPost } = useOrder();
+  useEffect(() => {
+    setFormdata((prev) => ({
+      ...prev,
+      productos: productosParaEnviar,
+    }));
+  }, [carrito]);
+
   const [formdata, setFormdata] = useState({
     metodoPago: "",
     tipoEntrega: "",
@@ -80,7 +87,7 @@ export const CartProvider = ({ children }) => {
     estado: "",
     montoTotal: 0,
     envio: 0,
-    productos: productosParaEnviar,
+    productos: [],
     sessionId: sessionId,
 
     userToken: user?.email || "",
@@ -121,85 +128,84 @@ export const CartProvider = ({ children }) => {
 
     if (!formdata.telefono)
       newErrors.telefono = "El numero de telefono es obligatorio";
-    if (!formdata.numeroTransferencia)
-      newErrors.numeroTransferencia = "El numero de transaccion es obligatorio";
+    // if (!formdata.numeroTransferencia)
+    //   newErrors.numeroTransferencia = "El numero de transaccion es obligatorio";
 
-    if (!formdata.montoTotal)
-      newErrors.montoTotal = "El monto total es obligatorio";
+    // if (!formdata.montoTotal)
+    //   newErrors.montoTotal = "El monto total es obligatorio";
 
-    const montoCalculado = carrito.reduce(
-      (acc, producto) => acc + producto.cantidad * producto.price,
-      0
-    );
+    // const montoCalculado = carrito.reduce(
+    //   (acc, producto) => acc + producto.cantidad * producto.price,
+    //   0
+    // );
 
-    const montoCalculado2 = montoCalculado * (10 / 100);
+    // const montoCalculado2 = montoCalculado * (10 / 100);
 
-    const ResTotal = montoCalculado - montoCalculado2;
-    const montoIngresado = Number(formdata.montoTotal);
+    // const ResTotal = montoCalculado - montoCalculado2;
+    // const montoIngresado = Number(formdata.montoTotal);
 
-    if (user?.rol === "usuario") {
-      if (montoIngresado !== ResTotal) {
-        newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
-          ResTotal
-        )})`;
-      }
-    } else {
-      if (montoIngresado !== montoCalculado) {
-        newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
-          montoCalculado
-        )})`;
-      }
-    }
+    // if (user?.rol === "usuario") {
+    //   if (montoIngresado !== ResTotal) {
+    //     newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
+    //       ResTotal
+    //     )})`;
+    //   }
+    // } else {
+    //   if (montoIngresado !== montoCalculado) {
+    //     newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
+    //       montoCalculado
+    //     )})`;
+    //   }
+    // }
     setError(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      if (!validate()) return;
+  // const handleSubmit = async (e) => {
+  //   try {
+  //     e.preventDefault();
+  //     if (!validate()) return;
 
-      const formData = new FormData();
-      formData.append("metodoPago", formdata.metodoPago),
-        formData.append("tipoEntrega", formdata.tipoEntrega),
-        formData.append("nombre", formdata.nombre),
-        formData.append("apellido", formdata.apellido),
-        formData.append("domicilio", formdata.domicilio),
-        formData.append("localidad", formdata.localidad),
-        formData.append("codigoPostal", formdata.codigoPostal),
-        formData.append("email", formdata.email),
-        formData.append("telefono", formdata.telefono),
-        formData.append("numeroTransferencia", formdata.numeroTransferencia);
-      formData.append("montoTotal", formdata.montoTotal);
-      formData.append("sessionId", sessionId);
-      if (user?.email) {
-        formData.append("userToken", user?.email);
-      }
+  //     const formData = new FormData();
+  //     formData.append("metodoPago", formdata.metodoPago),
+  //       formData.append("tipoEntrega", formdata.tipoEntrega),
+  //       formData.append("nombre", formdata.nombre),
+  //       formData.append("apellido", formdata.apellido),
+  //       formData.append("domicilio", formdata.domicilio),
+  //       formData.append("localidad", formdata.localidad),
+  //       formData.append("codigoPostal", formdata.codigoPostal),
+  //       formData.append("email", formdata.email),
+  //       formData.append("telefono", formdata.telefono),
+  //       formData.append("numeroTransferencia", formdata.numeroTransferencia);
+  //     formData.append("montoTotal", formdata.montoTotal);
+  //     formData.append("sessionId", sessionId);
+  //     if (user?.email) {
+  //       formData.append("userToken", user?.email);
+  //     }
 
-      if (formdata.comprobanteURL) {
-        formData.append("comprobanteURL", formdata.comprobanteURL);
-      }
-      formData.append("productos", JSON.stringify(productosParaEnviar));
-      const response = await toast.promise(orderPost(formData), {
-        pending: "Subiendo...",
-        success: "Pedido realizado exitosamente😎",
-        error: "Error al realizar el pedido😣",
-      });
-      if (response.data) {
-        setPostData(response.data);
-        setConfirmar("Subido");
-        setCarrito([]);
-      }
-    } catch (error) {
-      toast.error("Error al generar el pedido😣");
-      console.log("Error al generar la orden", error);
-    }
-    handleOpen();
-  };
+  //     // if (formdata.comprobanteURL) {
+  //     //   formData.append("comprobanteURL", formdata.comprobanteURL);
+  //     // }
+  //     formData.append("productos", JSON.stringify(productosParaEnviar));
+  //     const response = await toast.promise(orderPost(formData), {
+  //       pending: "Subiendo...",
+  //       success: "Pedido realizado exitosamente😎",
+  //       error: "Error al realizar el pedido😣",
+  //     });
+  //     if (response.data) {
+  //       setPostData(response.data);
+  //       setConfirmar("Subido");
+  //       setCarrito([]);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error al generar el pedido😣");
+  //     console.log("Error al generar la orden", error);
+  //   }
+  //   handleOpen();
+  // };
 
   // Estado que almacena los productos en el carrito
 
-  const [cantidad, setCantidad] = useState(1);
   // Función para agregar un producto al carrito o actualizar su cantidad
   const handleAddWidget = (item, cantidad) => {
     // Crear una copia del producto con la cantidad proporcionada
@@ -215,9 +221,9 @@ export const CartProvider = ({ children }) => {
 
     // Si el producto ya está en el carrito, actualizar la cantidad
     if (enElCarrito) {
-      enElCarrito.cantidad += cantidad;
-      setCarrito(nuevoCarrito);
-      toast.success("Producto agregado exitosamente al carrito 🛒");
+      // enElCarrito.cantidad += cantidad;
+      // setCarrito(nuevoCarrito);
+      toast.error("El producto ya existe en el carrito 🛒");
     } else {
       // Si el producto no está en el carrito, agregarlo
       nuevoCarrito.push(itemAgregado);
@@ -226,15 +232,17 @@ export const CartProvider = ({ children }) => {
     }
   };
   // Función para incrementar la cantidad
-  const handleAdd = (cantidad) => {
+  const handleAdd = (cantidad, producto) => {
+    if (producto.stock === 0) return;
     // Verificar que la cantidad no supere el stock disponible
-    if (cantidad < 10) setCantidad(cantidad + 1);
+    if (cantidad < producto.stock) setCantidad(cantidad + 1);
   };
 
   // Función para decrementar la cantidad
-  const handleRemove = (cantidad) => {
-    // Verificar que la cantidad sea mayor que 1 antes de decrementar
-    if (cantidad > 1) setCantidad(cantidad - 1);
+  const handleRemove = (cantidad, producto) => {
+    if (producto.stock === 0) return;
+    if (cantidad === 0) return;
+    if (producto.stock >= cantidad && cantidad > 1) setCantidad(cantidad - 1);
   };
 
   // Función para calcular la cantidad total de productos en el carrito
@@ -293,7 +301,6 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
-  // Proporcionar el estado del carrito y las funciones asociadas a través del contexto
   return (
     <CartContext.Provider
       value={{
@@ -310,12 +317,11 @@ export const CartProvider = ({ children }) => {
         formdata,
         handleOnChange,
         convertArs,
-        handleSubmit,
-        confirmar,
+
         handleOpen,
         menuForm,
         sessionId,
-        postData,
+
         error,
         totalWidget2,
       }}

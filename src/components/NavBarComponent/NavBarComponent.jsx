@@ -112,8 +112,9 @@ const NavBarComponent = () => {
                 Contacto
               </Link>
             </Button>
-            {/* <CartWidget /> */}
-            <Carrito />
+
+            <Carrito toggleMenu={toggleMenu} />
+
             {user ? (
               <Logout user={user} toggleMenu={toggleMenu} />
             ) : (

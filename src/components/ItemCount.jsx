@@ -1,4 +1,10 @@
-const ItemCount = ({ handleAdd, handleAddProduct, handleRemove, cantidad }) => {
+const ItemCount = ({
+  handleAdd,
+  handleAddProduct,
+  handleRemove,
+  cantidad,
+  producto,
+}) => {
   return (
     <div className="relative flex flex-row justify-between w-full items-center  gap-2   ">
       <button

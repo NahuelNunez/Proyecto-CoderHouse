@@ -9,12 +9,10 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Admin/Store/useAuth";
-export const Carrito = () => {
+export const Carrito = ({ toggleMenu }) => {
   const { user } = useAuth();
-  console.log("Usuario", user);
-  const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = useState("md");
@@ -30,13 +28,14 @@ export const Carrito = () => {
   const handleOpen = (size) => {
     setSize(size);
     onOpen();
+    toggleMenu();
   };
   const handleRestById = (id) => {
     const enCarrito = [...carrito];
 
     const Rest = enCarrito.find((product) => product.id === id);
 
-    if (Rest.cantidad > 1) {
+    if (Rest.stock >= Rest.cantidad && Rest.cantidad > 1) {
       Rest.cantidad = Rest.cantidad - 1;
       setCarrito(enCarrito);
     }
@@ -45,14 +44,10 @@ export const Carrito = () => {
   const handleSumById = (id) => {
     const newCarrito = [...carrito];
     const Sum = newCarrito.find((product) => product.id === id);
-    if (Sum) {
+    if (Sum.stock > Sum.cantidad) {
       Sum.cantidad = Sum.cantidad + 1;
       setCarrito(newCarrito);
     }
-  };
-  const navigateanotherwebsite = () => {
-    navigate("/checkout");
-    onClose();
   };
 
   return (
@@ -144,8 +139,17 @@ export const Carrito = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="flex justify-center items-center h-full">
-                    <h2 className="text-gray-500">El carrito esta vacio</h2>
+                  <div className="flex flex-col gap-2 justify-center items-center h-full">
+                    <h2 className="text-gray-500 font-semibold">
+                      Tu carrito esta vacio
+                    </h2>
+                    <Link
+                      to="/Productos"
+                      onClick={onClose}
+                      className="text-gray-500 underline"
+                    >
+                      ¡Continúa comprando para encontrar algo genial!
+                    </Link>
                   </div>
                 )}
               </DrawerBody>
@@ -164,7 +168,7 @@ export const Carrito = () => {
                     )}
                     <div className="flex w-full justify-between">
                       <h2 className="font-playfair font-semibold text-gray-900 text-lg">
-                        Total:
+                        {carrito.length === 0 ? "" : "Total:"}
                       </h2>
                       {user?.rol === "usuario" ? (
                         <div className="flex flex-col">
@@ -179,19 +183,24 @@ export const Carrito = () => {
                           <h2 className="font-poppins">{totalWidget2()}</h2>
                         </div>
                       ) : (
-                        <h2 className="font-poppins">{totalWidget()}</h2>
+                        <h2 className="font-poppins">
+                          {carrito.length === 0 ? "" : totalWidget()}
+                        </h2>
                       )}
                     </div>
                   </div>
                   {carrito.length === 0 ? (
                     ""
                   ) : (
-                    <button
-                      onClick={navigateanotherwebsite}
+                    <Link
+                      to="/checkout"
+                      onClick={onClose}
                       className="  w-full bg-black  text-sky-500 hover:scale-105 hover:bg-sky-500 hover:text-black scale-90 transition-all duration-[0.5s] ease-in-out   font-bold p-3 text-md"
                     >
-                      <h2 className="font-poppins">FINALIZAR COMPRA</h2>
-                    </button>
+                      <h2 className="font-poppins text-center">
+                        FINALIZAR COMPRA
+                      </h2>
+                    </Link>
                   )}
                 </div>
               </DrawerFooter>

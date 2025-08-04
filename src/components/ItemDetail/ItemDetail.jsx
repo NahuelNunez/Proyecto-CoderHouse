@@ -25,20 +25,26 @@ export const ItemDetail = ({ producto }) => {
         alt={`${producto.title}`}
       />
 
-      <CardBody className="flex flex-row justify-around overflow-visible  items-center  w-full gap-3 ">
-        <h3 className="font-semibold text-white  ">{producto.title}</h3>
-        <h3 className="font-semibold text-gray-500">
-          {" "}
-          {convertArs(producto.price)} ARS
-        </h3>
+      <CardBody className="flex flex-col justify-around overflow-visible  items-center  w-full gap-3 ">
+        <div className="flex  justify-around items-center w-full">
+          <h3 className="font-semibold text-white  ">{producto.title}</h3>
+          <h3 className="font-semibold text-gray-500">
+            {" "}
+            {convertArs(producto.price)} ARS
+          </h3>
+        </div>
+        <div className="flex justify-around w-full items-center">
+          <h3 className="font-semibold text-white">Stock</h3>
+          <h3 className="font-semibold text-gray-500">{producto.stock}</h3>
+        </div>
       </CardBody>
       <CardFooter>
         <ItemCount
           handleAdd={() => {
-            handleAdd(cantidad);
+            handleAdd(cantidad, producto);
           }}
           handleRemove={() => {
-            handleRemove(cantidad);
+            handleRemove(cantidad, producto);
           }}
           handleAddProduct={() => {
             handleAddWidget(producto, cantidad);

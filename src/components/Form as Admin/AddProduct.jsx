@@ -58,13 +58,17 @@ export const AddProduct = ({ user }) => {
     getCategory();
   }, [user]);
 
-  console.log("Categorias", categories);
   return (
     <>
       <Button onPress={onOpen} className="bg-transparent text-blue-600">
         Add products as Admin
       </Button>
-      <Modal className="bg-black" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        className="bg-black"
+        placement="top-center"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>

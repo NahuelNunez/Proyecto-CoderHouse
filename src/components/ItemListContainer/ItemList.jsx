@@ -76,22 +76,33 @@ export const ItemList = ({ producto }) => {
           </CardFooter>
         </Card>
       ) : (
-        <Link to={`/item/${producto.id}`}>
+        <Link to={`${producto.stock === 0 ? `/` : `/item/${producto.id}`}`}>
           <Card
             key={producto.id}
             isPressable
             shadow="md"
             onPress={() => console.log("item pressed")}
-            className="w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 transition duration-500 ease-in-out"
+            className={`w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 relative  transition duration-500 ease-in-out`}
           >
-            <CardBody className="flex justify-center overflow-visible p-0 ">
+            <h3 className="text-red-600     absolute top-20 tracking-widest font-poppins text-[25px] opacity-100 border border-red-600 p-1">
+              AGOTADO
+            </h3>
+            <CardBody
+              className={`flex justify-center overflow-visible p-0 ${
+                producto.stock === 0 ? "opacity-10" : ""
+              }`}
+            >
               <img
                 className=" object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg "
                 src={`${producto.image}`}
                 alt={`${producto.title}`}
               />
             </CardBody>
-            <CardFooter className="text-center justify-between px-4">
+            <CardFooter
+              className={`text-center justify-between px-4 ${
+                producto.stock === 0 ? "opacity-10" : ""
+              }`}
+            >
               <h3 className="font-semibold text-white ">{producto.title}</h3>
               <h3 className="font-semibold text-gray-500">
                 {convertArs(producto.price)}

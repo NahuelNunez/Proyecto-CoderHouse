@@ -110,7 +110,12 @@ export const AddCategories = ({ user, category, usuario }) => {
       >
         {category?.category ? iconEdit : `Agregar categorias`}
       </Button>
-      <Modal className="bg-black" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        className="bg-black"
+        placement="center"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>

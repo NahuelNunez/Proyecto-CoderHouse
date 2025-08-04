@@ -589,8 +589,8 @@ export const FinalizarCompra = () => {
           <p className="text-white text-[14px]">
             Tus datos personales se utilizarán para procesar tu pedido.
           </p>
-          <button className="bg-sky-500 flex items-center px-2 py-2 font-poppins   hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 ">
-            Realizar pedido
+          <button className="bg-sky-500 flex justify-center items-center px-2 py-2 font-poppins text-center   hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 ">
+            <span>Realizar pedido</span>
             {arrowRight}
           </button>
         </div>
