@@ -35,6 +35,8 @@ const SucessPayment = () => {
         if (response) {
           setDataOrder(response);
           localStorage.removeItem("carrito");
+          localStorage.removeItem("cartItems");
+          localStorage.removeItem("clientData");
           setCarrito([]);
         }
       } catch (error) {
