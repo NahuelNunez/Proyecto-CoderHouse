@@ -18,7 +18,7 @@ const Home = () => {
         </p>
         <Link
           to="/Productos"
-          className="uppercase text-sm text-sky-500 p-4 border border-sky-500 font-semibold hover:bg-sky-500 hover:text-white hover:font-semibold transition-all ease-in-out duration-300"
+          className="uppercase text-sm text-white p-4  rounded-lg bg-sky-500 font-semibold hover:bg-transparent border border-sky-500 hover:text-white hover:font-semibold transition-all ease-in-out duration-300"
         >
           ver coleccion
         </Link>

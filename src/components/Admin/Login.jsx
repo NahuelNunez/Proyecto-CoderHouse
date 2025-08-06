@@ -82,7 +82,7 @@ export const Login = () => {
         </h4>
         <button
           type="submit"
-          className="bg-sky-600 p-2 w-[40%] lg:w-[25%] px-2 rounded-full text-[18px] font-semibold hover:text-white  duration-300 transition-all hover:scale-100 scale-90"
+          className="bg-sky-600 p-2 w-[40%] lg:w-[40%] px-2 rounded-full text-[18px] font-semibold hover:text-white  duration-300 transition-all hover:scale-100 scale-90 hover:bg-transparent hover: border border-sky-500"
         >
           Ingresar
         </button>

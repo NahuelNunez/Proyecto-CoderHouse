@@ -4,6 +4,7 @@ import { form, Radio, RadioGroup } from "@heroui/react";
 
 import { usePayment } from "../../hooks/usePayment";
 import { useAuth } from "../../components/Admin/Store/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const arrowRight = (
   <svg
@@ -37,7 +38,13 @@ export const FinalizarCompra = () => {
     convertArs,
   } = useContext(CartContext);
 
-  useEffect(() => {}, []);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (carrito.length === 0) {
+      navigate("/Productos");
+    }
+  }, []);
   const { createPayments } = usePayment();
   const { user } = useAuth();
 
