@@ -34,6 +34,7 @@ export const FinalizarCompra = () => {
     totalWidget2,
     carrito,
     setCarrito,
+    validate,
 
     convertArs,
   } = useContext(CartContext);
@@ -48,8 +49,6 @@ export const FinalizarCompra = () => {
   const { createPayments } = usePayment();
   const { user } = useAuth();
 
-  console.log("user", user);
-  console.log("carrito:", carrito);
   const selectDepartamentos = [
     { key: 0, label: "" },
     { key: 1, label: "Rawson" },
@@ -62,9 +61,9 @@ export const FinalizarCompra = () => {
 
     { key: 8, label: "Albardon" },
   ];
-
   const handleMercadoPayment = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
 
     if (!carrito || carrito.length === 0) {
       alert("El carrito esta vacio agregar productos para continuar.");
@@ -166,7 +165,7 @@ export const FinalizarCompra = () => {
           formdata.metodoPago === "tarjeta" ||
           formdata.metodoPago === "mercadoPago-basic"
             ? handleMercadoPayment
-            : handleSubmit
+            : handleMercadoPayment
         }
         className="bg-black/90 p-8 flex flex-col justify-between relative gap-10 mb-10  min-w-[320px] w-[80%]"
       >
@@ -175,7 +174,7 @@ export const FinalizarCompra = () => {
         </h4>
 
         <div className="flex flex-col md:flex-row md:justify-around md:gap-24 w-full">
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-2 relative">
             <span className="text-white text-[14px] font-oswald">Nombre</span>
             <input
               name="nombre"
@@ -183,9 +182,12 @@ export const FinalizarCompra = () => {
               className="bg-transparent text-sky-500 text-[12px] w-[100%] border-b-1 placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
               type="text"
             />
+            {error.nombre && (
+              <p className=" text-red-500 text-sm">{error.nombre}</p>
+            )}
           </div>
 
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex relative flex-col gap-2">
             <span className="text-white font-oswald text-[14px]">Apellido</span>
             <input
               name="apellido"
@@ -193,9 +195,12 @@ export const FinalizarCompra = () => {
               type="text"
               className=" w-[100%] text-sky-500 text-[12px] bg-transparent border-b-1 placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
             />
+            {error.apellido && (
+              <p className="text-red-500 text-sm">{error.apellido}</p>
+            )}
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 relative">
           <label className="text-white font-oswald text-[14px] ">
             Tipo entrega
           </label>
@@ -217,13 +222,16 @@ export const FinalizarCompra = () => {
               <span className="text-white font-oswald text-[12px]">Envio</span>
             </Radio>
           </RadioGroup>
+          {error.tipoEntrega && (
+            <p className="text-red-500 text-sm">{error.tipoEntrega}</p>
+          )}
         </div>
 
         <div
           className={`${
-            formdata.tipoEntrega === "Retiro"
-              ? "hidden"
-              : "flex flex-col w-full gap-2"
+            formdata.tipoEntrega === "Envio"
+              ? "flex flex-col w-full gap-2 relative"
+              : "hidden"
           }`}
         >
           <RadioGroup name="envio">
@@ -263,11 +271,12 @@ export const FinalizarCompra = () => {
               </span>
             </Radio>
           </RadioGroup>
+          {error.envio && <p className="text-red-500 text-sm">{error.envio}</p>}
         </div>
         <div
           className={`${
-            formdata.tipoEntrega === "Retiro" ? "hidden" : "flex"
-          } flex-col w-full gap-2`}
+            formdata.tipoEntrega === "Envio" ? "flex" : "hidden"
+          } flex-col w-full gap-2 relative`}
         >
           <span className="text-white font-oswald text-[14px]">Domicilio</span>
           <input
@@ -276,11 +285,14 @@ export const FinalizarCompra = () => {
             type="text"
             className="bg-transparent text-sky-500 border-b-1 text-[12px] placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
           />
+          {error.domicilio && (
+            <p className="text-red-500 text-sm">{error.domicilio}</p>
+          )}
         </div>
         <div
           className={`${
-            formdata.tipoEntrega === "Retiro" ? "hidden" : "flex"
-          } flex-col w-full gap-2`}
+            formdata.tipoEntrega === "Envio" ? "flex" : "hidden"
+          } flex-col w-full gap-2 relative`}
         >
           <span className="text-white font-oswald text-[14px]">Localidad</span>
           <select
@@ -298,11 +310,14 @@ export const FinalizarCompra = () => {
               </option>
             ))}
           </select>
+          {error.localidad && (
+            <p className="text-red-500 text-sm">{error.localidad}</p>
+          )}
         </div>
         <div
           className={`${
-            formdata.tipoEntrega === "Retiro" ? "hidden" : "flex"
-          } flex-col w-full gap-2`}
+            formdata.tipoEntrega === "Envio" ? "flex" : "hidden"
+          } flex-col w-full gap-2 relative`}
         >
           <label className="text-white font-oswald text-[14px]">
             Codigo Postal
@@ -313,8 +328,11 @@ export const FinalizarCompra = () => {
             type="number"
             className="bg-transparent border-b-1 text-[12px] text-sky-500 placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
           />
+          {error.codigoPostal && (
+            <p className="text-red-500 text-sm">{error.codigoPostal}</p>
+          )}
         </div>
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 relative">
           <label className="text-white font-oswald text-[14px]">Telefono</label>
           <input
             name="telefono"
@@ -322,8 +340,11 @@ export const FinalizarCompra = () => {
             type="number"
             className="bg-transparent border-b-1 text-[12px] text-sky-500 placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
           />
+          {error.telefono && (
+            <p className="text-red-500 text-sm">{error.telefono} </p>
+          )}
         </div>
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 relative">
           <label className="text-white font-oswald text-[14px]">
             Dirección de correo electrónico
           </label>
@@ -333,6 +354,7 @@ export const FinalizarCompra = () => {
             type="email"
             className="bg-transparent border-b-1 text-[12px] text-sky-500 placeholder:text-[12px] placeholder:text-gray-600 border-b-gray-600 focus:border-b-white outline-none transition-all duration-300 ease-in-out"
           />
+          {error.email && <p className="text-red-500 text-sm">{error.email}</p>}
         </div>
         <h3 className="text-white font-poppins text-[22px] font-semibold">
           Tu pedido
@@ -570,7 +592,7 @@ export const FinalizarCompra = () => {
             </label>
           </Radio> */}
 
-          <div
+          {/* <div
             className={`${
               formdata.metodoPago === "transferencia"
                 ? "   mercadoPago-Basic     bg-gray-500/60 p-6 text-[12px]"
@@ -589,14 +611,20 @@ export const FinalizarCompra = () => {
                 tu pedido.
               </p>
             </div>
-          </div>
+          </div> */}
         </RadioGroup>
+        {error.metodoPago && (
+          <p className="text-red-500 text-sm">{error.metodoPago}</p>
+        )}
 
         <div className="  flex flex-col gap-5 relative  md:flex-row justify-between">
           <p className="text-white text-[14px]">
             Tus datos personales se utilizarán para procesar tu pedido.
           </p>
-          <button className="bg-sky-500 flex justify-center items-center px-2 py-2 font-poppins text-center   hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 ">
+          <button
+            type="submit"
+            className="bg-sky-500 flex justify-center items-center px-2 py-2 font-poppins text-center   hover:text-white hover:bg-sky-400 ease-in-out transition-all duration-300 "
+          >
             <span>Realizar pedido</span>
             {arrowRight}
           </button>

@@ -121,43 +121,30 @@ export const CartProvider = ({ children }) => {
   const validate = () => {
     const newErrors = {};
 
-    if (!formdata.nombre) newErrors.nombre = "El nombre es obligatorio";
+    if (!formdata.nombre.trim()) newErrors.nombre = "El nombre es obligatorio";
 
-    if (!formdata.apellido) newErrors.apellido = "El apellido es obligatorio";
-    if (!formdata.email) newErrors.email = "El email es obligatorio";
+    if (!formdata.apellido.trim())
+      newErrors.apellido = "El apellido es obligatorio";
+    if (!formdata.email.trim()) newErrors.email = "El email es obligatorio";
 
     if (!formdata.telefono)
       newErrors.telefono = "El numero de telefono es obligatorio";
-    // if (!formdata.numeroTransferencia)
-    //   newErrors.numeroTransferencia = "El numero de transaccion es obligatorio";
-
-    // if (!formdata.montoTotal)
-    //   newErrors.montoTotal = "El monto total es obligatorio";
-
-    // const montoCalculado = carrito.reduce(
-    //   (acc, producto) => acc + producto.cantidad * producto.price,
-    //   0
-    // );
-
-    // const montoCalculado2 = montoCalculado * (10 / 100);
-
-    // const ResTotal = montoCalculado - montoCalculado2;
-    // const montoIngresado = Number(formdata.montoTotal);
-
-    // if (user?.rol === "usuario") {
-    //   if (montoIngresado !== ResTotal) {
-    //     newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
-    //       ResTotal
-    //     )})`;
-    //   }
-    // } else {
-    //   if (montoIngresado !== montoCalculado) {
-    //     newErrors.montoTotal = `El monto ingresado no coincide con el total a pagar (${convertArs(
-    //       montoCalculado
-    //     )})`;
-    //   }
-    // }
+    if (!formdata.tipoEntrega)
+      newErrors.tipoEntrega = "Seleccione un tipo de entrega";
+    else if (formdata.tipoEntrega === "Envio") {
+      if (!formdata.envio) newErrors.envio = "Seleccione Destino.";
+      if (!formdata.domicilio.trim())
+        newErrors.domicilio = "El domicilio es obligatorio.";
+      if (!formdata.localidad.trim())
+        newErrors.localidad = "La localidad es obligatoria.";
+      if (!formdata.codigoPostal || isNaN(formdata.codigoPostal)) {
+        newErrors.codigoPostal = "Código postal obligatorio.";
+      }
+      if (!formdata.envio) newErrors.envio = "Seleccioná un precio de envío.";
+    }
     setError(newErrors);
+    if (!formdata.metodoPago)
+      newErrors.metodoPago = "Seleccione metodo de pago";
     return Object.keys(newErrors).length === 0;
   };
 
@@ -321,7 +308,7 @@ export const CartProvider = ({ children }) => {
         handleOpen,
         menuForm,
         sessionId,
-
+        validate,
         error,
         totalWidget2,
       }}
