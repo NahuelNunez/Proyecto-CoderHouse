@@ -26,6 +26,7 @@ import { TableAdmins } from "./components/Admin/SuperAdmin/Table Admin/TableAdmi
 import { FinalizarCompra } from "./pages/finalizarCompra/FinalizarCompra";
 import SucessPayment from "./pages/SucessPayment";
 import FailurePayment from "./pages/FailurePayment";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   const { user } = useAuth();
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             {/* <Login /> */}
             <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
             <Route path="/item/:id" element={<ItemDetailContainer />} />
             <Route path="/category/:category" element={<Category />} />
             <Route path="/Productos" element={<Productos />} />
@@ -83,7 +85,6 @@ function App() {
             <Route path="/checkout" element={<FinalizarCompra />} />
             <Route path="/payment/success" element={<SucessPayment />} />
             <Route path="/payment/failure" element={<FailurePayment />} />
-            <Route path="/payment/pending" element={<SucessPayment />} />
           </Routes>
           <Footer />
         </Layout>

@@ -25,9 +25,12 @@ export default function FailedPayment() {
             Por favor, verifica los datos de tu tarjeta o intenta con otro
             método de pago.
           </p>
-          <Button className="bg-red-600 text-white hover:bg-red-500 font-poppins">
-            <Link to="/">Volver al Inicio</Link>
-          </Button>
+          <Link
+            to="/"
+            className="bg-red-600 text-white text-center py-2 px-2 rounded-full hover:bg-red-500 font-poppins"
+          >
+            Volver al Inicio
+          </Link>
         </CardBody>
       </Card>
     </div>
