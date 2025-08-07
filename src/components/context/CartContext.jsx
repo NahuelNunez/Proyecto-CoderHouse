@@ -34,7 +34,6 @@ export const CartProvider = ({ children }) => {
     cantidad: product.cantidad,
     imagen: product.image,
   }));
-  console.log("carrito", carrito);
 
   useEffect(() => {
     const getSession = async () => {
@@ -92,8 +91,6 @@ export const CartProvider = ({ children }) => {
 
     userToken: user?.email || "",
   });
-
-  console.log("Datos a enviar:", formdata);
 
   const [error, setError] = useState({});
 

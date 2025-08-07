@@ -157,7 +157,7 @@ export const TableAdmins = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center gap-5 items-center">
       <h2 className="text-white font-playfair text-[40px] mt-14">
-        Table Administradores
+        Tabla Operadores
       </h2>
 
       <Table className="w-auto bg-black/90 p-8">
@@ -233,12 +233,12 @@ export const TableAdmins = () => {
         openEye={openEye}
       />
       <h2 className="font-playfair text-[30px] text-white">
-        Actividad administradores
+        Actividad operadores
       </h2>
 
-      <div className="bg-black/90 flex flex-col-reverse gap-2 p-8 max w-auto h-[30em] overflow-auto scrollbar-thin scrollbar-track">
+      <div className="bg-black/90 flex flex-col-reverse gap-2 p-8 mb-14 w-auto h-[30em] overflow-auto scrollbar-thin scrollbar-track">
         {logs.map((log) => (
-          <div key={log.id} className=" text-white gap-6   border-b-1 ">
+          <div key={log.id} className=" text-white gap-6   border-b-1 p-2 m-0 ">
             <h2
               className={`${
                 log.action === "CREATE_PRODUCT" ||
@@ -253,7 +253,7 @@ export const TableAdmins = () => {
             >
               {log.action}
             </h2>
-            <p className="text-gray-400">{log.description}</p>
+            <p className="text-gray-300">{log.description}</p>
           </div>
         ))}
       </div>

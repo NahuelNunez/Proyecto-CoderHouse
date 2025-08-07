@@ -88,16 +88,14 @@ export const AddAdmin = ({
             : "text-white font-poppins bg-black rounded-full px-4 py-3 scale-90 hover:scale-100 hover:text-black hover:bg-sky-400 transition-all duration-300 ease-in-out"
         }`}
       >
-        {admin?.nombre ? iconEdit : "Agregar administrador"}
+        {admin?.nombre ? iconEdit : "Agregar operador"}
       </button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent className="bg-black">
           <>
             <ModalHeader className="flex flex-col gap-1">
               <h2 className="text-center text-white">
-                {admin?.nombre
-                  ? "Editar administrador"
-                  : "Agregar administrador"}
+                {admin?.nombre ? "Editar operador" : "Agregar operador"}
               </h2>
             </ModalHeader>
             <ModalBody>
@@ -178,7 +176,7 @@ export const AddAdmin = ({
                       value="admin"
                     >
                       <h2 className="text-white">
-                        Rol: <span>Admin</span>
+                        Rol: <span>Operador</span>
                       </h2>
                     </Radio>
                   </RadioGroup>
@@ -291,7 +289,7 @@ export const AddAdmin = ({
                       {...register("rol", { required: true })}
                       value="admin"
                     >
-                      <h2 className="text-white">Admin</h2>
+                      <h2 className="text-white">Operador</h2>
                     </Radio>
                   </RadioGroup>
                   <ModalFooter className="flex items-center justify-center gap-4">
