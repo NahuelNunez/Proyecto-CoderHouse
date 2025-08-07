@@ -234,6 +234,7 @@ export const FinalizarCompra = () => {
               : "hidden"
           }`}
         >
+          <h2 className="font-oswald text-white text-[14px]">Costo de envío</h2>
           <RadioGroup name="envio">
             <Radio
               type="number"

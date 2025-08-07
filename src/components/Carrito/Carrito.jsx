@@ -9,7 +9,7 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../Admin/Store/useAuth";
 export const Carrito = ({ toggleMenu }) => {
   const { user } = useAuth();
@@ -166,10 +166,18 @@ export const Carrito = ({ toggleMenu }) => {
                     ) : (
                       ""
                     )}
+
                     <div className="flex w-full justify-between">
-                      <h2 className="font-playfair font-semibold text-gray-900 text-lg">
-                        {carrito.length === 0 ? "" : "Total:"}
-                      </h2>
+                      <div className="flex flex-col">
+                        <h2 className="font-playfair font-semibold text-gray-900 text-lg">
+                          {carrito.length === 0 ? "" : "Subtotal:"}
+                        </h2>
+
+                        <h2 className="font-playfair font-semibold text-gray-900 text-lg">
+                          {carrito.length === 0 ? "" : "Total:"}
+                        </h2>
+                      </div>
+
                       {user?.rol === "usuario" ? (
                         <div className="flex flex-col">
                           {carrito.length >= 1 ? (
@@ -183,9 +191,15 @@ export const Carrito = ({ toggleMenu }) => {
                           <h2 className="font-poppins">{totalWidget2()}</h2>
                         </div>
                       ) : (
-                        <h2 className="font-poppins">
-                          {carrito.length === 0 ? "" : totalWidget()}
-                        </h2>
+                        <div className="flex flex-col">
+                          <h2 className="font-poppins">
+                            {carrito.length === 0 ? "" : totalWidget()}
+                          </h2>
+                          <h2 className="font-poppins">
+                            {" "}
+                            {carrito.length === 0 ? "" : totalWidget()}
+                          </h2>
+                        </div>
                       )}
                     </div>
                   </div>
