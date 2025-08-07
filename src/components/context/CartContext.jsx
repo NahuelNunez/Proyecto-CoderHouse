@@ -264,7 +264,13 @@ export const CartProvider = ({ children }) => {
     const totalCarrito2 = totalCarrito * (10 / 100);
 
     const Total2 = totalCarrito - totalCarrito2;
-    const total = Total2.toLocaleString("es-AR", {
+    const addEnvio =
+      formdata.envio === "Retiro"
+        ? (formdata.envio = 0)
+        : Number(formdata.envio);
+    const totalito = Total2 + addEnvio;
+
+    const total = totalito.toLocaleString("es-AR", {
       style: "currency",
       currency: "ARS",
       minimumFractionDigits: 0,
