@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter } from "@heroui/react";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../Admin/Store/useAuth";
@@ -76,33 +76,38 @@ export const ItemList = ({ producto }) => {
           </CardFooter>
         </Card>
       ) : (
-        <Link to={`${producto.stock === 0 ? `/` : `/item/${producto.id}`}`}>
+        <Link to={`/item/${producto.id}`}>
           <Card
             key={producto.id}
             isPressable
             shadow="md"
             onPress={() => console.log("item pressed")}
-            className={`w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 relative  transition duration-500 ease-in-out`}
+            className={`w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 relative   transition duration-500 ease-in-out`}
           >
-            <h3 className="text-red-600     absolute top-20 tracking-widest font-poppins text-[25px] opacity-100 border border-red-600 p-1">
-              AGOTADO
-            </h3>
-            <CardBody
-              className={`flex justify-center overflow-visible p-0 ${
-                producto.stock === 0 ? "opacity-10" : ""
-              }`}
-            >
+            {producto.stock === 0 ? (
+              <h3 className="font-semibold     absolute top-2 left-2 tracking-widest font-poppins text-[10px] text-white bg-red-600 z-10 border border-red-600 p-1">
+                SIN STOCK
+              </h3>
+            ) : (
+              ""
+            )}
+
+            <CardBody className={`flex justify-center overflow-visible p-0 `}>
               <img
-                className=" object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg "
+                className={` object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg`}
                 src={`${producto.image}`}
                 alt={`${producto.title}`}
               />
             </CardBody>
             <CardFooter
               className={`text-center justify-between px-4 ${
-                producto.stock === 0 ? "opacity-10" : ""
-              }`}
+                producto.stock === 0 ? "opacity-60" : ""
+              } `}
             >
+              {producto.stock === 0 && (
+                <div className=" bg-white/30 bg-opacity-80 inset-0  absolute    "></div>
+              )}
+
               <h3 className="font-semibold text-white ">{producto.title}</h3>
               <h3 className="font-semibold text-gray-500">
                 {convertArs(producto.price)}

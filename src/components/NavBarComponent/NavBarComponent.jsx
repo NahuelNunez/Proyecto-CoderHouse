@@ -73,7 +73,7 @@ const NavBarComponent = () => {
               <DropdownTrigger>
                 <Button
                   variant="bordered"
-                  className=" text-white text-center p-2 "
+                  className=" text-white text-center p-2 font-semibold"
                 >
                   Categorias
                 </Button>
@@ -97,20 +97,32 @@ const NavBarComponent = () => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button onPress={toggleMenu} variant="bordered" className=" p-2">
-              <Link to="/Productos" className="text-white">
-                Productos
-              </Link>
+            <Button
+              onPress={() => {
+                toggleMenu(), navigate(`/Productos`);
+              }}
+              variant="bordered"
+              className=" p-2"
+            >
+              <h2 className="text-white font-semibold">Productos</h2>
             </Button>
-            <Button onPress={toggleMenu} variant="bordered" className=" p-2 ">
-              <Link to="/about" className="text-white font-semibold">
-                Nosotros
-              </Link>
+            <Button
+              onPress={() => {
+                toggleMenu(), navigate(`/about`);
+              }}
+              variant="bordered"
+              className=" p-2 "
+            >
+              <h2 className="text-white font-semibold">Nosotros</h2>
             </Button>
-            <Button onPress={toggleMenu} variant="bordered" className=" p-2">
-              <Link to="/contact" className="text-white font-semibold">
-                Contacto
-              </Link>
+            <Button
+              onPress={() => {
+                toggleMenu(), navigate(`/contact`);
+              }}
+              variant="bordered"
+              className=" p-2"
+            >
+              <h2 className="text-white font-semibold">Contacto</h2>
             </Button>
 
             <Carrito toggleMenu={toggleMenu} />
@@ -170,20 +182,26 @@ const NavBarComponent = () => {
             </Dropdown>
           </div>
         </div>
-        <Button variant="bordered" className=" p-2">
-          <Link to="/Productos" className="text-white">
-            Productos
-          </Link>
+        <Button
+          variant="bordered"
+          onPress={() => navigate(`/Productos`)}
+          className=" p-2"
+        >
+          <h2 className="text-white font-semibold">Productos</h2>
         </Button>
-        <Button variant="bordered" className=" p-2 ">
-          <Link to="/about" className="text-white font-semibold">
-            Nosotros
-          </Link>
+        <Button
+          onPress={() => navigate(`/about`)}
+          variant="bordered"
+          className=" p-2 "
+        >
+          <h2 className="text-white font-semibold">Nosotros</h2>
         </Button>
-        <Button variant="bordered" className=" p-2">
-          <Link to="/contact" className="text-white font-semibold">
-            Contacto
-          </Link>
+        <Button
+          onPress={() => navigate(`/contact`)}
+          variant="bordered"
+          className=" p-2"
+        >
+          <h2 className="text-white font-semibold">Contacto</h2>
         </Button>
 
         <Carrito />
