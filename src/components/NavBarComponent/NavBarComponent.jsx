@@ -173,7 +173,7 @@ const NavBarComponent = () => {
                     textValue={option.category}
                     onPress={() => navigate(`/category/${option.category}`)}
                   >
-                    <span className="text-white font-semibold">
+                    <span className="text-white font-semibold uppercase">
                       {option.category}
                     </span>
                   </DropdownItem>

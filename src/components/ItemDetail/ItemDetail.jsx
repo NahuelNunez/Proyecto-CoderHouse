@@ -44,7 +44,9 @@ export const ItemDetail = ({ producto }) => {
 
       <CardBody className="flex flex-col justify-around overflow-visible  items-center  w-full gap-3 ">
         <div className="flex  justify-around items-center w-full">
-          <h3 className="font-semibold text-white  ">{producto.title}</h3>
+          <h3 className="font-semibold text-white uppercase text-[14px]  ">
+            {producto.title}
+          </h3>
           <h3 className="font-semibold text-gray-500">
             {" "}
             {convertArs(producto.price)} ARS

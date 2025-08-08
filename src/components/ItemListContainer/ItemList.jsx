@@ -47,7 +47,9 @@ export const ItemList = ({ producto }) => {
             />
           </CardBody>
           <CardFooter className="text-center justify-between px-4">
-            <h3 className="font-semibold text-white ">{producto.title}</h3>
+            <h3 className="font-semibold text-white uppercase text-[14px] ">
+              {producto.title}
+            </h3>
             <h3 className="font-semibold text-gray-500">
               {convertArs(producto.price)}
             </h3>
@@ -108,7 +110,9 @@ export const ItemList = ({ producto }) => {
                 <div className=" bg-white/30 bg-opacity-80 inset-0  absolute    "></div>
               )}
 
-              <h3 className="font-semibold text-white ">{producto.title}</h3>
+              <h3 className="font-semibold text-white uppercase text-[14px] ">
+                {producto.title}
+              </h3>
               <h3 className="font-semibold text-gray-500">
                 {convertArs(producto.price)}
               </h3>
