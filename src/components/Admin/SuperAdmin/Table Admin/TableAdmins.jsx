@@ -120,7 +120,7 @@ export const TableAdmins = () => {
     try {
       const response = await deleteUser(idAdmin, user.token);
       if (response) {
-        toast.success("Administrador eliminado exitosamente");
+        toast.success("Operador eliminado exitosamente");
         getAdmines();
       } else if (response.error) {
         toast.error("Error al eliminar el administrador");
@@ -135,22 +135,22 @@ export const TableAdmins = () => {
       if (status === false) {
         const response = await inhabilitarAdmin(id, user.token);
         if (response.error) {
-          toast.error("Error al inhabilitar el administrador");
+          toast.error("Error al inhabilitar el Operador");
         } else if (response) {
-          toast.success("Administrador inhabilitado exitosamente");
+          toast.success("Operador inhabilitado exitosamente");
           getAdmines();
         }
       } else if (status) {
         const response = await habilitarAdmin(id, user.token);
         if (response.error) {
-          toast.error("Error al habilitar el administrador");
+          toast.error("Error al habilitar el Operador");
         } else if (response) {
-          toast.success("Administrador habilitado exitosamente");
+          toast.success("Operador habilitado exitosamente");
           getAdmines();
         }
       }
     } catch (error) {
-      console.log("Error al inhabilitar el administrador", error);
+      console.log("Error al inhabilitar el Operador", error);
     }
   };
 

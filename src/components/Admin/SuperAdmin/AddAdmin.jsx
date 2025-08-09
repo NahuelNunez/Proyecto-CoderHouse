@@ -48,16 +48,16 @@ export const AddAdmin = ({
       if (admin) {
         const response = await editUser(admin.id, user?.token, data);
         if (response.error) {
-          toast.error("Error al editar el administrador");
+          toast.error("Error al editar el Operador");
         } else if (response) {
-          toast.success("Administrador editado exitosamente");
+          toast.success("Operador editado exitosamente");
           getAdmines();
           onClose();
         }
       } else {
         const response = await postSingUp(data);
         if (response) {
-          toast.success("Administrador creado exitosamente");
+          toast.success("Operador creado exitosamente");
           getAdmines();
           reset();
           onClose();
@@ -65,11 +65,11 @@ export const AddAdmin = ({
       }
     } catch (error) {
       if (admin) {
-        toast.error("Error al editar el administrador");
-        console.log("Error al editar el administrador", error);
+        toast.error("Error al editar el Operador");
+        console.log("Error al editar el Operador", error);
       }
-      toast.error("Error al crear administrador");
-      console.log("Error al crear administrador", error);
+      toast.error("Error al crear Operador");
+      console.log("Error al crear Operador", error);
     }
   };
   return (
@@ -90,7 +90,7 @@ export const AddAdmin = ({
       >
         {admin?.nombre ? iconEdit : "Agregar operador"}
       </button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent className="bg-black">
           <>
             <ModalHeader className="flex flex-col gap-1">
