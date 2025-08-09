@@ -41,10 +41,11 @@ export const AddProduct = ({ user }) => {
       formData.append("price", data.price);
       formData.append("stock", data.stock);
       formData.append("image", data.image[0]);
-      const response = await postProductos(formData, user.token);
-      if (response) {
-        toast.success("Producto creado exitosamente");
-      }
+      await toast.promise(postProductos(formData, user.token), {
+        pending: "Cargando...🙄",
+        success: "Producto Agregado exitosamente😎",
+        error: "Error al crear el producto😯",
+      });
       getProductos();
     } catch (error) {
       console.log("Error al crear las promociones", error);
