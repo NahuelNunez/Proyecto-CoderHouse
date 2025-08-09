@@ -90,7 +90,7 @@ const NavBarComponent = () => {
                       navigate(`/category/${option.category}`), toggleMenu();
                     }}
                   >
-                    <span className="text-white font-semibold">
+                    <span className="text-white font-semibold uppercase">
                       {option.category}
                     </span>
                   </DropdownItem>

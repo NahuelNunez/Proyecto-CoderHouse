@@ -87,13 +87,12 @@ export const ItemList = ({ producto }) => {
             className={`w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 relative   transition duration-500 ease-in-out`}
           >
             {producto.stock === 0 ? (
-              <h3 className="font-semibold     absolute top-2 left-2 tracking-widest font-poppins text-[10px] text-white bg-red-600 z-10 border border-red-600 p-1">
+              <h3 className="font-semibold     absolute top-2 left-2 tracking-widest font-poppins text-[10px] text-white bg-red-600 z-[1]  border border-red-600 p-1">
                 SIN STOCK
               </h3>
             ) : (
               ""
             )}
-
             <CardBody className={`flex justify-center overflow-visible p-0 `}>
               <img
                 className={` object-cover object-center h-[200px] w-full rounded-t-lg rounded-b-lg`}
@@ -114,7 +113,7 @@ export const ItemList = ({ producto }) => {
                 {producto.title}
               </h3>
               <h3 className="font-semibold text-gray-500">
-                {convertArs(producto.price)}
+                {convertArs(producto.price)} ARS
               </h3>
             </CardFooter>
           </Card>
