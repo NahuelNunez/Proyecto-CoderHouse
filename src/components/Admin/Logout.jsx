@@ -94,7 +94,7 @@ export const Logout = ({ user, toggleMenu }) => {
               Navigate(`/admin/TableOrders`), toggleMenu();
             }}
           >
-            <span className="text-green-500">Table Orders</span>
+            <span className="text-green-500">Tabla Ordenes</span>
           </DropdownItem>
 
           <DropdownItem
@@ -115,7 +115,7 @@ export const Logout = ({ user, toggleMenu }) => {
               toggleMenu();
             }}
           >
-            <span className="text-amber-300">Table Categories</span>
+            <span className="text-amber-300">Tabla Categorias</span>
           </DropdownItem>
 
           <DropdownItem

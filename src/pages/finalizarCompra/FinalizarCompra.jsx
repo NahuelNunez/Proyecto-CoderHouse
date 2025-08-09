@@ -69,7 +69,7 @@ export const FinalizarCompra = () => {
       alert("El carrito esta vacio agregar productos para continuar.");
       return;
     }
-    const shippingCost = Number(formdata.envio);
+
     try {
       if (user?.rol === "usuario") {
         const userEmail = user?.email;
@@ -86,7 +86,6 @@ export const FinalizarCompra = () => {
           formdata,
           userEmail,
           userId,
-          shippingCost,
         });
 
         if (response.error) {
@@ -163,7 +162,7 @@ export const FinalizarCompra = () => {
       <form
         onSubmit={
           formdata.metodoPago === "tarjeta" ||
-          formdata.metodoPago === "mercadoPago-basic"
+          formdata.metodoPago === "Billetera-MercadoPago"
             ? handleMercadoPayment
             : handleMercadoPayment
         }
@@ -425,9 +424,9 @@ export const FinalizarCompra = () => {
         <RadioGroup name="metodoPago">
           <Radio
             name="metodoPago"
-            checked={formdata.metodoPago === "mercadoPago-basic"}
+            checked={formdata.metodoPago === "Billetera-MercadoPago"}
             onChange={handleOnChange}
-            value="mercadoPago-basic"
+            value="Billetera-MercadoPago"
             id="metodo"
             className="peer/metodo"
           >
@@ -439,7 +438,7 @@ export const FinalizarCompra = () => {
 
           <div
             className={`${
-              formdata.metodoPago === "mercadoPago-basic"
+              formdata.metodoPago === "Billetera-MercadoPago"
                 ? "   mercadoPago-Basic     bg-gray-500/60 p-6 before:max-h-340"
                 : "exit-mercadoPago "
             } transition-all ease-in-out duration-500 `}

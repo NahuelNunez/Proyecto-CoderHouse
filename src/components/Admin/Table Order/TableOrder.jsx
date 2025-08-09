@@ -66,7 +66,7 @@ export const TableOrder = () => {
             <TableColumn>LOCALIDAD</TableColumn>
             <TableColumn>DOMICILIO</TableColumn>
             <TableColumn>CODIGO POSTAL</TableColumn>
-            <TableColumn>N° Transferencia</TableColumn>
+            <TableColumn>COSTE ENVIO</TableColumn>
             <TableColumn>MONTO TOTAL</TableColumn>
           </TableHeader>
           <TableBody>
@@ -92,7 +92,7 @@ export const TableOrder = () => {
                 <TableCell>{orders.localidad}</TableCell>
                 <TableCell>{orders.domicilio}</TableCell>
                 <TableCell>{orders.codigoPostal}</TableCell>
-                <TableCell>{orders.numeroTransferencia}</TableCell>
+                <TableCell>{orders.envio}</TableCell>
                 <TableCell>{convertArs(orders.montoTotal)}</TableCell>
               </TableRow>
             ))}
