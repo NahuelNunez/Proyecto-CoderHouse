@@ -80,8 +80,50 @@ export const useProductos = create((set) => ({
 
         }
     },
+    inhabilitarProductos: async (id, token) => {
+        try {
+            const response = await axios.patch(`${baseURL}/products/inhabilitarProduct/${id}`, {}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+
+            })
+            return { data: response.data, error: null }
+
+        } catch (error) {
+            console.error("Error al inhabilitar el producto", error)
+            const msg = error.response?.data?.message || error.response?.data?.error
+            return { error: msg, data: null }
+
+        }
+    },
+
+
+    habilitarProductos: async (id, token) => {
+        try {
+            const response = await axios.patch(`${baseURL}/products/habilitarProduct/${id}`, {}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            console.error("Error al habilitar el producto", error)
+            const msg = error.response?.data?.message || error.response?.data?.error
+            return { error: msg, data: null }
+        }
+    },
+
+
+
+
+
     setEditingProduct: (producto) => set({ editingProduct: producto }),
     clearEditingProduct: () => set({ editingProduct: null }),
+
+
 }))
 
 

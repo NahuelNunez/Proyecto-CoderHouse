@@ -111,6 +111,10 @@ const SucessPayment = () => {
               Gracias por tu compra. Tu pago ha sido procesado con éxito y tu
               orden está en camino.
             </p>
+            <p className="text-xl font-semibold text-muted-foreground">
+              La confirmacion de tus pedidos ha sido enviada a tu correo
+              electronico.
+            </p>
           </div>
         </div>
         <CardBody className="space-y-8 mt-8">

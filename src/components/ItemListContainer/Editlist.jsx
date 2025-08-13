@@ -68,7 +68,7 @@ export const Editlist = ({ producto, user }) => {
   return (
     <>
       <Button
-        className="bg-transparent hover:text-blue-500 text-white p-0 w-1 m-0"
+        className="bg-transparent hover:text-blue-500 text-white p-0 m-0"
         onPress={() => Onediting(producto)}
       >
         <svg
