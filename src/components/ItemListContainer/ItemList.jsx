@@ -155,6 +155,45 @@ export const ItemList = ({ producto }) => {
         ""
       )}
 
+      {user?.rol === "operador" && (
+        <Card
+          key={producto.id}
+          shadow="md"
+          className="w-64  flex flex-col items-center bg-[#18181B] rounded-lg gap-4 hover:scale-105 transition duration-500 ease-in-out"
+        >
+          <CardBody className="flex justify-center overflow-visible p-0 ">
+            {producto.inhabilitado === true && (
+              <h3 className="uppercase absolute bg-red-600/80 text-[20px] p-2 tracking-widest  top-[0px]  font-poppins text-white ">
+                inhabilitado
+              </h3>
+            )}
+            <img
+              className=" object-cover h-[200px] rounded-t-lg rounded-b-lg "
+              src={`${producto.image}`}
+            />
+          </CardBody>
+          <CardFooter className="text-center justify-between px-4">
+            <h3 className="font-semibold text-white uppercase text-[14px] ">
+              {producto.title}
+            </h3>
+            <h3 className="font-semibold text-gray-500">
+              {convertArs(producto.price)}
+            </h3>
+
+            <div className="flex flex-col items-center gap-2">
+              <button
+                className="text-gray-400 hover:text-white transition-all duration-300 ease-in-out"
+                onClick={() =>
+                  enableDisableProduct(producto.id, producto.inhabilitado)
+                }
+              >
+                {producto.inhabilitado === false ? openEye : closeEye}
+              </button>
+            </div>
+          </CardFooter>
+        </Card>
+      )}
+
       {(producto.inhabilitado === false && user?.rol === "usuario") ||
       (producto.inhabilitado === false && user === null) ||
       (user?.rol === "superadmin" && producto.inhabilitado === false) ? (

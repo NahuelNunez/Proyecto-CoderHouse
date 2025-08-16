@@ -66,7 +66,7 @@ function App() {
             <Route
               path="/admin/categories"
               element={
-                <RutaProtegida roleRequired="admin">
+                <RutaProtegida roleRequired="admin" roleRequired2="operador">
                   <TableCategory user={user} />
                 </RutaProtegida>
               }

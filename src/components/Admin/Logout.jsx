@@ -164,6 +164,43 @@ export const Logout = ({ user, toggleMenu }) => {
           </DropdownItem>
         </DropdownMenu>
       )}
+      {rol === "operador" && (
+        <DropdownMenu closeOnSelect={false} className="text-center bg-black">
+          <DropdownItem
+            variant="bordered"
+            closeOnSelect={true}
+            className="text-white"
+            onPress={() => {
+              Navigate(`/changepassword`), toggleMenu();
+            }}
+          >
+            <span>Cambiar contraseña</span>
+          </DropdownItem>
+
+          <DropdownItem
+            closeOnSelect={true}
+            variant="bordered"
+            onPress={() => {
+              Navigate(`/admin/categories`);
+              toggleMenu();
+            }}
+          >
+            <span className="text-amber-300">Tabla Categorias</span>
+          </DropdownItem>
+
+          <DropdownItem
+            variant="bordered"
+            closeOnSelect={true}
+            onPress={() => {
+              LogOut();
+              toggleMenu();
+            }}
+            className="text-danger"
+          >
+            Cerrar Sesion
+          </DropdownItem>
+        </DropdownMenu>
+      )}
     </Dropdown>
   );
 };

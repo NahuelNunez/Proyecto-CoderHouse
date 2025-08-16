@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Admin/Store/useAuth";
-import { Login } from "../Admin/Login";
-import { Productos } from "../../pages/Productos";
+
 import { useEffect } from "react";
 
-export const RutaProtegida = ({ children, roleRequired }) => {
+export const RutaProtegida = ({ children, roleRequired, roleRequired2 }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -13,7 +12,11 @@ export const RutaProtegida = ({ children, roleRequired }) => {
       return navigate(`/`);
     }
 
-    if (roleRequired && user?.rol !== roleRequired) {
+    if (
+      roleRequired &&
+      user?.rol !== roleRequired &&
+      user?.rol !== roleRequired2
+    ) {
       return navigate(`/Productos`);
     }
   }, [user, roleRequired, navigate]);
@@ -21,7 +24,8 @@ export const RutaProtegida = ({ children, roleRequired }) => {
   if (
     (roleRequired && user?.rol === "admin") ||
     user?.rol === "superadmin" ||
-    user?.rol === "user"
+    user?.rol === "user" ||
+    user?.rol === "operador"
   ) {
     return children;
   }

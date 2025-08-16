@@ -116,6 +116,10 @@ export const TableAdmins = () => {
 
   const filtroAdmines = admines.filter((admin) => admin.rol === "admin");
 
+  const filtroOperadores = admines.filter(
+    (operador) => operador.rol === "operador"
+  );
+
   const deleteAdmin = async (idAdmin) => {
     try {
       const response = await deleteUser(idAdmin, user.token);
@@ -157,74 +161,153 @@ export const TableAdmins = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center gap-5 items-center">
       <h2 className="text-white font-playfair text-[40px] mt-14">
-        Tabla Operadores
+        Tabla Administradores y operadores
       </h2>
+      <div className="flex items-center gap-10  justify-center">
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <h2 className="font-poppins text-white text-center">
+            Administradores
+          </h2>
+          <Table className="w-auto bg-black/90 p-8">
+            <TableHeader>
+              <TableColumn>Full Name</TableColumn>
 
-      <Table className="w-auto bg-black/90 p-8">
-        <TableHeader>
-          <TableColumn>Full Name</TableColumn>
+              <TableColumn>Accion</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {filtroAdmines.map((admin) => (
+                <TableRow key={admin.id}>
+                  <TableCell>
+                    <div
+                      className={`flex flex-col ${
+                        admin.inhabilitado === true ? "text-gray-400" : ""
+                      } `}
+                    >
+                      <h2>
+                        {admin.nombre} {admin.apellido}
+                      </h2>
+                      <h2
+                        className={` text-[12px] ${
+                          admin.inhabilitado === true
+                            ? "text-gray-400"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {admin.email}
+                      </h2>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <button
+                        className={`${
+                          admin.inhabilitado === true
+                            ? "text-gray-400 hover:text-gray-500 transition-all duration-300 ease-in-out"
+                            : "text-gray-500"
+                        }`}
+                        onClick={() =>
+                          disableAdmin(admin.id, admin.inhabilitado)
+                        }
+                      >
+                        {admin.inhabilitado ? openEye : closeEye}
+                      </button>
 
-          <TableColumn>Accion</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {filtroAdmines.map((admin) => (
-            <TableRow key={admin.id}>
-              <TableCell>
-                <div
-                  className={`flex flex-col ${
-                    admin.inhabilitado === true ? "text-gray-400" : ""
-                  } `}
-                >
-                  <h2>
-                    {admin.nombre} {admin.apellido}
-                  </h2>
-                  <h2
-                    className={` text-[12px] ${
-                      admin.inhabilitado === true
-                        ? "text-gray-400"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {admin.email}
-                  </h2>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <button
-                    className={`${
-                      admin.inhabilitado === true
-                        ? "text-gray-400 hover:text-gray-500 transition-all duration-300 ease-in-out"
-                        : "text-gray-500"
-                    }`}
-                    onClick={() => disableAdmin(admin.id, admin.inhabilitado)}
-                  >
-                    {admin.inhabilitado ? openEye : closeEye}
-                  </button>
+                      <AddAdmin
+                        user={user}
+                        iconEdit={iconEdit}
+                        getAdmines={getAdmines}
+                        admin={admin}
+                      />
 
-                  <AddAdmin
-                    user={user}
-                    iconEdit={iconEdit}
-                    getAdmines={getAdmines}
-                    admin={admin}
-                  />
+                      <button
+                        className={`${
+                          admin.inhabilitado === true
+                            ? "text-gray-400 hover:text-[#bc134f] transition-all duration-300 ease-in-out"
+                            : "text-[#bc134f]"
+                        }`}
+                        onClick={() => deleteAdmin(admin.id)}
+                      >
+                        {iconDelete}
+                      </button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        {/* OPERADORES */}
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <h2 className="text-white font-poppins text-center">Operadores</h2>
+          <Table className="w-auto bg-black/90 p-8">
+            <TableHeader>
+              <TableColumn>Full Name</TableColumn>
 
-                  <button
-                    className={`${
-                      admin.inhabilitado === true
-                        ? "text-gray-400 hover:text-[#bc134f] transition-all duration-300 ease-in-out"
-                        : "text-[#bc134f]"
-                    }`}
-                    onClick={() => deleteAdmin(admin.id)}
-                  >
-                    {iconDelete}
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+              <TableColumn>Accion</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {filtroOperadores.map((operador) => (
+                <TableRow key={operador.id}>
+                  <TableCell>
+                    <div
+                      className={`flex flex-col ${
+                        operador.inhabilitado === true ? "text-gray-400" : ""
+                      } `}
+                    >
+                      <h2>
+                        {operador.nombre} {operador.apellido}
+                      </h2>
+                      <h2
+                        className={` text-[12px] ${
+                          operador.inhabilitado === true
+                            ? "text-gray-400"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {operador.email}
+                      </h2>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <button
+                        className={`${
+                          operador.inhabilitado === true
+                            ? "text-gray-400 hover:text-gray-500 transition-all duration-300 ease-in-out"
+                            : "text-gray-500"
+                        }`}
+                        onClick={() =>
+                          disableAdmin(operador.id, operador.inhabilitado)
+                        }
+                      >
+                        {operador.inhabilitado ? openEye : closeEye}
+                      </button>
+
+                      <AddAdmin
+                        user={user}
+                        iconEdit={iconEdit}
+                        getAdmines={getAdmines}
+                        operador={operador}
+                      />
+
+                      <button
+                        className={`${
+                          operador.inhabilitado === true
+                            ? "text-gray-400 hover:text-[#bc134f] transition-all duration-300 ease-in-out"
+                            : "text-[#bc134f]"
+                        }`}
+                        onClick={() => deleteAdmin(operador.id)}
+                      >
+                        {iconDelete}
+                      </button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
 
       <AddAdmin
         getAdmines={getAdmines}

@@ -11,6 +11,7 @@ import { useCategory } from "../Store/useCategory";
 import { toast } from "react-toastify";
 
 import { AddCategories } from "../AddCategories";
+import { useNavigate } from "react-router-dom";
 
 const openEye = (
   <svg
@@ -62,6 +63,8 @@ const iconDelete = (
 export const TableCategory = ({ user }) => {
   const { getCategory, editCategory, categories, deleteCategory } =
     useCategory();
+
+  const { rol } = user;
 
   const functionDisabled = async (category) => {
     try {
@@ -121,47 +124,65 @@ export const TableCategory = ({ user }) => {
           <TableColumn className="text-center">Accion</TableColumn>
         </TableHeader>
         <TableBody>
-          {categories.map((category) => (
-            <TableRow
-              key={category.id}
-              className={`${
-                category.estado === "Inactivo" ? "text-gray-400 " : ""
-              }`}
-            >
-              <TableCell>{category.category}</TableCell>
-              <TableCell>{category.estado}</TableCell>
-              <TableCell>
-                <div className="flex items-center gap-1">
+          {rol === "admin" &&
+            categories.map((category) => (
+              <TableRow
+                key={category.id}
+                className={`${
+                  category.estado === "Inactivo" ? "text-gray-400 " : ""
+                }`}
+              >
+                <TableCell>{category.category}</TableCell>
+                <TableCell>{category.estado}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-1">
+                    <button onClick={() => functionDisabled(category)}>
+                      {category.estado === "Inactivo" ? closeEye : openEye}
+                    </button>
+
+                    <AddCategories
+                      usuario={user}
+                      category={category}
+                      className={`${
+                        category.estado === "Inactivo"
+                          ? "text-gray-400 "
+                          : "text-blue-500"
+                      }`}
+                    >
+                      {" "}
+                    </AddCategories>
+
+                    <button
+                      onClick={() => categoryDelete(category.id)}
+                      className={`${
+                        category.estado === "Inactivo"
+                          ? "text-gray-400 "
+                          : "text-[#bc134f]"
+                      }`}
+                    >
+                      {iconDelete}
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          {rol === "operador" &&
+            categories.map((category) => (
+              <TableRow
+                key={category.id}
+                className={`${
+                  category.estado === "Inactivo" ? "text-gray-400 " : ""
+                }`}
+              >
+                <TableCell>{category.category}</TableCell>
+                <TableCell>{category.estado}</TableCell>
+                <TableCell>
                   <button onClick={() => functionDisabled(category)}>
                     {category.estado === "Inactivo" ? closeEye : openEye}
                   </button>
-
-                  <AddCategories
-                    usuario={user}
-                    category={category}
-                    className={`${
-                      category.estado === "Inactivo"
-                        ? "text-gray-400 "
-                        : "text-blue-500"
-                    }`}
-                  >
-                    {" "}
-                  </AddCategories>
-
-                  <button
-                    onClick={() => categoryDelete(category.id)}
-                    className={`${
-                      category.estado === "Inactivo"
-                        ? "text-gray-400 "
-                        : "text-[#bc134f]"
-                    }`}
-                  >
-                    {iconDelete}
-                  </button>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

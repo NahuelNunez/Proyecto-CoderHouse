@@ -12,7 +12,8 @@ export const useUser = create((set) => ({
             return { data: response.data, error: null }
         } catch (error) {
             console.log('Error al registrarse', error)
-            return { error: error, data: null }
+            const msg = error.response?.data?.message || error.response?.data?.error
+            return { error: msg, data: null }
 
         }
     },
@@ -29,7 +30,7 @@ export const useUser = create((set) => ({
     },
     editUser: async (id, token, data) => {
         try {
-            const response = await axios.put(`${baseURL}/user/edit/${id}`, data, {
+            const response = await axios.patch(`${baseURL}/user/edit/${id}`, data, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`

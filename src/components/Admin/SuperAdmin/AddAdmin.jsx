@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Modal,
   ModalContent,
@@ -21,6 +21,7 @@ export const AddAdmin = ({
   iconEdit,
   admin,
   user,
+  operador,
 }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [showpassword, setShowpassword] = useState(false);
@@ -32,41 +33,87 @@ export const AddAdmin = ({
     setValue,
     formState: { errors },
     reset,
+    control,
   } = useForm();
 
-  const editAdmin = (admin) => {
+  const editAdmin = (admin, operador) => {
     if (admin) {
       setValue("nombre", admin.nombre);
       setValue("apellido", admin.apellido);
       setValue("email", admin.email);
+      setValue("rol", admin.rol);
+    } else if (operador) {
+      setValue("nombre", operador.nombre);
+      setValue("apellido", operador.apellido);
+      setValue("email", operador.email);
+      setValue("rol", operador.rol);
     }
     onOpen();
   };
 
+  console.log("Operador:", operador);
+
   const onSubmit = async (data) => {
     try {
       if (admin) {
-        const response = await editUser(admin.id, user?.token, data);
-        if (response.error) {
-          toast.error("Error al editar el Operador");
-        } else if (response) {
-          toast.success("Operador editado exitosamente");
+        const { data: dataOk, error: errroAdmin } = await editUser(
+          admin.id,
+          user?.token,
+          data
+        );
+        if (errroAdmin) {
+          toast.error("Error al editar el Administrador");
+        } else if (dataOk) {
+          toast.success("Administrador editado exitosamente");
           getAdmines();
           onClose();
         }
-      } else {
-        const response = await postSingUp(data);
-        if (response) {
-          toast.success("Operador creado exitosamente");
+      } else if (operador) {
+        const { data: dataOk, error: errorOperador } = await editUser(
+          operador.id,
+          user?.token,
+          data
+        );
+        if (errorOperador) {
+          toast.error("Error al editar el operador");
+        } else if (dataOk) {
           getAdmines();
-          reset();
           onClose();
+          toast.success("Operador editado exitosamente");
+        }
+      } else {
+        if (data.rol === "admin") {
+          const { data: dataOk, error: errorData } = await postSingUp(data);
+          if (dataOk) {
+            toast.success("Administrador creado exitosamente");
+            getAdmines();
+            reset();
+            onClose();
+          } else if (errorData) {
+            toast.error(errorData);
+            getAdmines();
+            reset();
+            onClose();
+          }
+        } else if (data.rol === "operador") {
+          const { data: dataOk, error: errorData } = await postSingUp(data);
+          if (dataOk) {
+            toast.success("Operador creado exitosamente");
+            getAdmines();
+            reset();
+            onClose();
+          } else if (errorData) {
+            toast.error(errorData);
+            getAdmines();
+            reset();
+            onClose();
+          }
         }
       }
     } catch (error) {
       if (admin) {
-        toast.error("Error al editar el Operador");
-        console.log("Error al editar el Operador", error);
+        toast.error("Error al editar el Administrador");
+        console.log("Error al editar el Administrador", error);
       }
       toast.error("Error al crear Operador");
       console.log("Error al crear Operador", error);
@@ -76,30 +123,38 @@ export const AddAdmin = ({
     <>
       <button
         onClick={() => {
-          editAdmin(admin);
+          editAdmin(admin, operador);
         }}
         className={`${
-          admin
+          admin || operador
             ? `text-blue-500  ${
-                admin.inhabilitado === true
+                admin?.inhabilitado === true || operador?.inhabilitado === true
                   ? "text-gray-400 hover:text-blue-500 transition-all duration-300 ease-in-out"
                   : "text-blue-500"
               }`
             : "text-white font-poppins bg-black rounded-full px-4 py-3 scale-90 hover:scale-100 hover:text-black hover:bg-sky-400 transition-all duration-300 ease-in-out"
         }`}
       >
-        {admin?.nombre ? iconEdit : "Agregar operador"}
+        {admin?.nombre || operador?.nombre
+          ? iconEdit
+          : "Agregar Administrador o Operador"}
       </button>
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent className="bg-black">
           <>
             <ModalHeader className="flex flex-col gap-1">
-              <h2 className="text-center text-white">
-                {admin?.nombre ? "Editar operador" : "Agregar operador"}
-              </h2>
+              {admin || operador ? (
+                <h2 className="text-white text-center">
+                  Editar Administrador o Operador
+                </h2>
+              ) : (
+                <h2 className="text-white text-center">
+                  Agregar Administrado o Operador
+                </h2>
+              )}
             </ModalHeader>
             <ModalBody>
-              {admin ? (
+              {admin || operador ? (
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-3"
@@ -167,19 +222,28 @@ export const AddAdmin = ({
                       {showpassword ? openEye : closeEye}
                     </button>
                   </div>
-                  <RadioGroup
-                    defaultValue="admin"
-                    {...register("rol", { required: true })}
-                  >
-                    <Radio
-                      {...register("rol", { required: true })}
-                      value="admin"
-                    >
-                      <h2 className="text-white">
-                        Rol: <span>Operador</span>
-                      </h2>
-                    </Radio>
-                  </RadioGroup>
+                  <Controller
+                    control={control}
+                    name="rol"
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <RadioGroup
+                        orientation="horizontal"
+                        {...register("rol", { required: true })}
+                        label="Tipo"
+                        value={value}
+                        onBlur={onBlur}
+                        onChange={onChange}
+                      >
+                        <Radio {...register("rol")} value="admin">
+                          <h2 className="text-white">Administrador</h2>
+                        </Radio>
+                        <Radio {...register("rol")} value="operador">
+                          <h2 className="text-white">Operador</h2>
+                        </Radio>
+                      </RadioGroup>
+                    )}
+                  />
+
                   <ModalFooter className="flex items-center justify-center gap-4">
                     <Button color="danger" variant="light" onPress={onClose}>
                       Cancelar
@@ -282,13 +346,14 @@ export const AddAdmin = ({
                     </button>
                   </div>
                   <RadioGroup
+                    orientation="horizontal"
                     defaultValue="admin"
                     {...register("rol", { required: true })}
                   >
-                    <Radio
-                      {...register("rol", { required: true })}
-                      value="admin"
-                    >
+                    <Radio {...register("rol")} value="admin">
+                      <h2 className="text-white">Administrador</h2>
+                    </Radio>
+                    <Radio {...register("rol")} value="operador">
                       <h2 className="text-white">Operador</h2>
                     </Radio>
                   </RadioGroup>
