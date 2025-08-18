@@ -14,19 +14,20 @@ const ItemCount = ({
         Agregar al carrito
       </button>
       <button
-        onClick={handleAdd}
-        className="text-cyan-500 font-semibold border  border-sky-500 rounded-full p-0 px-[6px]  hover:text-white transition duration-0.5 hover:bg-slate-900"
-      >
-        +
-      </button>
-      <span className="text-white font-semibold absolute right-9">
-        {cantidad}
-      </span>
-      <button
         onClick={handleRemove}
         className="text-cyan-500 font-semibold border border-sky-500 rounded-full px-2 hover:text-white transition duration-0.5 hover:bg-slate-900"
       >
         -
+      </button>
+
+      <span className="text-white font-semibold absolute right-9">
+        {cantidad}
+      </span>
+      <button
+        onClick={handleAdd}
+        className="text-cyan-500 font-semibold border  border-sky-500 rounded-full p-0 px-[6px]  hover:text-white transition duration-0.5 hover:bg-slate-900"
+      >
+        +
       </button>
     </div>
   );

@@ -11,7 +11,6 @@ import { useCategory } from "../Store/useCategory";
 import { toast } from "react-toastify";
 
 import { AddCategories } from "../AddCategories";
-import { useNavigate } from "react-router-dom";
 
 const openEye = (
   <svg
