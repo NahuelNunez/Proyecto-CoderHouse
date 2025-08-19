@@ -81,5 +81,35 @@ export const useCategory = create((set) => ({
             return { error: error, data: null }
 
         }
-    }
+    },
+    inhabilitarCategory: async (id, token) => {
+        try {
+            const response = await axios.patch(`${baseURL}/category/inhabilitar/${id},`, {}, {
+                withCredentials: true,
+                headers: { Authorization: `Bearer ${token}` }
+
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            const msg = error.response?.data?.error || error.response?.data?.message
+            return { error: msg, data: null }
+
+        }
+    },
+    habilitarCategory: async (id, token) => {
+        try {
+            const response = await axios.patch(`${baseURL}/category/habilitar/${id},`, {}, {
+                withCredentials: true,
+                headers: { Authorization: `Bearer ${token}` }
+
+            })
+            return { data: response.data, error: null }
+        } catch (error) {
+            const msg = error.response?.data?.error || error.response?.data?.message
+            return { error: msg, data: null }
+
+        }
+    },
+
+
 }))

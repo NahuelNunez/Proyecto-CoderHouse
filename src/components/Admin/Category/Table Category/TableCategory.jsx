@@ -60,28 +60,26 @@ const iconDelete = (
 );
 
 export const TableCategory = ({ user }) => {
-  const { getCategory, editCategory, categories, deleteCategory } =
-    useCategory();
+  const {
+    getCategory,
+    categories,
+    deleteCategory,
+    inhabilitarCategory,
+    habilitarCategory,
+  } = useCategory();
 
   const { rol } = user;
 
   const functionDisabled = async (category) => {
     try {
-      if (category.estado === "Activo") {
-        const data = {
-          estado: "Inactivo",
-        };
-
-        const response = await editCategory(user.token, category.id, data);
+      if (category.estado === true) {
+        const response = await inhabilitarCategory(user.token, category.id);
         if (response) {
           toast.success("Estado de categoria Inactivo");
           getCategory();
         }
-      } else if (category.estado === "Inactivo") {
-        const data = {
-          estado: "Activo",
-        };
-        const response = await editCategory(user.token, category.id, data);
+      } else if (category.estado === false) {
+        const response = await habilitarCategory(user.token, category.id);
         if (response) {
           toast.success("Estado de categoria Activo");
           getCategory();
@@ -128,7 +126,7 @@ export const TableCategory = ({ user }) => {
               <TableRow
                 key={category.id}
                 className={`${
-                  category.estado === "Inactivo" ? "text-gray-400 " : ""
+                  category.estado === false ? "text-gray-400 " : ""
                 }`}
               >
                 <TableCell>{category.category}</TableCell>
@@ -136,14 +134,14 @@ export const TableCategory = ({ user }) => {
                 <TableCell>
                   <div className="flex items-center gap-1">
                     <button onClick={() => functionDisabled(category)}>
-                      {category.estado === "Inactivo" ? closeEye : openEye}
+                      {category.estado === false ? closeEye : openEye}
                     </button>
 
                     <AddCategories
                       usuario={user}
                       category={category}
                       className={`${
-                        category.estado === "Inactivo"
+                        category.estado === false
                           ? "text-gray-400 "
                           : "text-blue-500"
                       }`}
@@ -154,7 +152,7 @@ export const TableCategory = ({ user }) => {
                     <button
                       onClick={() => categoryDelete(category.id)}
                       className={`${
-                        category.estado === "Inactivo"
+                        category.estado === false
                           ? "text-gray-400 "
                           : "text-[#bc134f]"
                       }`}
