@@ -86,7 +86,9 @@ export const useCategory = create((set) => ({
         try {
             const response = await axios.patch(`${baseURL}/category/inhabilitar/${id}`, {}, {
                 withCredentials: true,
-                headers: { Authorization: `Bearer ${token}` }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
 
             })
             return { data: response.data, error: null }

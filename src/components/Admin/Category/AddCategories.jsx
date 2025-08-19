@@ -10,7 +10,7 @@ import {
   Radio,
 } from "@heroui/react";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import { toast } from "react-toastify";
 import { useEffect } from "react";
@@ -42,6 +42,7 @@ export const AddCategories = ({ user, category, usuario }) => {
     handleSubmit,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -139,25 +140,25 @@ export const AddCategories = ({ user, category, usuario }) => {
                   {errors.category && (
                     <p className="text-red-500">la categoria es requerida</p>
                   )}
-                  <RadioGroup
-                    defaultValue="Activo"
-                    {...register("estado", { required: true })}
-                  >
-                    <div className="flex  items-center gap-2">
-                      <Radio
-                        {...register("estado", { required: true })}
-                        value="Activo"
+                  <Controller
+                    name="estado"
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <RadioGroup
+                        orientation="horizontal"
+                        value={value ? "true" : "false"}
+                        onBlur={onBlur}
+                        onValueChange={(v) => onChange(v === "true")}
                       >
-                        <h5 className="text-white">Activo</h5>
-                      </Radio>
-                      <Radio
-                        {...register("estado", { required: true })}
-                        value="Inactivo"
-                      >
-                        <h5 className="text-white">Inactivo</h5>
-                      </Radio>
-                    </div>
-                  </RadioGroup>
+                        <Radio value="true">
+                          <h5 className="text-white">Activo</h5>
+                        </Radio>
+                        <Radio value="false">
+                          <h5 className="text-white">Inactivo</h5>
+                        </Radio>
+                      </RadioGroup>
+                    )}
+                  />
 
                   <div className="flex items-center justify-around w-full">
                     <Button color="primary" type="submit">
