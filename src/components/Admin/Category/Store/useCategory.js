@@ -82,7 +82,7 @@ export const useCategory = create((set) => ({
 
         }
     },
-    inhabilitarCategory: async (id, token) => {
+    inhabilitarCategory: async (token, id) => {
         try {
             const response = await axios.patch(`${baseURL}/category/inhabilitar/${id},`, {}, {
                 withCredentials: true,
@@ -96,7 +96,7 @@ export const useCategory = create((set) => ({
 
         }
     },
-    habilitarCategory: async (id, token) => {
+    habilitarCategory: async (token, id) => {
         try {
             const response = await axios.patch(`${baseURL}/category/habilitar/${id},`, {}, {
                 withCredentials: true,

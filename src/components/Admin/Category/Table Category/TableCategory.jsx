@@ -68,8 +68,6 @@ export const TableCategory = ({ user }) => {
     habilitarCategory,
   } = useCategory();
 
-  const { rol } = user;
-
   const functionDisabled = async (category) => {
     try {
       if (category.estado === true) {
@@ -121,7 +119,7 @@ export const TableCategory = ({ user }) => {
           <TableColumn className="text-center">Accion</TableColumn>
         </TableHeader>
         <TableBody>
-          {rol === "admin" &&
+          {user?.rol === "admin" &&
             categories.map((category) => (
               <TableRow
                 key={category.id}
@@ -163,19 +161,21 @@ export const TableCategory = ({ user }) => {
                 </TableCell>
               </TableRow>
             ))}
-          {rol === "operador" &&
+          {user?.rol === "operador" &&
             categories.map((category) => (
               <TableRow
                 key={category.id}
                 className={`${
-                  category.estado === "Inactivo" ? "text-gray-400 " : ""
+                  category.estado === false ? "text-gray-400 " : ""
                 }`}
               >
                 <TableCell>{category.category}</TableCell>
-                <TableCell>{category.estado}</TableCell>
+                <TableCell>
+                  {category.estado === false ? "Inactivo" : "Activo"}
+                </TableCell>
                 <TableCell>
                   <button onClick={() => functionDisabled(category)}>
-                    {category.estado === "Inactivo" ? closeEye : openEye}
+                    {category.estado === false ? closeEye : openEye}
                   </button>
                 </TableCell>
               </TableRow>
