@@ -51,8 +51,6 @@ export const AddAdmin = ({
     onOpen();
   };
 
-  console.log("Operador:", operador);
-
   const onSubmit = async (data) => {
     try {
       if (admin) {
@@ -137,19 +135,21 @@ export const AddAdmin = ({
       >
         {admin?.nombre || operador?.nombre
           ? iconEdit
-          : "Agregar Administrador o Operador"}
+          : "Agregar Administrador / Operador"}
       </button>
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent className="bg-black">
           <>
             <ModalHeader className="flex flex-col gap-1">
-              {admin || operador ? (
+              {admin?.rol === "admin" && (
+                <h2 className="text-white text-center">Editar Administrador</h2>
+              )}
+              {operador?.rol === "operador" && (
+                <h2 className="text-white text-center">Editar Operador</h2>
+              )}
+              {admin === undefined && operador === undefined && (
                 <h2 className="text-white text-center">
-                  Editar Administrador o Operador
-                </h2>
-              ) : (
-                <h2 className="text-white text-center">
-                  Agregar Administrado o Operador
+                  Agregar Administrador / Operador
                 </h2>
               )}
             </ModalHeader>

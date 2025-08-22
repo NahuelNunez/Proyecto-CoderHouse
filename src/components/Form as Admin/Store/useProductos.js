@@ -66,7 +66,7 @@ export const useProductos = create((set) => ({
     },
     deleteProductos: async (id, token) => {
         try {
-            const response = await axios.delete(`${baseURL}/products/delete/${id}`, {
+            const response = await axios.patch(`${baseURL}/products/delete/${id}`, {}, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`

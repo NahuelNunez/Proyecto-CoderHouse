@@ -134,22 +134,37 @@ export const TableAdmins = () => {
     }
   };
 
-  const disableAdmin = async (id, status) => {
+  const disableAdmin = async (id, admin, operador) => {
     try {
-      if (status === false) {
+      if (admin?.inhabilitado === false || operador?.inhabilitado === false) {
         const response = await inhabilitarAdmin(id, user.token);
         if (response.error) {
           toast.error("Error al inhabilitar el Operador");
         } else if (response) {
-          toast.success("Operador inhabilitado exitosamente");
+          toast.success(
+            `${
+              admin.rol === "admin"
+                ? "Administrador Inhabilitado exitosamente"
+                : "Operador Inhabilitado exitosamente"
+            }`
+          );
           getAdmines();
         }
-      } else if (status) {
+      } else if (
+        admin?.inhabilitado === true ||
+        operador?.inhabilitado === true
+      ) {
         const response = await habilitarAdmin(id, user.token);
         if (response.error) {
           toast.error("Error al habilitar el Operador");
         } else if (response) {
-          toast.success("Operador habilitado exitosamente");
+          toast.success(
+            `${
+              admin.rol === "admin"
+                ? "Administrador habilitado exitosamente"
+                : "Operador habilitado exitosamente"
+            }`
+          );
           getAdmines();
         }
       }
@@ -205,9 +220,7 @@ export const TableAdmins = () => {
                             ? "text-gray-400 hover:text-gray-500 transition-all duration-300 ease-in-out"
                             : "text-gray-500"
                         }`}
-                        onClick={() =>
-                          disableAdmin(admin.id, admin.inhabilitado)
-                        }
+                        onClick={() => disableAdmin(admin.id, admin)}
                       >
                         {admin.inhabilitado ? openEye : closeEye}
                       </button>
@@ -276,9 +289,7 @@ export const TableAdmins = () => {
                             ? "text-gray-400 hover:text-gray-500 transition-all duration-300 ease-in-out"
                             : "text-gray-500"
                         }`}
-                        onClick={() =>
-                          disableAdmin(operador.id, operador.inhabilitado)
-                        }
+                        onClick={() => disableAdmin(operador.id, operador)}
                       >
                         {operador.inhabilitado ? openEye : closeEye}
                       </button>
@@ -316,7 +327,7 @@ export const TableAdmins = () => {
         openEye={openEye}
       />
       <h2 className="font-playfair text-[30px] text-white">
-        Actividad operadores
+        Actividad Administradores / Operadores
       </h2>
 
       <div className="bg-black/90 flex flex-col-reverse gap-2 p-8 mb-14 w-auto h-[30em] overflow-auto scrollbar-thin scrollbar-track">

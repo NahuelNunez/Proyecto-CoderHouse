@@ -11,9 +11,9 @@ import { UserLocalStorage } from "../../hooks/UserLocalStorage";
 export const Login = () => {
   const navigate = useNavigate();
   UserLocalStorage();
-  const { login, user } = useAuth();
+  const { login } = useAuth();
 
-  const { handleChange, reset, formData, validate, error } = UseForm({
+  const { handleChange, reset, formData, error } = UseForm({
     email: "",
     password: "",
   });

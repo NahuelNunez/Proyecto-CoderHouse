@@ -78,7 +78,7 @@ export const ItemList = ({ producto }) => {
       }
     } else {
       try {
-        await toast.promise(habilitarProductos(id, user.token), {
+        await toast.promise(habilitarProductos(id, user?.token), {
           pending: "Habilitando...",
           success: "Producto Habilitado",
           error: "Error al habilitar el producto",

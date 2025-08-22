@@ -84,7 +84,7 @@ export const useUser = create((set) => ({
 
     deleteUser: async (id, token) => {
         try {
-            const response = await axios.delete(`${baseURL}/user/delete/${id}`, {
+            const response = await axios.patch(`${baseURL}/user/delete/${id}`, {}, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -93,7 +93,8 @@ export const useUser = create((set) => ({
             return { data: response.data, error: null }
         } catch (error) {
             console.log("Error al eliminar el usuario", error)
-            return { error: error, data: null }
+            const msg = error.response?.data?.message || error.response?.data?.error
+            return { error: msg, data: null }
         }
     }
 
