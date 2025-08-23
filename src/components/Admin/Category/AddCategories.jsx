@@ -105,8 +105,8 @@ export const AddCategories = ({ user, category, usuario }) => {
         onPress={() => {
           onOpen, editingCategories(category);
         }}
-        className={`bg-transparent ${
-          category?.category ? "text-blue-500" : "text-amber-500"
+        className={`bg-transparent  ${
+          category?.category ? "text-blue-500 min-w-[5px]" : "text-amber-500"
         }`}
       >
         {category?.category ? iconEdit : `Agregar categorias`}

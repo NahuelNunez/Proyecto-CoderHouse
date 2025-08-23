@@ -69,7 +69,7 @@ export const useCategory = create((set) => ({
     },
     deleteCategory: async (id, token) => {
         try {
-            const response = await axios.delete(`${baseURL}/category/delete/${id}`, {
+            const response = await axios.patch(`${baseURL}/category/delete/${id}`, {}, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`

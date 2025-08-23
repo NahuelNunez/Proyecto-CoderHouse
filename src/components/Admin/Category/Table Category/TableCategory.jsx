@@ -91,12 +91,11 @@ export const TableCategory = ({ user }) => {
 
   const categoryDelete = async (idCategory) => {
     try {
-      const response = await deleteCategory(idCategory, user.token);
-
-      if (response) {
-        toast.success("Categoria eliminada exitosamente");
-        getCategory();
-      }
+      await toast.promise(deleteCategory(idCategory, user.token), {
+        pending: "Eliminando...",
+        success: "Categoria eliminada exitosamente 😎",
+      });
+      getCategory();
     } catch (error) {
       toast.error("Error al eliminar la categoria🤔");
       console.log("Error al eliminar la categoria", error);
@@ -127,10 +126,12 @@ export const TableCategory = ({ user }) => {
                   category.estado === false ? "text-gray-400 " : ""
                 }`}
               >
-                <TableCell>{category.category}</TableCell>
-                <TableCell>{category.estado}</TableCell>
+                <TableCell className="uppercase">{category.category}</TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-1">
+                  {category.estado === true ? "Activo" : "Inactivo"}
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center ">
                     <button onClick={() => functionDisabled(category)}>
                       {category.estado === false ? closeEye : openEye}
                     </button>

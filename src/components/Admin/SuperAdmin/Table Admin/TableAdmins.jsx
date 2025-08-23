@@ -222,7 +222,7 @@ export const TableAdmins = () => {
                         }`}
                         onClick={() => disableAdmin(admin.id, admin)}
                       >
-                        {admin.inhabilitado ? openEye : closeEye}
+                        {admin.inhabilitado ? closeEye : openEye}
                       </button>
 
                       <AddAdmin
@@ -291,7 +291,7 @@ export const TableAdmins = () => {
                         }`}
                         onClick={() => disableAdmin(operador.id, operador)}
                       >
-                        {operador.inhabilitado ? openEye : closeEye}
+                        {operador.inhabilitado ? closeEye : openEye}
                       </button>
 
                       <AddAdmin
