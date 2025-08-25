@@ -29,12 +29,11 @@ export const AddProduct = ({ user }) => {
   const { getCategory, categories } = useCategory();
 
   const handleOnSubmit = async (data) => {
-    if (!data.image) {
-      alert("Selecciona una imagen🙃");
-      return;
-    }
     try {
-      console.log("Data form", data);
+      if (!data.image) {
+        alert("Selecciona una imagen🙃");
+        return;
+      }
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("category", data.category);
