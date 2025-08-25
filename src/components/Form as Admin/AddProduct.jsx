@@ -30,7 +30,7 @@ export const AddProduct = ({ user }) => {
 
   const handleOnSubmit = async (data) => {
     try {
-      if (!data.image) {
+      if (!data.image[0]) {
         alert("Selecciona una imagen🙃");
         return;
       }
@@ -94,10 +94,17 @@ export const AddProduct = ({ user }) => {
                   <input
                     placeholder="Ingresar titulo"
                     className="outline-none w-full p-1 border-b-2 bg-transparent placeholder:text-sm  text-sky-500 focus:border-b-gray-600 focus:transition-all focus:duration-300 "
-                    {...register("title", { required: true })}
+                    {...register("title", {
+                      required: "El título es requerido",
+                      pattern: {
+                        value: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ.,-]{3,50}$/,
+                        message:
+                          "El título debe tener entre 3 y 50 caracteres válidos",
+                      },
+                    })}
                   />
                   {errors.title && (
-                    <p className="text-red-500">El titulo es requerido</p>
+                    <p className="text-red-500">{errors.title.message}</p>
                   )}
                   <RadioGroup
                     {...register("category")}
@@ -122,22 +129,34 @@ export const AddProduct = ({ user }) => {
                   )}
                   <input
                     className="outline-none w-full border-b-2 p-1 bg-transparent placeholder:text-sm  text-sky-500 focus:border-b-gray-600 focus:transition-all focus:duration-300 "
-                    {...register("price", { required: true })}
+                    {...register("price", {
+                      required: "El precio es requerido",
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "El precio debe ser un número válido",
+                      },
+                    })}
                     placeholder="Ingresar precio"
                   />
                   {errors.price && (
-                    <p className="text-red-500">El precio es requerido</p>
+                    <p className="text-red-500">{errors.price.message}</p>
                   )}
                   <input
                     className="outline-none w-full border-b-2 p-1 bg-transparent placeholder:text-sm  text-sky-500 focus:border-b-gray-600 focus:transition-all focus:duration-300 "
-                    {...register("stock", { required: true })}
+                    {...register("stock", {
+                      required: "El stock es requerido",
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "El stock debe ser un número entero",
+                      },
+                    })}
                     placeholder="Ingresar Stock"
                   />
                   {errors.stock && (
-                    <p className="text-red-500">El stock es requerido</p>
+                    <p className="text-red-500">{errors.stock.message}</p>
                   )}
                   <div className="flex items-center justify-around w-full">
-                    <Button color="primary" type="submit" onPress={onClose}>
+                    <Button color="primary" type="submit">
                       Agregar
                     </Button>
                     <Button
