@@ -3,8 +3,8 @@ import { Card, CardBody, CardFooter } from "@heroui/card";
 const Welcome = () => {
   return (
     <div className="w-full flex flex-col items-center gap-10">
-      <h1 className="uppercase font-playfair  text-[40px] text-center py-4 text-white  sm:mt-[50px]">
-        Cuidado de joya
+      <h1 className="uppercase font-playfair  text-[30px] text-center py-4 text-white  sm:mt-[50px]">
+        TIPS
       </h1>
 
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(250px,_1fr))] md:grid-cols-[repeat(2,_minmax(200px,_1fr))] lg:grid-cols-[repeat(2,_minmax(200px,_1fr))] xl:grid-cols-[repeat(3,_minmax(200px,_1fr))] place-items-center place-content-center  gap-10 mb-10">

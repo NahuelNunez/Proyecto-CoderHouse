@@ -128,7 +128,12 @@ const NavBarComponent = () => {
             <Carrito toggleMenu={toggleMenu} />
 
             {user ? (
-              <Logout user={user} toggleMenu={toggleMenu} />
+              <Logout
+                user={user}
+                setOpen={setOpen}
+                open={open}
+                toggleMenu={toggleMenu}
+              />
             ) : (
               <Link onClick={toggleMenu} to="/login">
                 <svg

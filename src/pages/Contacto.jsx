@@ -59,17 +59,11 @@ const Contacto = () => {
       </form>
       <div className=" flex flex-col lg:flex-row  gap-5">
         <div className="text-white font-poppins flex flex-col gap-10 max-w-[500px]  ">
-          <h2 className="text-[30px] text-white uppercase text-center font-playfair">
-            ¡Descubrí el brillo de la elegancia con{" "}
-            <span className="text-[30px] text-sky-500">Chelitas Joyas</span>!
+          <h2 className="uppercase font-playfair text-[40px] text-center  text-white">
+            Joyería Exclusiva
           </h2>
-          <p className="mx-1">
-            Encontrá la joya ideal con{" "}
-            <span className="text-amber-400">calidad</span>,{" "}
-            <span className="text-amber-400">exclusividad</span>{" "}
-            <span className="text-amber-400">
-              y el mejor servicio personalizado.
-            </span>
+          <p className="text-md text-white ">
+            Descubre piezas unicas que cuentan tu historia
           </p>
         </div>
         <div className="flex flex-col gap-3">

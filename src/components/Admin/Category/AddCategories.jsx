@@ -36,7 +36,7 @@ const iconEdit = (
   </svg>
 );
 
-export const AddCategories = ({ user, category, usuario }) => {
+export const AddCategories = ({ user, category, usuario, setOpen, open }) => {
   const {
     register,
     handleSubmit,
@@ -103,7 +103,11 @@ export const AddCategories = ({ user, category, usuario }) => {
     <>
       <Button
         onPress={() => {
-          onOpen, editingCategories(category);
+          onOpen();
+          editingCategories(category);
+          if (open === true) {
+            setOpen(false);
+          }
         }}
         className={`bg-transparent  ${
           category?.category ? "text-blue-500 min-w-[5px]" : "text-amber-500"

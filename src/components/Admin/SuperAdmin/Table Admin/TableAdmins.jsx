@@ -175,15 +175,15 @@ export const TableAdmins = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center gap-5 items-center">
-      <h2 className="text-white font-playfair text-[40px] mt-14">
+      <h2 className="text-white text-center font-playfair text-[40px] mt-14">
         Tabla Administradores y operadores
       </h2>
-      <div className="flex items-center gap-10  justify-center">
-        <div className="flex flex-col gap-2 items-center justify-center">
+      <div className="flex flex-col lg:flex-row items-center gap-10  justify-center">
+        <div className=" flex flex-col gap-2 items-center justify-center">
           <h2 className="font-poppins text-white text-center">
             Administradores
           </h2>
-          <Table className="w-auto bg-black/90 p-8">
+          <Table className="">
             <TableHeader>
               <TableColumn>Full Name</TableColumn>
 
@@ -252,7 +252,7 @@ export const TableAdmins = () => {
         {/* OPERADORES */}
         <div className="flex flex-col gap-2 items-center justify-center">
           <h2 className="text-white font-poppins text-center">Operadores</h2>
-          <Table className="w-auto bg-black/90 p-8">
+          <Table className="">
             <TableHeader>
               <TableColumn>Full Name</TableColumn>
 
@@ -326,7 +326,7 @@ export const TableAdmins = () => {
         closeEye={closeEye}
         openEye={openEye}
       />
-      <h2 className="font-playfair text-[30px] text-white">
+      <h2 className="font-playfair text-[30px] text-center text-white">
         Actividad Administradores / Operadores
       </h2>
 

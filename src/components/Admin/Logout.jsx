@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AddCategories } from "./Category/AddCategories";
 
-export const Logout = ({ user, toggleMenu }) => {
+export const Logout = ({ user, toggleMenu, setOpen, open }) => {
   const Navigate = useNavigate();
 
   const { name, rol } = user;
@@ -21,7 +21,9 @@ export const Logout = ({ user, toggleMenu }) => {
     Navigate("/login");
   };
   return (
-    <Dropdown className="relative flex flex-col bg-black  items-center">
+    <Dropdown
+      className={`${open === false ? "hidden" : ""}  bg-black  items-center`}
+    >
       <DropdownTrigger>
         <button className="text-white flex items-center gap-2 font-semibold  cursor-pointer">
           {name}
@@ -63,11 +65,12 @@ export const Logout = ({ user, toggleMenu }) => {
           </DropdownItem>
         </DropdownMenu>
       )}
+
       {rol === "admin" && (
         <DropdownMenu closeOnSelect={false} className="text-center bg-black">
           <DropdownItem
-            variant="bordered"
             closeOnSelect={true}
+            variant="bordered"
             className="text-white"
             onPress={() => {
               Navigate(`/changepassword`), toggleMenu();
@@ -78,18 +81,15 @@ export const Logout = ({ user, toggleMenu }) => {
 
           <DropdownItem
             variant="bordered"
-            closeOnSelect={false}
-            onPress={() => {
-              toggleMenu();
-            }}
+            onPress={() => {}}
             className="text-amber-400"
           >
-            <AddProduct user={user} />
+            <AddProduct user={user} setOpen={setOpen} open={open} />
           </DropdownItem>
 
           <DropdownItem
-            closeOnSelect={true}
             variant="bordered"
+            closeOnSelect={true}
             onPress={() => {
               Navigate(`/admin/TableOrders`), toggleMenu();
             }}
@@ -99,12 +99,11 @@ export const Logout = ({ user, toggleMenu }) => {
 
           <DropdownItem
             variant="bordered"
-            closeOnSelect={false}
             onPress={() => {
               toggleMenu();
             }}
           >
-            <AddCategories user={user} />
+            <AddCategories user={user} setOpen={setOpen} open={open} />
           </DropdownItem>
 
           <DropdownItem
@@ -120,7 +119,6 @@ export const Logout = ({ user, toggleMenu }) => {
 
           <DropdownItem
             variant="bordered"
-            closeOnSelect={true}
             onPress={() => {
               LogOut();
               toggleMenu();
@@ -131,6 +129,7 @@ export const Logout = ({ user, toggleMenu }) => {
           </DropdownItem>
         </DropdownMenu>
       )}
+
       {rol === "superadmin" && (
         <DropdownMenu className="    text-center  bg-black">
           <DropdownItem

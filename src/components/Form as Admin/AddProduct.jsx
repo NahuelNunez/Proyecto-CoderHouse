@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useCategory } from "../Admin/Category/Store/useCategory";
 
-export const AddProduct = ({ user }) => {
+export const AddProduct = ({ user, setOpen, open }) => {
   const {
     register,
     handleSubmit,
@@ -60,7 +60,15 @@ export const AddProduct = ({ user }) => {
 
   return (
     <>
-      <Button onPress={onOpen} className="bg-transparent text-blue-600">
+      <Button
+        onPress={() => {
+          onOpen();
+          if (open === true) {
+            setOpen(false);
+          }
+        }}
+        className="bg-transparent text-blue-600"
+      >
         Agregar Productos
       </Button>
       <Modal
@@ -69,7 +77,7 @@ export const AddProduct = ({ user }) => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
-        <ModalContent>
+        <ModalContent className="z-[9999]">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
