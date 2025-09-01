@@ -1,10 +1,12 @@
-import { Input } from "@heroui/input";
 import { Checkbox } from "@heroui/checkbox";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 const Contacto = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
+    alert("Tu informacion ha sido enviada correctamente");
+    toast.success("Tu informacion ha sido enviada correctamente");
     reset();
   };
 
@@ -20,11 +22,13 @@ const Contacto = () => {
       >
         <div className="flex flex-col md:flex-row gap-4 w-full">
           <input
+            type="text"
             placeholder="Nombre"
             className="flex-1 outline-none bg-transparent border-b border-gray-600 placeholder:text-gray-400 focus:border-b-sky-500 text-white"
             {...register("name", { required: true })}
           />
           <input
+            type="text"
             placeholder="Apellido"
             className="flex-1 outline-none bg-transparent border-b border-gray-600 placeholder:text-gray-400 focus:border-b-sky-500 text-white"
             {...register("apellido", { required: true })}
@@ -32,6 +36,7 @@ const Contacto = () => {
         </div>
 
         <input
+          type="email"
           placeholder="Correo electrónico"
           className="w-full outline-none bg-transparent border-b border-gray-600 placeholder:text-gray-400 focus:border-b-sky-500 text-white"
           {...register("email", { required: true })}
